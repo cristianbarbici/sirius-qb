@@ -17,11 +17,15 @@ export default function CreateQuickBusiness(props) {
         <SplField field="process_BusinessLayer.BusinessTitle">
           <BusinessTitleField />
         </SplField>
+        <SplField field="process_StartDate">
+          <DatePicker
+            label="Start Date"
+            value={startDate}
+            onChange={eventTarget(handleStartDateChange)}
+          />
+        </SplField>
         <DatePicker
-          value={startDate}
-          onChange={eventTarget(handleStartDateChange)}
-        />
-        <DatePicker
+          label="End Date"
           value={endDate}
           onChange={eventTarget(handleEndDateChange)}
         />
@@ -31,8 +35,7 @@ export default function CreateQuickBusiness(props) {
             label="Type of Business"
             variant="filled"
             select
-          >
-          </TextField>
+          ></TextField>
         </SplField>
         <SplField field="process_TypeOfParticipation.Name">
           <TextField
@@ -56,8 +59,7 @@ export default function CreateQuickBusiness(props) {
             label="Reinsurer"
             variant="filled"
             select
-          >
-          </TextField>
+          ></TextField>
         </SplField>
         <SplField field="process_ReportingUnit.Name">
           <TextField
@@ -72,8 +74,7 @@ export default function CreateQuickBusiness(props) {
             label="Main class of business"
             variant="filled"
             select
-          >
-          </TextField>
+          ></TextField>
         </SplField>
       </form>
     </div>

@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SplFieldCtx } from "../SplatComponents/SplField";
-import { navigateState, setState } from "../SplatComponents/SplProcess";
+import { navigateState } from "../SplatComponents/SplProcess";
 
 export default function TextField(props) {
   const fieldContext = useContext(SplFieldCtx);
-  const splatFieldValue = () => navigateState(fieldContext.path, fieldContext.state);
+  const [state, setState] = useState(
+    navigateState(fieldContext.path, fieldContext.state)
+  );
   const handleSplatFieldValueChange = (event) => {    
     console.log("update " + fieldContext.path + " => " + event.target.value);
-    setState(fieldContext.path, fieldContext.state, event.target.value);
+    setState(event.target.value);
   };
 
   return (
@@ -15,7 +17,7 @@ export default function TextField(props) {
       {props.label}:
       <input
         type="text"
-        value={splatFieldValue()}
+        value={state}
         id="{props.id}"
         onChange={handleSplatFieldValueChange}
       ></input>
