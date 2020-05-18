@@ -30,7 +30,6 @@ const setState = (path, state, value) => {
 
 const splatReducer = (state, action) => {
   console.log(action.type + " [" + action.path + "] = " + action.value);
-      state.process_BusinessLayer.BusinessTitle = new Date().toTimeString();
   switch (action.type) {
     case "update":
       // we need to return a _new_ state here, not just a modified one
@@ -46,7 +45,6 @@ const splatReducer = (state, action) => {
 export const useProcessState = () => useContext(SplProcessCtx);
 
 export default function SplProcess(props) {
-  console.log("setting state  with title ", splat.state.process_BusinessLayer.BusinessTitle);
   const [state, reducer] = useReducer(splatReducer, splat.state);
   const processContext = {state, reducer};
   return (
