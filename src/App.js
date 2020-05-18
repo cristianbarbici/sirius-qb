@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './factor10-logo.svg';
 import './App.css';
-import SplProcess from "./SplProcess";
-import CreateQuickBusiness from "./CreateQuickBusiness";
+import SplProcess from "./SplatComponents/SplProcess";
+import CreateQuickBusiness from "./Components/CreateQuickBusiness";
 
 function App() {
   return (
