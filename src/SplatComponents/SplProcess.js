@@ -1,4 +1,5 @@
 import React, { useReducer, useContext } from 'react';
+import produce from "immer"
 import splat from '../Data/Splat-data'
 
 export const SplProcessStateCtx = React.createContext();
@@ -27,19 +28,17 @@ const setState = (path, state, value) => {
     });
 };
 
-const splatReducer = (state, action) => {
+const splatReducer = produce((draft, action) => {
   console.log("reducer " + action.type + " " + action.path + " => " + action.value);
   switch (action.type) {
     case "update":
-      // we need to return a _new_ state here, not just a modified one
-      let newState = JSON.parse(JSON.stringify(state));
-      setState(action.path, newState, action.value);
-      return newState;
+      setState(action.path, draft, action.value);
+      return;
 
     default:
-      return state;
+      return;
   }
-};
+});
 
 export const useProcessState = () => useContext(SplProcessStateCtx);
 export const useProcessReducer = () => useContext(SplProcessReducerCtx);
