@@ -4,11 +4,7 @@ import TextField from './TextField'
 export default function BusinessTitleField(props) {
   return (
     <div>
-      <TextField
-        id="MainClassOfBusiness"
-        label="Business Title"
-        variant="filled"
-      />
+      <TextField id="BusinessTitle" label="Business Title" variant="filled" />
     </div>
   );
 }

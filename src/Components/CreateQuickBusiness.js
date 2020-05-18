@@ -1,15 +1,12 @@
-import React, { useState } from "react";
-import SplField from "../SplatComponents/SplField";
+import React from "react";
+import SplField, { useSplatField } from "../SplatComponents/SplField";
 import BusinessTitleField from "./BusinessTitleField";
 import TextField from "./TextField";
 import DatePicker from "./DatePicker";
 
 export default function CreateQuickBusiness(props) {
-  // fake data for date pickers
-  const [startDate, handleStartDateChange] = useState(new Date());
-  const [endDate, handleEndDateChange] = useState(new Date());
-
-  const eventTarget = (fn) => (event) => fn(event.target.value)
+  const [ startDate, handleStartDateChange ] = useSplatField("process_StartDate");
+  const [ endDate, handleEndDateChange ] = useSplatField("process_EndDate");
 
   return (
     <div>
@@ -21,13 +18,13 @@ export default function CreateQuickBusiness(props) {
           <DatePicker
             label="Start Date"
             value={startDate}
-            onChange={eventTarget(handleStartDateChange)}
+            onChange={handleStartDateChange}
           />
         </SplField>
         <DatePicker
           label="End Date"
           value={endDate}
-          onChange={eventTarget(handleEndDateChange)}
+          onChange={handleEndDateChange}
         />
         <SplField field="process_TypeOfBusiness.Name">
           <TextField

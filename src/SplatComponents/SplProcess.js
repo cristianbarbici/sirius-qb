@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useReducer, useContext } from 'react';
 import splat from '../Data/Splat-data'
 
 export const SplProcessCtx = React.createContext({ loaded: false });
 
 export const workState = (path, state, fn) => {
-    if (path) {
+    if (path && state) {
       let current = path.split(".", 1)[0];
       if (current === path) {
         return fn(current, state);
@@ -19,21 +19,38 @@ export const navigateState = (path, state) => {
   return workState(path, state, (prop, state) => state[prop]);
 };
 
-export const setState = (path, state, value) => {
+const setState = (path, state, value) => {
   return workState(path, state, (prop, state) => {
       console.log("state[" + prop + "] = " + value + ", was ", state[prop]);
       state[prop] = value;
-      console.log("resulting state:", state[prop]);
-      return; 
+      console.log("resulting change:", state[prop]);
+      return state; 
     });
 };
 
+const splatReducer = (state, action) => {
+  console.log(action.type + " [" + action.path + "] = " + action.value);
+      state.process_BusinessLayer.BusinessTitle = new Date().toTimeString();
+  switch (action.type) {
+    case "update":
+      // we need to return a _new_ state here, not just a modified one
+      let newState = JSON.parse(JSON.stringify(state));
+      setState(action.path, newState, action.value);
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+export const useProcessState = () => useContext(SplProcessCtx);
+
 export default function SplProcess(props) {
   console.log("setting state  with title ", splat.state.process_BusinessLayer.BusinessTitle);
-  const [state] = useState(splat.state);
-
+  const [state, reducer] = useReducer(splatReducer, splat.state);
+  const processContext = {state, reducer};
   return (
-    <SplProcessCtx.Provider value={state}>
+    <SplProcessCtx.Provider value={processContext}>
       {props.children}
     </SplProcessCtx.Provider>
   );
