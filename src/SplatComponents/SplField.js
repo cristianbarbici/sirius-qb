@@ -1,39 +1,40 @@
 import React, { useContext } from "react";
-import { navigateState, useProcessState } from "../SplatComponents/SplProcess";
+import { navigateState, useProcessState, useProcessReducer } from "../SplatComponents/SplProcess";
 
-export const SplFieldCtx = React.createContext({ path: "???" });
+export const SplFieldStateCtx = React.createContext("???");
+export const SplFieldPathCtx = React.createContext("???");
 
-export const useFieldState = () => useContext(SplFieldCtx);
+export const useFieldState = () => useContext(SplFieldStateCtx);
+export const useFieldPath = () => useContext(SplFieldPathCtx);
 
-export const useSplatField = (path) => {
-  const { state, reducer } = useProcessState();
-  const fieldState = navigateState(path, state);
+export const useStateHandlerPair = (path, fieldState) => {
+  const reducer = useProcessReducer();
   const handler = (event) => {
-    console.log("  useSplatField change " + path + " => " + event.target.value);
     reducer({ type: "update", path, value: event.target.value });
   };
+  return [fieldState, handler];
+};
 
-  return [
-    fieldState,
-    handler,
-  ];
+export const useSplatField = (path) => {
+  const processState = useProcessState();
+  const fieldState = navigateState(path, processState);
+  return useStateHandlerPair(path, fieldState);
 };
 
 export const useSplatFieldCtx = () => {
-  const {path} = useFieldState();
-  console.log("useSplatFieldCtx: " + path);
-  return useSplatField(path);
+  const path = useFieldPath();
+  const fieldState = useFieldState();
+  return useStateHandlerPair(path, fieldState);
 };
 
 export default function SplField(props) {
-  const {state, reducer} = useProcessState();
-  console.log("  SplField: " + props.field);
-  let fieldContext = { path: props.field, state: navigateState(props.field, state), reducer };
-  console.log("     state: " + fieldContext.state);
-  
+  const state = useProcessState();
+  const fieldState = navigateState(props.field, state);
   return (
-    <SplFieldCtx.Provider value={fieldContext}>
-      {props.children}
-    </SplFieldCtx.Provider>
+    <SplFieldPathCtx.Provider value={props.field}>
+      <SplFieldStateCtx.Provider value={fieldState}>
+        {props.children}
+      </SplFieldStateCtx.Provider>
+    </SplFieldPathCtx.Provider>
   );
 }

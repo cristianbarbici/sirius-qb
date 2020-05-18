@@ -7,7 +7,7 @@ import DatePicker from "./DatePicker";
 export default function CreateQuickBusiness(props) {
   const [ startDate, handleStartDateChange ] = useSplatField("process_StartDate");
   const [ endDate, handleEndDateChange ] = useSplatField("process_EndDate");
-
+  
   return (
     <div>
       <form noValidate autoComplete="off">

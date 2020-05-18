@@ -1,7 +1,8 @@
 import React, { useReducer, useContext } from 'react';
 import splat from '../Data/Splat-data'
 
-export const SplProcessCtx = React.createContext({ loaded: false });
+export const SplProcessStateCtx = React.createContext();
+export const SplProcessReducerCtx = React.createContext();
 
 export const workState = (path, state, fn) => {
     if (path && state) {
@@ -21,15 +22,13 @@ export const navigateState = (path, state) => {
 
 const setState = (path, state, value) => {
   return workState(path, state, (prop, state) => {
-      console.log("state[" + prop + "] = " + value + ", was ", state[prop]);
       state[prop] = value;
-      console.log("resulting change:", state[prop]);
       return state; 
     });
 };
 
 const splatReducer = (state, action) => {
-  console.log(action.type + " [" + action.path + "] = " + action.value);
+  console.log("reducer " + action.type + " " + action.path + " => " + action.value);
   switch (action.type) {
     case "update":
       // we need to return a _new_ state here, not just a modified one
@@ -42,14 +41,16 @@ const splatReducer = (state, action) => {
   }
 };
 
-export const useProcessState = () => useContext(SplProcessCtx);
+export const useProcessState = () => useContext(SplProcessStateCtx);
+export const useProcessReducer = () => useContext(SplProcessReducerCtx);
 
 export default function SplProcess(props) {
   const [state, reducer] = useReducer(splatReducer, splat.state);
-  const processContext = {state, reducer};
   return (
-    <SplProcessCtx.Provider value={processContext}>
-      {props.children}
-    </SplProcessCtx.Provider>
+    <SplProcessReducerCtx.Provider value={reducer}>
+      <SplProcessStateCtx.Provider value={state}>
+        {props.children}
+      </SplProcessStateCtx.Provider>
+    </SplProcessReducerCtx.Provider>
   );
 }
