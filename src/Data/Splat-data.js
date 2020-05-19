@@ -1905,7 +1905,7 @@ let state = {
   UserAuthorizedToWrite: true,
   NrOfBusinessesToCreate: 1,
   ShowInsuredInUI: true,
-  CanCreateBusiness: true,
+  CanCreateBusiness: false,
   IsAdminUser: true,
   root: {
     created: "2020-05-15T10:39:44.767581Z",

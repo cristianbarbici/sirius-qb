@@ -25,18 +25,25 @@ export const navigateState = (path, state) => {
 const setState = (path, state, value) => {
   return workState(path, state, (prop, state) => {
       state[prop] = value;
-      return state; 
+      return state;
     });
 };
 
 const splatReducer = produce((draft, action) => {
-  console.log("reducer " + action.type + " " + action.path + " => " + action.value);
   switch (action.type) {
     case "update":
+      console.log(
+        action.type + " " + action.path + " => " + action.value
+      );
       setState(action.path, draft, action.value);
       return;
 
+    case "invoke-action":
+      console.log("invoke action " + action.name);
+      return
+
     default:
+      console.log("unknown action type " + action.type);
       return;
   }
 });

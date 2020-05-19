@@ -3,6 +3,8 @@ import SplField, { useSplatField } from "../SplatComponents/SplField";
 import BusinessTitleField from "./BusinessTitleField";
 import TextField from "./TextField";
 import DatePicker from "./DatePicker";
+import SplAction from "../SplatComponents/SplAction";
+import Button from "./Button";
 
 export default function CreateQuickBusiness(props) {
   const [ startDate, handleStartDateChange ] = useSplatField("process_StartDate");
@@ -11,7 +13,16 @@ export default function CreateQuickBusiness(props) {
   return (
     <div>
       <form noValidate autoComplete="off">
-        <SplField field="process_BusinessLayer.BusinessTitle">
+        <SplAction name="CreateBusiness">
+          <Button label="Create Business" />
+        </SplAction>
+        <SplAction name="Init">
+          <Button label="Reset All" />
+        </SplAction>
+        <SplAction name="GenerateDummyData">
+          <Button label="Generate" />
+        </SplAction>
+        <SplField path="process_BusinessLayer.BusinessTitle">
           <BusinessTitleField />
         </SplField>
         <DatePicker
@@ -24,7 +35,7 @@ export default function CreateQuickBusiness(props) {
           value={endDate}
           onChange={handleEndDateChange}
         />
-        <SplField field="process_TypeOfBusiness.Name">
+        <SplField path="process_TypeOfBusiness.Name">
           <TextField
             id="TypeOfBusiness"
             label="Type of Business"
@@ -32,7 +43,7 @@ export default function CreateQuickBusiness(props) {
             select
           ></TextField>
         </SplField>
-        <SplField field="process_TypeOfParticipation.Name">
+        <SplField path="process_TypeOfParticipation.Name">
           <TextField
             id="TypeOfParticipation"
             label="Type of Participation Method"
@@ -47,8 +58,8 @@ export default function CreateQuickBusiness(props) {
                 */}
           </TextField>
         </SplField>
-        <SplField field="CoinsuranceIsDisabled"></SplField>
-        <SplField field="process_Reinsurer.Name">
+        <SplField path="CoinsuranceIsDisabled"></SplField>
+        <SplField path="process_Reinsurer.Name">
           <TextField
             id="Reinsurer"
             label="Reinsurer"
@@ -56,14 +67,14 @@ export default function CreateQuickBusiness(props) {
             select
           ></TextField>
         </SplField>
-        <SplField field="process_ReportingUnit.Name">
+        <SplField path="process_ReportingUnit.Name">
           <TextField
             id="ReportingUnit"
             label="Reporting Unit"
             variant="filled"
           />
         </SplField>
-        <SplField field="process_MainClassOfBusiness.Name">
+        <SplField path="process_MainClassOfBusiness.Name">
           <TextField
             id="MainClassOfBusiness"
             label="Main class of business"

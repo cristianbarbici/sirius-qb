@@ -29,9 +29,9 @@ export const useSplatFieldCtx = () => {
 
 export default function SplField(props) {
   const state = useProcessState();
-  const fieldState = navigateState(props.field, state);
+  const fieldState = navigateState(props.path, state);
   return (
-    <SplFieldPathCtx.Provider value={props.field}>
+    <SplFieldPathCtx.Provider value={props.path}>
       <SplFieldStateCtx.Provider value={fieldState}>
         {props.children}
       </SplFieldStateCtx.Provider>
