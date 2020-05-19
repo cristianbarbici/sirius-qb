@@ -29,10 +29,12 @@
 }
 
 @keyframes App-logo-spin {
+  /* 
   from {
-    transform: rotateY(0deg);
+    transform: perspective(150px) rotate3d(0, 0, 0, 180deg);
   }
   to {
-    transform: rotateY(360deg);
+    transform: perspective(150px) rotate3d(0, 2, 1, 360deg);
   }
+  */
 }
