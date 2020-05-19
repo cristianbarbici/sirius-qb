@@ -14,13 +14,11 @@ export default function CreateQuickBusiness(props) {
         <SplField field="process_BusinessLayer.BusinessTitle">
           <BusinessTitleField />
         </SplField>
-        <SplField field="process_StartDate">
-          <DatePicker
-            label="Start Date"
-            value={startDate}
-            onChange={handleStartDateChange}
-          />
-        </SplField>
+        <DatePicker
+          label="Start Date"
+          value={startDate}
+          onChange={handleStartDateChange}
+        />
         <DatePicker
           label="End Date"
           value={endDate}

@@ -5,7 +5,7 @@ import splat from '../Data/Splat-data'
 export const SplProcessStateCtx = React.createContext();
 export const SplProcessReducerCtx = React.createContext();
 
-export const workState = (path, state, fn) => {
+const workState = (path, state, fn) => {
     if (path && state) {
       let current = path.split(".", 1)[0];
       if (current === path) {
