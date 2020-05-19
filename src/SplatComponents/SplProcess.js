@@ -3,6 +3,7 @@ import produce from "immer"
 import splat from '../Data/Splat-data'
 
 export const SplProcessStateCtx = React.createContext();
+export const SplProcessTypeCtx = React.createContext();
 export const SplProcessReducerCtx = React.createContext();
 
 const workState = (path, state, fn) => {
@@ -41,15 +42,19 @@ const splatReducer = produce((draft, action) => {
 });
 
 export const useProcessState = () => useContext(SplProcessStateCtx);
+export const useProcessType = () => useContext(SplProcessTypeCtx);
 export const useProcessReducer = () => useContext(SplProcessReducerCtx);
 
 export default function SplProcess(props) {
   const [state, reducer] = useReducer(splatReducer, splat.state);
+  const processType = {name: props.name, typeData: splat.typeData};
   return (
     <SplProcessReducerCtx.Provider value={reducer}>
-      <SplProcessStateCtx.Provider value={state}>
-        {props.children}
-      </SplProcessStateCtx.Provider>
+      <SplProcessTypeCtx.Provider value={processType}>
+        <SplProcessStateCtx.Provider value={state}>
+          {props.children}
+        </SplProcessStateCtx.Provider>
+      </SplProcessTypeCtx.Provider>
     </SplProcessReducerCtx.Provider>
   );
 }
