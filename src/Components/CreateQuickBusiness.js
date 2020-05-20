@@ -41,12 +41,12 @@ export default function CreateQuickBusiness(props) {
             label="Start Date"
             value={startDate}
             onChange={convertDate(handleStartDateChange)}
-          />
+          ></DatePicker>
           <DatePicker
             label="End Date"
             value={endDate}
             onChange={convertDate(handleEndDateChange)}
-          />
+          ></DatePicker>
         </Box>
         <Box display="flex" flexDirection="row">
           <SplField path="process_TypeOfBusiness.Name">
@@ -64,7 +64,7 @@ export default function CreateQuickBusiness(props) {
               label="Type of Participation Method"
               variant="filled"
             >
-              { /* TypeOfParticipation options depends on the selected Type of Business… */ }
+              {/* TypeOfParticipation options depends on the selected Type of Business… */}
             </TextField>
           </SplField>
           <SplField path="CoinsuranceIsDisabled">

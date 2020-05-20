@@ -1,6 +1,6 @@
 import React from "react";
 import { useSplatFieldCtx } from "../SplatComponents/SplField";
-import MUITextField from "@material-ui/core/TextField";
+import MuiTextField from "@material-ui/core/TextField";
 import { useStyles } from "../Hooks/useStyles";
 
 export default function TextField(props) {
@@ -8,7 +8,7 @@ export default function TextField(props) {
   const classes = useStyles();
 
   return (
-    <MUITextField
+    <MuiTextField
       id={props.id}
       label={props.label}
       variant="filled"
@@ -19,6 +19,6 @@ export default function TextField(props) {
       select={props.select}
     >
       {props.children}
-    </MUITextField>
+    </MuiTextField>
   );
 }
