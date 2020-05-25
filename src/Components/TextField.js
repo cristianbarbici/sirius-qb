@@ -4,7 +4,7 @@ import MuiTextField from "@material-ui/core/TextField";
 import { useStyles } from "../Hooks/useStyles";
 
 export default function TextField(props) {
-  const [state, handler] = useSplatFieldCtx();
+  const [value, setValue] = useSplatFieldCtx();
   const classes = useStyles();
 
   return (
@@ -13,8 +13,8 @@ export default function TextField(props) {
       label={props.label}
       variant="filled"
       className={props.className || classes.textField}
-      value={state}
-      onChange={handler}
+      value={value}
+      onChange={setValue}
       fullWidth={props.fullWidth}
       select={props.select}
     >

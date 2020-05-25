@@ -7,24 +7,28 @@ export const SplFieldPathCtx = React.createContext("???");
 export const useFieldState = () => useContext(SplFieldStateCtx);
 export const useFieldPath = () => useContext(SplFieldPathCtx);
 
-export const useStateHandlerPair = (path, fieldState) => {
+export const useStateHandlerPair = (path, fieldState, eventValueExtractor) => {
   const reducer = useProcessReducer();
   const handler = (event) => {
-    reducer({ type: "update", path, value: event.target.value });
+    reducer({ type: "update", path, value: eventValueExtractor(event) });
   };
   return [fieldState, handler];
 };
 
-export const useSplatField = (path) => {
+export const eventTargetValue = (event) => event.target.value;
+export const eventTargetChecked = (event) => event.target.checked;
+export const dateFormat = (date) => date.format();
+
+export const useSplatField = (path, eventValueExtractor = (id) => id) => {
   const processState = useProcessState();
   const fieldState = navigateState(path, processState);
-  return useStateHandlerPair(path, fieldState);
+  return useStateHandlerPair(path, fieldState, eventValueExtractor);
 };
 
-export const useSplatFieldCtx = () => {
+export const useSplatFieldCtx = (eventValueExtractor = eventTargetValue) => {
   const path = useFieldPath();
   const fieldState = useFieldState();
-  return useStateHandlerPair(path, fieldState);
+  return useStateHandlerPair(path, fieldState, eventValueExtractor);
 };
 
 export default function SplField(props) {

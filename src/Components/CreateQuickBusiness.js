@@ -1,5 +1,5 @@
 import React from "react";
-import SplField, { useSplatField } from "../SplatComponents/SplField";
+import SplField, { useSplatField, dateFormat } from "../SplatComponents/SplField";
 import BusinessTitleField from "./BusinessTitleField";
 import TextField from "./TextField";
 import DatePicker from "./DatePicker";
@@ -11,13 +11,11 @@ import CoinsuranceSwitch from "./CoinsuranceSwitch";
 import { useProcessState } from "../SplatComponents/SplProcess";
 
 export default function CreateQuickBusiness(props) {
-  const [startDate, handleStartDateChange] = useSplatField("process_StartDate");
-  const [endDate, handleEndDateChange] = useSplatField("process_EndDate");
+  const [startDate, handleStartDateChange] = useSplatField("process_StartDate", dateFormat);
+  const [endDate, handleEndDateChange] = useSplatField("process_EndDate", dateFormat);
 
   const processState = useProcessState();
   const classes = useStyles();
-  const convertDate = (updateFn) => (date) =>
-    updateFn({ target: { value: date.format() } });
 
   return (
     <div className={classes.formContainer}>
@@ -40,12 +38,12 @@ export default function CreateQuickBusiness(props) {
           <DatePicker
             label="Start Date"
             value={startDate}
-            onChange={convertDate(handleStartDateChange)}
+            onChange={handleStartDateChange}
           ></DatePicker>
           <DatePicker
             label="End Date"
             value={endDate}
-            onChange={convertDate(handleEndDateChange)}
+            onChange={handleEndDateChange}
           ></DatePicker>
         </Box>
         <Box display="flex" flexDirection="row">
