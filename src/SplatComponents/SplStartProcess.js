@@ -37,13 +37,16 @@ export default function SplStartProcess(props) {
   const handler = () => {
     const correlationId = getCorrelationId();
 
-    startProcess(props.name, correlationId)
+    var subscription = startProcess(props.name, correlationId)
       .subscribe((msg) => {
         console.log("from subscription: ", msg);
         if(msg.type === "TypeEventWithState") {
           setProcessType({name: props.name, typeData: msg.typeData});
           reducer({type: "set-process-state", state: msg.state});
           setStateLoaded(true);
+          // if is it possible to receive further state after this,
+          // then perhaps we shouldn't unsubscribe?
+          subscription.unsubscribe();
         }
       });
   };

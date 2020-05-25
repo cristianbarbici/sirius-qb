@@ -44,7 +44,7 @@ export const sendCommand = (subsystem, commandName, payload, correlationId) => {
 
 const messageSubject = new Subject();
 
-export async function getMessages(last, publish) {
+export async function getMessages(last) {
   console.log("polling for messages, last seen: " + last);
   const request = bent(
     "GET",
@@ -52,25 +52,30 @@ export async function getMessages(last, publish) {
     "json",
     200
   );
+  var lastError = false;
   var lastReceived = await request(`?clientId=${clientId}&last=${last}`).then(
     (response) => {
+      lastError = false;
       response.messages.forEach(message => {
         messageSubject.next(message);
       });
       return response.lastSequenceNumber;
     },
     (err) => {
+      lastError = true;
       if (err.statusCode !== 503) {
-        console.info(JSON.stringify(err));
+        console.error(JSON.stringify(err));
+      } else {
+        lastError = false;
       }
       return last;
     }
   );
-  setTimeout(getMessages, 10, lastReceived, publish);
+  setTimeout(getMessages, (lastError ? 1000 * 30 : 10), lastReceived);
 }
 
 export const initSplatComms = () => {
-  getMessages(0, (m) => console.log(m));
+  getMessages(0);
   sendCommand(frontendSubsystem, "hello-server", {}, getCorrelationId());
 };
 
