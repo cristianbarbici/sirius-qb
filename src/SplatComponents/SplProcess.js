@@ -22,7 +22,7 @@ export const navigateState = (path, state) => {
   return workState(path, state, (prop, state) => state[prop]);
 };
 
-const setState = (path, state, value) => {
+export const setState = (path, state, value) => {
   return workState(path, state, (prop, state) => {
       state[prop] = value;
       return state;

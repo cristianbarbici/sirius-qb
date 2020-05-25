@@ -45,7 +45,7 @@ export const sendCommand = (subsystem, commandName, payload, correlationId) => {
 const messageSubject = new Subject();
 
 export async function getMessages(last, publish) {
-  console.log("last: " + last);
+  console.log("polling for messages, last seen: " + last);
   const request = bent(
     "GET",
     `${host}/${frontendSubsystem}/${tenantId}/messages`,
