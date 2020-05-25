@@ -3,7 +3,7 @@ import {
   navigateState,
   useProcessType,
   useProcessState,
-  useProcessReducer,
+  useProcessDispatch,
 } from "../SplatComponents/SplProcess";
 
 export const SplActionCtx = React.createContext();
@@ -11,9 +11,9 @@ export const useAction = () => useContext(SplActionCtx);
 
 export const useSplatActionCtx = () => {
   const action = useAction();
-  const reducer = useProcessReducer();
+  const dispatch = useProcessDispatch();
   const handleClick = (event) =>
-    reducer({ type: "invoke-action", name: action.name });
+    dispatch({ type: "invoke-action", name: action.name });
   return [action.disabled, handleClick];
 }
 

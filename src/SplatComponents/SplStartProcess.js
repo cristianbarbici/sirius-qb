@@ -2,7 +2,7 @@ import React, { useReducer, useState } from "react";
 import MuiButton from "@material-ui/core/Button";
 import { useStyles } from "../Hooks/useStyles";
 import { startProcess, getCorrelationId } from "../lib/splatComms";
-import { SplProcessReducerCtx, SplProcessTypeCtx, SplProcessStateCtx, setState } from "./SplProcess";
+import { SplProcessDispatchCtx, SplProcessTypeCtx, SplProcessStateCtx, setState } from "./SplProcess";
 import produce from "immer";
 
 const splatBackendReducer = produce((draft, action) => {
@@ -27,7 +27,7 @@ const splatBackendReducer = produce((draft, action) => {
 });
 
 export default function SplStartProcess(props) {
-  const [state, reducer] = useReducer(splatBackendReducer, {});
+  const [state, dispatch] = useReducer(splatBackendReducer, {});
   const [processType, setProcessType] = useState({ name: props.name });
   const [stateLoaded, setStateLoaded] = useState(false);
 
@@ -42,7 +42,7 @@ export default function SplStartProcess(props) {
         console.log("from subscription: ", msg);
         if(msg.type === "TypeEventWithState") {
           setProcessType({name: props.name, typeData: msg.typeData});
-          reducer({type: "set-process-state", state: msg.state});
+          dispatch({type: "set-process-state", state: msg.state});
           setStateLoaded(true);
           // if is it possible to receive further state after this,
           // then perhaps we shouldn't unsubscribe?
@@ -64,13 +64,13 @@ export default function SplStartProcess(props) {
     </div>
   );
   const splProcess = (
-    <SplProcessReducerCtx.Provider value={reducer}>
+    <SplProcessDispatchCtx.Provider value={dispatch}>
       <SplProcessTypeCtx.Provider value={processType}>
         <SplProcessStateCtx.Provider value={state}>
           {props.children}
         </SplProcessStateCtx.Provider>
       </SplProcessTypeCtx.Provider>
-    </SplProcessReducerCtx.Provider>
+    </SplProcessDispatchCtx.Provider>
   );
 
   return stateLoaded ? splProcess : startButton;

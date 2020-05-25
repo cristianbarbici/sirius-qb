@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { navigateState, useProcessState, useProcessReducer } from "../SplatComponents/SplProcess";
+import { navigateState, useProcessState, useProcessDispatch } from "../SplatComponents/SplProcess";
 
 export const SplFieldStateCtx = React.createContext("???");
 export const SplFieldPathCtx = React.createContext("???");
@@ -8,9 +8,9 @@ export const useFieldState = () => useContext(SplFieldStateCtx);
 export const useFieldPath = () => useContext(SplFieldPathCtx);
 
 export const useStateHandlerPair = (path, fieldState, eventValueExtractor) => {
-  const reducer = useProcessReducer();
+  const dispatch = useProcessDispatch();
   const handler = (event) => {
-    reducer({ type: "update", path, value: eventValueExtractor(event) });
+    dispatch({ type: "update", path, value: eventValueExtractor(event) });
   };
   return [fieldState, handler];
 };
