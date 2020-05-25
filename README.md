@@ -27,7 +27,7 @@ To notify the proxy of new configuration, either restart it (the container _sir-
 
     docker kill --signal HUP sir-cfg-itest-nginx`
 
-Now, if the Splat+React app is started via `yarn start` it will be available both at [http://localhost:3000/react](http://localhost:8000/portal/eda0ea26-6167-4cdb-9db4-1394d7fa2dbd/content/index.html) (from where it cannot access the contract backend due to CORS policy issues) and via the proxy also from [http://localhost:8000/react](http://localhost:8000/portal/eda0ea26-6167-4cdb-9db4-1394d7fa2dbd/content/index.html) (from where the browser accepts both the React app and the contract backend as having the same origin).
+Now, if the Splat+React app is started via `yarn start` it will be available both at [http://localhost:3000/react](http://localhost:3000/react) (from where it cannot access the contract backend due to CORS policy issues) and via the proxy also from [http://localhost:8000/react](http://localhost:8000/react) (from where the browser accepts both the React app and the contract backend as having the same origin).
 
 ### Backend communication
 To enable the POC to work also without a running Splat backend, the application has two separate CreateQuickBusiness components. One wrapped in the SplProcess component (which uses the copied Splat state) and one wrapped in a SplStartProcess, which initially just contains a button "Start Contract POC". SplStartProcess otherwise functions just like SplProcess in that it provides process context for child components (the full process state, and a reducer/dispatcher method). It uses a slightly different reducer, though.
