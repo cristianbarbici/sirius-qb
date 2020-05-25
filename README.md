@@ -1,5 +1,44 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Tweaks for Sirius
+### Without a backend
+The data for the already filled in form comes from a JSON object copied from the real traffic from the real application, and is imported by the SplProcess directive. This way you don't need any running backend to experiment.
+> Note: The copied data (found in src/Data folder) is not automatically updated, and will drift away from the "real thing" due to changes in the real environment.
+
+In order to run this against the real Contract POC backend, we must tweak the Sirius Splat Nginx Proxy configuration. The often used `itest.yml` in `uw-config` maps the proxy configuration to your local folder `~/docker-data/sirius-nginx/nginx.conf`.
+
+Add the following two locations just above the "/config" location.
+
+```
+        # websocket upgrade support (for hot reload)
+        location /react/sockjs-node {
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header Host $host;
+            proxy_pass http://host.docker.internal:3000;
+        }
+
+        location /react {
+            proxy_pass http://host.docker.internal:3000;
+        }
+```
+
+To notify the proxy of new configuration, either restart it (the container _sir-cfg-itest-nginx_, if started via configs itest), or send it a *HUP* signal (which for nginx means to reload configuration)
+
+    docker kill --signal HUP sir-cfg-itest-nginx`
+
+Now, if the Splat+React app is started via `yarn start` it will be available both at [http://localhost:3000/react](http://localhost:8000/portal/eda0ea26-6167-4cdb-9db4-1394d7fa2dbd/content/index.html) (from where it cannot access the contract backend due to CORS policy issues) and via the proxy also from [http://localhost:8000/react](http://localhost:8000/portal/eda0ea26-6167-4cdb-9db4-1394d7fa2dbd/content/index.html) (from where the browser accepts both the React app and the contract backend as having the same origin).
+
+### Backend communication
+To enable the POC to work also without a running Splat backend, the application has two separate CreateQuickBusiness components. One wrapped in the SplProcess component (which uses the copied Splat state) and one wrapped in a SplStartProcess, which initially just contains a button "Start Contract POC". SplStartProcess otherwise functions just like SplProcess in that it provides process context for child components (the full process state, and a reducer/dispatcher method). It uses a slightly different reducer, though.
+
+If this button is pressed, the app attempts to communicate with the backend to start a ContractPOCoverview (runs the start-process command) and then fetches messages until it sees the first TypeEventWithState message, which should contain valid TypeData for the process, and the initial state (mostly empty).
+
+If we added navigation to the app, we could remove the button, and have SplStartProcess immediately do start-process. We could also require a backend connection, and simply have SplProcess handle starting. For the real thing we shouldn't need both SplStartProcess and SplProcess.
+
+### Authentication issues
+There's no feature for logging in to Splat via the React app, but as it shares origin with portal etc, just navigate to [the portal startpage](http://localhost:8000/portal/eda0ea26-6167-4cdb-9db4-1394d7fa2dbd/content/index.html) from where you'll be asked to login to keycloak, which will store a valid session cookie, which will also allow requests from the React app.
+
 ## Available Scripts
 
 In the project directory, you can run:
