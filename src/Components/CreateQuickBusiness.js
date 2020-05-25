@@ -62,7 +62,6 @@ export default function CreateQuickBusiness(props) {
             <TextField
               id="TypeOfParticipation"
               label="Type of Participation Method"
-              variant="filled"
             >
               {/* TypeOfParticipation options depends on the selected Type of Business… */}
             </TextField>
@@ -73,7 +72,7 @@ export default function CreateQuickBusiness(props) {
         </Box>
         <Box display="flex" flexDirection="row">
           <SplField path="process_Reinsurer.Name">
-            <TextField id="Reinsurer" label="Reinsurer" variant="filled" select>
+            <TextField id="Reinsurer" label="Reinsurer" select>
               {processState.ReinsurerOptions.map((option) => (
                 <MenuItem key={option.Code} value={option.Name}>
                   {option.Name}
@@ -82,17 +81,14 @@ export default function CreateQuickBusiness(props) {
             </TextField>
           </SplField>
           <SplField path="process_ReportingUnit.Name">
-            <TextField
-              id="ReportingUnit"
-              label="Reporting Unit"
-              variant="filled"
-            />
+            <TextField id="ReportingUnit" label="Reporting Unit">
+              {/* ReportingUnit depends on selected Reinsurer? */}
+            </TextField>
           </SplField>
           <SplField path="process_MainClassOfBusiness.Name">
             <TextField
               id="MainClassOfBusiness"
               label="Main class of business"
-              variant="filled"
               select
             >
               {processState.MainClassOfBusinessOptions.map((option) => (
