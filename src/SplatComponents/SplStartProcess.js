@@ -1,7 +1,7 @@
 import React from "react";
 import MuiButton from "@material-ui/core/Button";
 import { useStyles } from "../Hooks/useStyles";
-import { startProcess, getCorrelationId, subscribeTo } from "../lib/comms";
+import { startProcess, getCorrelationId } from "../lib/splatComms";
 
 export default function SplStartProcess(props) {
   const disabled = false;
@@ -9,12 +9,10 @@ export default function SplStartProcess(props) {
 
   const handler = () => {
     const correlationId = getCorrelationId();
-    subscribeTo(correlationId, (m) => console.log("from subscription: ", m));
+    // subscribeTo(correlationId, (m) => console.log("from subscription: ", m));
 
-    startProcess(props.name, correlationId).then(
-      (r) => console.log("response: " + r),
-      (err) => console.log(err)
-    );
+    startProcess(props.name, correlationId)
+      .subscribe((m) => console.log("from subscription: ", m));
   };
 
   return (

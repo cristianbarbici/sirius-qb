@@ -33,22 +33,16 @@ export const sendCommand = (subsystem, commandName, payload, correlationId) => {
     202
   );
 
-  return request(
+  request(
     `?clientId=${clientId}&correlationId=${correlationId}`,
     payload
+  );
+  return messageSubject.pipe(
+    filter((message) => message.event.initiator.correlationId === correlationId)
   );
 };
 
 const messageSubject = new Subject();
-export const subscribeTo = (correlationId, subFn) => {
-  messageSubject
-    .pipe(
-      filter(
-        (message) => message.event.initiator.correlationId === correlationId
-      )
-    )
-    .subscribe(subFn);
-};
 
 export async function getMessages(last, publish) {
   console.log("last: " + last);
