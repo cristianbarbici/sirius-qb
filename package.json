@@ -2,6 +2,7 @@
   "name": "splat-cfw-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/react",
   "dependencies": {
     "@date-io/core": "1.x",
     "@date-io/moment": "1.x",
@@ -17,7 +18,9 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "rxjs": "^6.5.5",
+    "uuid": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

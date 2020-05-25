@@ -6,8 +6,11 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import SplProcess from "./SplatComponents/SplProcess";
 import CreateQuickBusiness from "./Components/CreateQuickBusiness";
+import SplStartProcess from "./SplatComponents/SplStartProcess";
+import { initSplatComms } from "./lib/comms";
 
 function App() {
+  initSplatComms();
   return (
     <div className="App">
       <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -17,6 +20,7 @@ function App() {
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
         </header>
+        <SplStartProcess name="ContractPOCoverview" label="Start Contract POS" />
         <SplProcess name="ContractPOCoverview">
           <CreateQuickBusiness />
         </SplProcess>
