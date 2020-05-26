@@ -13,7 +13,7 @@ export default function TextField(props) {
       label={props.label}
       variant="filled"
       className={props.className || classes.textField}
-      value={value}
+      value={value || ""}
       onChange={setValue}
       fullWidth={props.fullWidth}
       select={props.select}

@@ -64,7 +64,7 @@ export default function CreateQuickBusiness(props) {
               {/* TypeOfParticipation options depends on the selected Type of Business… */}
             </TextField>
           </SplField>
-          <SplField path="CoinsuranceIsDisabled">
+          <SplField path="process_IsCoinsurance">
             <CoinsuranceSwitch />
           </SplField>
         </Box>

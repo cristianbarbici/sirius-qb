@@ -23,6 +23,23 @@ export const startProcess = (processName, correlationId) => {
   return sendCommand(subsystem, "start-process", startProcess, correlationId);
 };
 
+export const updateProcess = (
+  instanceUri,
+  propertyPath,
+  value,
+  currentEventId,
+  correlationId
+) => {
+  const updateProcess = {
+    action: "update",
+    currentEventId,
+    instance: instanceUri,
+    property: propertyPath,
+    value: value,
+  };
+  return sendCommand(subsystem, "update-process", updateProcess, correlationId);
+};
+
 export const sendCommand = (subsystem, commandName, payload, correlationId) => {
   console.log(commandName);
 
@@ -33,10 +50,7 @@ export const sendCommand = (subsystem, commandName, payload, correlationId) => {
     202
   );
 
-  request(
-    `?clientId=${clientId}&correlationId=${correlationId}`,
-    payload
-  );
+  request(`?clientId=${clientId}&correlationId=${correlationId}`, payload);
   return messageSubject.pipe(
     filter((message) => message.event.initiator.correlationId === correlationId)
   );
@@ -56,7 +70,7 @@ export async function getMessages(last) {
   var lastReceived = await request(`?clientId=${clientId}&last=${last}`).then(
     (response) => {
       lastError = false;
-      response.messages.forEach(message => {
+      response.messages.forEach((message) => {
         messageSubject.next(message);
       });
       return response.lastSequenceNumber;
@@ -71,7 +85,7 @@ export async function getMessages(last) {
       return last;
     }
   );
-  setTimeout(getMessages, (lastError ? 1000 * 30 : 10), lastReceived);
+  setTimeout(getMessages, lastError ? 1000 * 30 : 10, lastReceived);
 }
 
 export const initSplatComms = () => {
