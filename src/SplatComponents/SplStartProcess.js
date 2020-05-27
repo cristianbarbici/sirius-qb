@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from "react";
 import MuiButton from "@material-ui/core/Button";
 import { useStyles } from "../Hooks/useStyles";
-import { startProcess, getCorrelationId, updateProcess } from "../lib/splatComms";
+import { startProcess, getCorrelationId, updateProcess, executeAction } from "../lib/splatComms";
 import { SplProcessDispatchCtx, SplProcessTypeCtx, SplProcessStateCtx, setState } from "./SplProcess";
 import produce from "immer";
 
@@ -37,12 +37,25 @@ const updateBackend = (next, localState, setLocalState) => {
   return (action) => {
     console.log("updateBackend", action, localState);
     switch (action.type) {
+      case "invoke-action":
+        const actionCorrelationId = getCorrelationId();
+        executeAction(
+          localState.instanceUri,
+          action.name,
+          actionCorrelationId
+        ).subscribe((msg) => {
+          console.log("from executeAction subscription: ", msg);
+          if (msg.type === "TypeEventWithState") {
+            setLocalState({
+              lastKnownEventId: msg.lastKnownEventId,
+              instanceUri: msg.event.origin,
+            });
+            next({ type: "set-process-state", state: msg.state });
+          }
+        });
+        break;
       case "update":
         const correlationId = getCorrelationId();
-        // optimistically update local process state, 
-        // in the hope that the server will later agree
-        // (and if not, it will overwrite with the correct state)
-        next(action);
         updateProcess(
           localState.instanceUri,
           action.path,
@@ -59,10 +72,14 @@ const updateBackend = (next, localState, setLocalState) => {
             next({ type: "set-process-state", state: msg.state });
           }
         });
-        return;
+        break;
       default:
         break;
     }
+
+    // optimistically update local process state,
+    // in the hope that the server will later agree
+    // (and if not, it will overwrite with the correct state)
     return next(action);
   };
 };

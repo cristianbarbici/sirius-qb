@@ -23,6 +23,18 @@ export const startProcess = (processName: string, correlationId: string) => {
   return sendCommand(subsystem, "start-process", startProcess, correlationId);
 };
 
+export const executeAction = (
+  instanceUri: string,
+  actionName: string,
+  correlationId: string
+) => {
+  const executeAction = {
+    instance: instanceUri,
+    actionName,
+  };
+  return sendCommand(subsystem, "execute-action", executeAction, correlationId);
+};
+
 export const updateProcess = (
   instanceUri: string,
   propertyPath: string,
@@ -45,7 +57,12 @@ type obj = {
   [key: number]: any;
 };
 
-type eventMessage = {event: { initiator: {correlationId: string}}}
+type eventMessage = {
+  lastKnownEventId: string;
+  type: string;
+  event: { origin: string; initiator: { correlationId: string } };
+};
+
 export const sendCommand = (
   subsystem: string,
   commandName: string,
@@ -63,15 +80,12 @@ export const sendCommand = (
 
   request(`?clientId=${clientId}&correlationId=${correlationId}`, payload);
   return messageSubject.pipe(
-    filter(
-      (message) =>
-        message.event.initiator.correlationId === correlationId
-    )
+    filter((message) => message.event.initiator.correlationId === correlationId)
   );
 };
 
 const messageSubject = new Subject<eventMessage>();
-type messageResponse = {lastSequenceNumber: number, messages: eventMessage[] };
+type messageResponse = { lastSequenceNumber: number; messages: eventMessage[] };
 
 export async function getMessages(last: number) {
   console.log("polling for messages, last seen: " + last);
