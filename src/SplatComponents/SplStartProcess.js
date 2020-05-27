@@ -22,7 +22,7 @@ const splatBackendReducer = produce((draft, action) => {
       return action.state;
 
     case "update":
-      console.log(action.type + " " + action.path + " => " + action.value);
+      console.log(action.type + " " + action.path + " =>", action.value);
       // optimistically set state locally
       setState(action.path, draft, action.value);
       return;

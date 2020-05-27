@@ -33,7 +33,7 @@ const splatReducer = produce((draft, action) => {
   switch (action.type) {
     case "update":
       console.log(
-        action.type + " " + action.path + " => " + action.value
+        action.type + " " + action.path + " =>", action.value
       );
       setState(action.path, draft, action.value);
       return;

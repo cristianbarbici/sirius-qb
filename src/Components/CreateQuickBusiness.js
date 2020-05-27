@@ -9,6 +9,7 @@ import { useStyles } from "../Hooks/useStyles";
 import { Box, MenuItem } from "@material-ui/core";
 import CoinsuranceSwitch from "./CoinsuranceSwitch";
 import { useProcessState } from "../SplatComponents/SplProcess";
+import Select from "./Select";
 
 export default function CreateQuickBusiness(props) {
   const [startDate, handleStartDateChange] = useSplatField("process_StartDate", dateFormat);
@@ -69,14 +70,14 @@ export default function CreateQuickBusiness(props) {
           </SplField>
         </Box>
         <Box display="flex" flexDirection="row">
-          <SplField path="process_Reinsurer.Name">
-            <TextField id="Reinsurer" label="Reinsurer" select>
-              {processState.ReinsurerOptions.map((option) => (
-                <MenuItem key={option.Code} value={option.Name}>
-                  {option.Name}
-                </MenuItem>
-              ))}
-            </TextField>
+          <SplField path="process_Reinsurer">
+            <Select
+              id="Reinsurer"
+              label="Reinsurer"
+              options={processState.ReinsurerOptions}
+              optionKey="Code"
+              optionName="Name"
+            />
           </SplField>
           <SplField path="process_ReportingUnit.Name">
             <TextField id="ReportingUnit" label="Reporting Unit">
@@ -84,17 +85,13 @@ export default function CreateQuickBusiness(props) {
             </TextField>
           </SplField>
           <SplField path="process_MainClassOfBusiness.Name">
-            <TextField
+            <Select
               id="MainClassOfBusiness"
               label="Main class of business"
-              select
-            >
-              {processState.MainClassOfBusinessOptions.map((option) => (
-                <MenuItem key={option.Code} value={option.Name}>
-                  {option.Name}
-                </MenuItem>
-              ))}
-            </TextField>
+              options={processState.MainClassOfBusinessOptions}
+              optionKey="Code"
+              optionName="Name"
+            />
           </SplField>
         </Box>
       </form>
