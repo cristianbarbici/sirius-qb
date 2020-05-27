@@ -1,5 +1,5 @@
 import React from "react";
-import { useSplatFieldCtx, useFieldPath, useSplatField } from "../SplatComponents/SplField";
+import { useSplatFieldCtx } from "../SplatComponents/SplField";
 import MuiTextField from "@material-ui/core/TextField";
 import { useStyles } from "../Hooks/useStyles";
 import { MenuItem } from "@material-ui/core";

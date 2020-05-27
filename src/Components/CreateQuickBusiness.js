@@ -84,7 +84,7 @@ export default function CreateQuickBusiness(props) {
               {/* ReportingUnit depends on selected Reinsurer? */}
             </TextField>
           </SplField>
-          <SplField path="process_MainClassOfBusiness.Name">
+          <SplField path="process_MainClassOfBusiness">
             <Select
               id="MainClassOfBusiness"
               label="Main class of business"
