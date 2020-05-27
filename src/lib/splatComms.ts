@@ -16,7 +16,7 @@ const correlationFactory = () => {
 };
 export const getCorrelationId = correlationFactory();
 
-export const startProcess = (processName, correlationId) => {
+export const startProcess = (processName: string, correlationId: string) => {
   const startProcess = {
     type: `spl://${subsystem}/${tenantId}/${processName}`,
   };
@@ -24,11 +24,11 @@ export const startProcess = (processName, correlationId) => {
 };
 
 export const updateProcess = (
-  instanceUri,
-  propertyPath,
-  value,
-  currentEventId,
-  correlationId
+  instanceUri: string,
+  propertyPath: string,
+  value: obj,
+  currentEventId: string,
+  correlationId: string
 ) => {
   const updateProcess = {
     action: "update",
@@ -40,7 +40,18 @@ export const updateProcess = (
   return sendCommand(subsystem, "update-process", updateProcess, correlationId);
 };
 
-export const sendCommand = (subsystem, commandName, payload, correlationId) => {
+type obj = {
+  [key: string]: any;
+  [key: number]: any;
+};
+
+type eventMessage = {event: { initiator: {correlationId: string}}}
+export const sendCommand = (
+  subsystem: string,
+  commandName: string,
+  payload: obj,
+  correlationId: string
+) => {
   console.log(commandName);
 
   const request = bent(
@@ -52,13 +63,17 @@ export const sendCommand = (subsystem, commandName, payload, correlationId) => {
 
   request(`?clientId=${clientId}&correlationId=${correlationId}`, payload);
   return messageSubject.pipe(
-    filter((message) => message.event.initiator.correlationId === correlationId)
+    filter(
+      (message) =>
+        message.event.initiator.correlationId === correlationId
+    )
   );
 };
 
-const messageSubject = new Subject();
+const messageSubject = new Subject<eventMessage>();
+type messageResponse = {lastSequenceNumber: number, messages: eventMessage[] };
 
-export async function getMessages(last) {
+export async function getMessages(last: number) {
   console.log("polling for messages, last seen: " + last);
   const request = bent(
     "GET",
@@ -68,9 +83,10 @@ export async function getMessages(last) {
   );
   var lastError = false;
   var lastReceived = await request(`?clientId=${clientId}&last=${last}`).then(
-    (response) => {
+    (r) => {
+      const response = r as messageResponse;
       lastError = false;
-      response.messages.forEach((message) => {
+      response.messages.forEach((message: eventMessage) => {
         messageSubject.next(message);
       });
       return response.lastSequenceNumber;
