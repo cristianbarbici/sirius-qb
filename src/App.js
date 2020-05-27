@@ -20,7 +20,10 @@ function App() {
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <SplStartProcess name="ContractPOCoverview" label="Start Contract POC">
+        <SplStartProcess
+          name="ContractPOCoverview"
+          label="Start Contract POC"
+        >
           <div style={{ background: "#fde" }}>
             <CreateQuickBusiness />
           </div>

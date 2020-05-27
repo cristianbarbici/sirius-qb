@@ -60,6 +60,7 @@ type obj = {
 type eventMessage = {
   lastKnownEventId: string;
   type: string;
+  typeData: obj;
   event: { origin: string; initiator: { correlationId: string } };
 };
 
@@ -107,7 +108,7 @@ export async function getMessages(last: number) {
     },
     (err) => {
       lastError = true;
-      if (err.statusCode !== 503) {
+      if (err.statusCode !== 503 && err.statusCode !== 504) {
         console.error(JSON.stringify(err));
       } else {
         lastError = false;
