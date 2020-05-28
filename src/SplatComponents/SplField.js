@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { navigateState, useProcessState, useProcessDispatch } from "../SplatComponents/SplProcess";
+import { useProcessState, useProcessDispatch } from "../SplatComponents/SplProcess";
+import { navigateState } from "./splatReducer";
 
 export const SplFieldStateCtx = React.createContext("???");
 export const SplFieldPathCtx = React.createContext("???");
