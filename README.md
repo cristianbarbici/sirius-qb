@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 The data for the already filled in form comes from a JSON object copied from the real traffic from the real application, and is imported by the SplProcess directive. This way you don't need any running backend to experiment.
 > Note: The copied data (found in src/Data folder) is not automatically updated, and will drift away from the "real thing" due to changes in the real environment.
 
+### Towards the real backend
 In order to run this against the real Contract POC backend, we must tweak the Sirius Splat Nginx Proxy configuration. The often used `itest.yml` in `uw-config` maps the proxy configuration to your local folder `~/docker-data/sirius-nginx/nginx.conf`.
 
 Add the following two locations just above the "/config" location.
@@ -26,6 +27,11 @@ Add the following two locations just above the "/config" location.
 To notify the proxy of new configuration, either restart it (the container _sir-cfg-itest-nginx_, if started via configs itest), or send it a *HUP* signal (which for nginx means to reload configuration)
 
     docker kill --signal HUP sir-cfg-itest-nginx`
+
+Also you need to set the environment variable WDS_SOCKET_PATH to indicate where the webpack development server websocket can be found, via `export WDS_SOCKET_PATH=/react/sockjs-node` before running `yarn start` or you'll get the error `WebSocket connection to 'ws://localhost:8000/sockjs-node' failed: Error during WebSocket handshake: Unexpected response code: 404`
+This error causes the hot reload feature to stop working.
+
+> Note: alternatively, change `location /react/sockjs-node` in nginx.conf to simply `location /sockjs-node`, but this makes it less clear to which application this location belongs.
 
 Now, if the Splat+React app is started via `yarn start` it will be available both at [http://localhost:3000/react](http://localhost:3000/react) (from where it cannot access the contract backend due to CORS policy issues) and via the proxy also from [http://localhost:8000/react](http://localhost:8000/react) (from where the browser accepts both the React app and the contract backend as having the same origin).
 
