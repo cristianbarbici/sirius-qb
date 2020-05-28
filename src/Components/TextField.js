@@ -9,14 +9,12 @@ export default function TextField(props) {
 
   return (
     <MuiTextField
-      id={props.id}
       label={props.label}
-      variant="filled"
-      className={props.className || classes.textField}
+      variant="outlined"
       value={value || ""}
       onChange={setValue}
-      fullWidth={props.fullWidth}
       select={props.select}
+      InputLabelProps={{ shrink: true }}
     >
       {props.children}
     </MuiTextField>

@@ -2,10 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
          root: {
-           display: "inline-flex",
+           display: "flex",
            flexDirection: "column",
-           flexWrap: "wrap",
-           width: "80%",
+           maxWidth: "540px",
+           margin: "6rem auto"
          },
          controlContainer: {
            margin: "0.5em",
