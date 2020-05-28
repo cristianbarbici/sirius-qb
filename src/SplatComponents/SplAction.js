@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import {
-  navigateState,
   useProcessType,
   useProcessState,
   useProcessDispatch,
 } from "../SplatComponents/SplProcess";
+import { navigateState } from "./splatReducer";
 
 export const SplActionCtx = React.createContext();
 export const useAction = () => useContext(SplActionCtx);
