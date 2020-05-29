@@ -14,38 +14,7 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between'
     }
   }));
-
-/*
-let typeOfBusinessOptions = [
-  {
-    Name: "Non-Prop Direct",
-    Code: "NONPROPDIR",
-  },
-  {
-    Name: "Non-Prop Facultative",
-    Code: "NONPROPFAC",
-  },
-  {
-    Name: "Non-Prop Treaty",
-    Code: "NONPROPTTY",
-  },
-  {
-    Name: "Proportional Direct",
-    Code: "DIRECT", // PROPDIR
-  },
-  {
-    Name: "Proportional Facultative",
-    Code: "PROPFAC",
-  },
-  {
-    Name: "Proportional Treaty",
-    Code: "PROPTTY",
-  },
-];
-
-
-*/
-
+  
 export default function TypeOfBusiness(props) {
     const label = 'Type of business';
     const theme = useTheme();
