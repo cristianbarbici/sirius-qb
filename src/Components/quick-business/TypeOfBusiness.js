@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between'
     }
   }));
-  
+
 export default function TypeOfBusiness(props) {
     const label = 'Type of business';
     const theme = useTheme();
@@ -37,7 +37,7 @@ export default function TypeOfBusiness(props) {
         setSecondary(type);
     }
 
-    useEffect(() => {        
+    const handleChange = () => {
         // TODO: recommend we have the same logic for 'DIRECT'
         const code = primary === 'PROP' && secondary === 'DIR' ? 'DIRECT' : primary + secondary;
         const typeOfBusiness = _.head(_.filter(processState.TypeOfBusinessOptions, item => item.Code === code));
@@ -45,7 +45,10 @@ export default function TypeOfBusiness(props) {
         if (!_.isEmpty(typeOfBusiness)) {
             setValue(typeOfBusiness);
         }
+    }
 
+    useEffect(() => {        
+        handleChange();
     }, [primary, secondary])
     
 
