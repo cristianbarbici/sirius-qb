@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
          root: {
            display: "flex",
            flexDirection: "column",
-           maxWidth: "540px",
+           maxWidth: "600px",
            margin: "6rem auto"
          },
          controlContainer: {

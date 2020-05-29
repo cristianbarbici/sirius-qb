@@ -5,7 +5,7 @@ import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import SplProcess from "./SplatComponents/SplProcess";
-import CreateQuickBusiness from "./Components/CreateQuickBusiness";
+import CreateQuickBusiness from "./Process/CreateQuickBusiness";
 import SplStartProcess from "./SplatComponents/SplStartProcess";
 import { initSplatComms } from "./lib/splatComms";
 

@@ -1,17 +1,20 @@
 import React from "react";
 import SplField, { useSplatField, dateFormat } from "../SplatComponents/SplField";
-import BusinessTitle from "./BusinessTitle";
-import TextField from "./TextField";
-import DatePicker from "./DatePicker";
+import TextField from "../Components/TextField";
+import DatePicker from "../Components/DatePicker";
 import SplAction from "../SplatComponents/SplAction";
-import Button from "./Button";
+import Button from "../Components/Button";
 import { useStyles } from "../Hooks/useStyles";
 import { Box, MenuItem } from "@material-ui/core";
-import CoinsuranceSwitch from "./CoinsuranceSwitch";
+import CoinsuranceSwitch from "../Components/CoinsuranceSwitch";
 import { useProcessState } from "../SplatComponents/SplProcess";
-import Select from "./Select";
+import Select from "../Components/Select";
 
-import FormRow from "./common/FormRow";
+
+import FormRow from "../Components/common/FormRow";
+import BusinessTitle from "../Components/quick-business/BusinessTitle";
+import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness";
+
 
 export default function CreateQuickBusiness(props) {
   const [startDate, handleStartDateChange] = useSplatField("process_StartDate", dateFormat);
@@ -23,9 +26,10 @@ export default function CreateQuickBusiness(props) {
   return (
     <form className={classes.root} noValidate autoComplete="off">
 
-      <FormRow>
-        <BusinessTitle />
-      </FormRow>
+      
+      <BusinessTitle />
+      <TypeOfBusiness />
+      
 
       <FormRow>
         <SplField path="process_TypeOfBusiness.Name">

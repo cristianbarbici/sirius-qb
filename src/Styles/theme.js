@@ -27,6 +27,11 @@ export const theme = createMuiTheme({
             main: hexSecondary
         }
     },
+    typography: {
+        caption: {
+            letterSpacing: '2px'
+        }
+    },
     shape: {
         borderRadius: 4
     },
