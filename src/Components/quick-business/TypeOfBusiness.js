@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import FormRow from "../common/FormRow";
 import { useSplatField } from "../../SplatComponents/SplField";
 import { useProcessState } from "../../SplatComponents/SplProcess";
+import _ from 'lodash'
 
 export const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,37 +56,41 @@ export default function TypeOfBusiness(props) {
     const [primary, setPrimary] = useState('');
     const [secondary, setSecondary] = useState('');
 
+    const handleSelected = (compare, fix) => {
+        return compare === fix ? 'primary' : '';
+    }
+
     const handlePrimary = (type) => {
-        console.log(type);
         setPrimary(type);
     }
 
     const handleSecondary = (type) => {
-        console.log(type);
         setSecondary(type);
     }
 
-    const handleChange = () => {
-        // componse Code
+    useEffect(() => {        
+        // TODO: recommend we have the same logic for 'DIRECT'
         const code = primary === 'PROP' && secondary === 'DIR' ? 'DIRECT' : primary + secondary;
+        const typeOfBusiness = _.head(_.filter(processState.TypeOfBusinessOptions, item => item.Code === code));
 
-        // get TypeOfBusiness by Code
-        const typeOfBusinessOptions = processState.TypeOfBusinessOptions;
+        if (!_.isEmpty(typeOfBusiness)) {
+            setValue(typeOfBusiness);
+        }
 
-        // set Type of business
-    }
+    }, [primary, secondary])
+    
 
     return (
       <FormRow label={label}>
         <div className={classes.root}>            
             <ButtonGroup>
-                <Button onClick={() => handlePrimary('NONPROP')}>Non-Prop</Button>
-                <Button onClick={() => handlePrimary('PROP')}>Proportional</Button>
+                <Button color={handleSelected(primary, 'NONPROP')} onClick={() => handlePrimary('NONPROP')}>Non-Prop</Button>
+                <Button color={handleSelected(primary, 'PROP')} onClick={() => handlePrimary('PROP')}>Proportional</Button>
             </ButtonGroup>
             <ButtonGroup>
-                <Button onClick={() => handleSecondary('DIR')}>Direct</Button>
-                <Button onClick={() => handleSecondary('FAC')}>Facultative</Button>
-                <Button onClick={() => handleSecondary('TTY')}>Treaty</Button>
+                <Button color={handleSelected(secondary, 'DIR')}  onClick={() => handleSecondary('DIR')}>Direct</Button>
+                <Button color={handleSelected(secondary, 'FAC')} onClick={() => handleSecondary('FAC')}>Facultative</Button>
+                <Button color={handleSelected(secondary, 'TTY')} onClick={() => handleSecondary('TTY')}>Treaty</Button>
             </ButtonGroup>
         </div>
       </FormRow>
