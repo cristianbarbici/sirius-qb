@@ -1891,6 +1891,7 @@ let state = {
   MainClassOfBusinessOptions: refData.mainClassOfBusinessOptions,
   LifeCycleStatusOptions: refData.lifeCycleStatusOptions,
   TypeOfBusinessOptions: refData.typeOfBusinessOptions,
+  TypeOfParticipationOptions: refData.typeOfParticipationOptions,
   ReinsurerOptions: refData.reinsurerOptions,
   MainCurrencyOptions: refData.mainCurrencyOptions,
   RelationshipCodes: refData.relationshipCodes,
@@ -1980,10 +1981,9 @@ let state = {
     Code: "66993",
   },
   process_TypeOfParticipation: {
-    Name: "Binder",
-    Code: "BINDER",
   },
-  process_EndDate: "2021-05-30T22:00Z",
+  process_StartDate: undefined,
+  process_EndDate: undefined,
   process_ReportingUnit: {
     Name: "CH Zurich Branch",
     Code: "2391",
@@ -1993,12 +1993,8 @@ let state = {
     Name: "Boink",
     Code: "100571",
   },
-  process_StartDate: "2020-05-31T22:00Z",
-  process_UWYear: 2020,
+  process_UWYear: undefined, //2020
   process_TypeOfBusiness: {
-    TypeOfParticipationCodes: ["EMPTY", "BINDER", "LINESLIP"],
-    Name: "Non-Prop Direct",
-    Code: "NONPROPDIR",
   },
   process_Broker: {
     RelationshipCode: "BR",
@@ -2010,8 +2006,6 @@ let state = {
     Code: "NQR",
   },
   process_MainClassOfBusiness: {
-    Name: "Aviation",
-    Code: "AVIATION",
   },
 };
 

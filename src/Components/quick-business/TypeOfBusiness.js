@@ -53,18 +53,18 @@ export default function TypeOfBusiness(props) {
     
 
     return (
-      <FormRow label={label}>
-        <div className={classes.root}>            
-            <ButtonGroup>
-                <Button color={handleSelected(primary, 'NONPROP')} onClick={() => handlePrimary('NONPROP')}>Non-Prop</Button>
-                <Button color={handleSelected(primary, 'PROP')} onClick={() => handlePrimary('PROP')}>Proportional</Button>
-            </ButtonGroup>
-            <ButtonGroup>
-                <Button color={handleSelected(secondary, 'DIR')}  onClick={() => handleSecondary('DIR')}>Direct</Button>
-                <Button color={handleSelected(secondary, 'FAC')} onClick={() => handleSecondary('FAC')}>Facultative</Button>
-                <Button color={handleSelected(secondary, 'TTY')} onClick={() => handleSecondary('TTY')}>Treaty</Button>
-            </ButtonGroup>
-        </div>
-      </FormRow>
+        <FormRow label={label}>
+            <div className={classes.root}>            
+                <ButtonGroup>
+                    <Button color={handleSelected(primary, 'NONPROP')} onClick={() => handlePrimary('NONPROP')}>Non-Prop</Button>
+                    <Button color={handleSelected(primary, 'PROP')} onClick={() => handlePrimary('PROP')}>Proportional</Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                    <Button color={handleSelected(secondary, 'DIR')}  onClick={() => handleSecondary('DIR')}>Direct</Button>
+                    <Button color={handleSelected(secondary, 'FAC')} onClick={() => handleSecondary('FAC')}>Facultative</Button>
+                    <Button color={handleSelected(secondary, 'TTY')} onClick={() => handleSecondary('TTY')}>Treaty</Button>
+                </ButtonGroup>
+            </div>
+        </FormRow>
     );
 }

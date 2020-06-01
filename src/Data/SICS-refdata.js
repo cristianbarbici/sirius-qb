@@ -1117,6 +1117,109 @@ let typeOfBusinessOptions = [
   },
 ];
 
+let typeOfParticipationOptions = [
+  {
+    "Code": "BINDER",
+    "Name": "Binder"
+  },
+  {
+    "Code": "CATBOND",
+    "Name": "Cat Bond"
+  },
+  {
+    "Code": "CATSTOPL",
+    "Name": "Cat Stop Loss/Aggregate XL"
+  },
+  {
+    "Code": "CATXLPEREVENT",
+    "Name": "Cat XL"
+  },
+  {
+    "Code": "CLASHXL",
+    "Name": "Clash XL"
+  },
+  {
+    "Code": "COMBINE",
+    "Name": "QS & Spl"
+  },
+  {
+    "Code": "DERIVATIVE",
+    "Name": "Derivative"
+  },
+  {
+    "Code": "EMPTY",
+    "Name": ""
+  },
+  {
+    "Code": "FACOBLIG",
+    "Name": "Fac Oblig"
+  },
+  {
+    "Code": "LINESLIP",
+    "Name": "Lineslip"
+  },
+  {
+    "Code": "OPTN",
+    "Name": "Option"
+  },
+  {
+    "Code": "POOL PR",
+    "Name": "Pool"
+  },
+  {
+    "Code": "PRIMARY",
+    "Name": "Primary"
+  },
+  {
+    "Code": "QA",
+    "Name": "Quota Share"
+  },
+  {
+    "Code": "QAUNIT",
+    "Name": "Quota Share Unit Base"
+  },
+  {
+    "Code": "STOPLOSS",
+    "Name": "Stop Loss/Aggregate XL"
+  },
+  {
+    "Code": "SURPLUS",
+    "Name": "Surplus"
+  },
+  {
+    "Code": "SURPLUSUNIT",
+    "Name": "Surplus Unit Base"
+  },
+  {
+    "Code": "SWAP",
+    "Name": "Swap"
+  },
+  {
+    "Code": "TLO",
+    "Name": "TLO"
+  },
+  {
+    "Code": "XLPERRISK",
+    "Name": "Risk XL"
+  },
+  {
+    "Code": "XLPOOL",
+    "Name": "XL Pool"
+  },
+  {
+    "Code": "XLREP",
+    "Name": "Reporter XL"
+  },
+  {
+    "Code": "XLRISKOREVENT",
+    "Name": "Risk & Event XL"
+  },
+  {
+    "Code": "XLUMBRELLA",
+    "Name": "Umbrella - Ltd General XL"
+  }
+]
+
 let mainClassOfBusinessOptions = [
   {
     Name: "<None>",
@@ -1200,7 +1303,11 @@ export default {
   reinsurerOptions,
   mainClassOfBusinessOptions,
   typeOfBusinessOptions,
+  typeOfParticipationOptions,
   relationshipCodes,
   lifeCycleStatusOptions,
   nrOfBusinessesToCreateOptions,
 };
+
+
+

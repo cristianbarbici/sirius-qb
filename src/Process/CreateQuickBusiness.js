@@ -14,7 +14,7 @@ import Select from "../Components/Select";
 import FormRow from "../Components/common/FormRow";
 import BusinessTitle from "../Components/quick-business/BusinessTitle";
 import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness";
-
+import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation";
 
 export default function CreateQuickBusiness(props) {
   const [startDate, handleStartDateChange] = useSplatField("process_StartDate", dateFormat);
@@ -29,8 +29,15 @@ export default function CreateQuickBusiness(props) {
       
       <BusinessTitle />
       <TypeOfBusiness />
-      
+      <TypeOfParticipation />
+      <FormRow>
+        <SplField path="process_IsCoinsurance">
+          <CoinsuranceSwitch />
+        </SplField>
+      </FormRow>
 
+      
+{/* 
       <FormRow>
         <SplField path="process_TypeOfBusiness.Name">
           <TextField id="TypeOfBusiness" label="Type of Business" select>
@@ -42,23 +49,17 @@ export default function CreateQuickBusiness(props) {
           </TextField>
         </SplField>
       </FormRow>
-
       <FormRow>
         <SplField path="process_TypeOfParticipation.Name">
           <TextField
             id="TypeOfParticipation"
             label="Type of Participation Method"
           >
-            {/* TypeOfParticipation options depends on the selected Type of Business… */}
           </TextField>
         </SplField>
       </FormRow>
+*/}
 
-      <FormRow>
-        <SplField path="process_IsCoinsurance">
-          <CoinsuranceSwitch />
-        </SplField>
-      </FormRow>
 
       <FormRow>
         <Box display="flex" flexDirection="row">
