@@ -30,8 +30,8 @@ export const useStyles = makeStyles((theme) => ({
 
     const [value, setValue] = useSplatField("process_TypeOfParticipation");
 
-    const handleChange = (event) => {
-        const selected = _.filter(typeOfParticipationOptions, item => item.Code === event.target.value);
+    const handleChange = (e) => {
+        const selected = _.filter(typeOfParticipationOptions, item => item.Code === e.target.value);
         setValue(selected);
       };
 

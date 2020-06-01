@@ -22,6 +22,7 @@ export default function TypeOfBusiness(props) {
     const processState = useProcessState();
 
     const [value, setValue] = useSplatField("process_TypeOfBusiness");
+    // TODO: set primary and secondary based on initial value
     const [primary, setPrimary] = useState('');
     const [secondary, setSecondary] = useState('');
 
