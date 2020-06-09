@@ -9,6 +9,9 @@ import { useSplatProcessState } from "@splat/splat-react";
 import { useSplatField } from "@splat/splat-react";
 import FormRow from "../common/FormRow";
 
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -49,8 +52,10 @@ export default function ReportingUnit(props) {
     [(item) => item.reinsurer.Name]
   );
 
-  const handleChange = (event, value, reson) => {
-    setValue(value); // { Name: value.Name, Code: value.Code }
+  const handleChange = (props) => {
+    console.log('handleChange', props)
+    const { event, value, reson } = props
+    setValue(value) // { Name: value.Name, Code: value.Code }
   };
 
   const filterOptions = createFilterOptions({
@@ -64,10 +69,30 @@ export default function ReportingUnit(props) {
     }
   }, []);
 
+
+  const handleRenderGroup = (props) => {
+    const { key, group, children } = props;
+    console.log(children);
+    return <li key={key}>
+      <ListSubheader component='div'>{group}</ListSubheader>
+    </li>
+    
+    {/*
+    
+      <div class="MuiListSubheader-root MuiListSubheader-sticky MuiListSubheader-gutters">Geoforma</div>
+      <div class="MuiListSubheader-root MuiAutocomplete-groupLabel MuiListSubheader-sticky MuiListSubheader-gutters">Boink</div>
+
+      .MuiAutocomplete-groupLabel
+      top: -8px;
+      background-color: #fff;
+    */}
+  }
+
   return (
     <FormRow label={label}>
       <div className={classes.root}>
         <Autocomplete
+          debug
           openOnFocus
           options={options}
           filterOptions={filterOptions}
@@ -75,7 +100,8 @@ export default function ReportingUnit(props) {
           getOptionLabel={(option) => option.Name}
           getOptionSelected={(option) => option.Code === value.Code}
           renderInput={(params) => <TextField {...params} variant="filled" />} // helperText={value.reinsurer && value.reinsurer.Name}
-          renderOption={(option) => option.Name}
+          renderOption={option => option.Name}
+          //renderGroup={handleRenderGroup}
           onChange={handleChange}
           value={value}
         />
