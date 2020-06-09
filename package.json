@@ -9,6 +9,7 @@
     "@material-ui/core": "^4.9.14",
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
+    "@splat/splat-react": "^0.1.25",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
