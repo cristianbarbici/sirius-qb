@@ -1,10 +1,10 @@
 import React from "react";
-import SplField from "../SplatComponents/SplField";
+import { SplField } from "@splat/splat-react";
 import TextField from "../Components/TextField";
-import SplAction from "../SplatComponents/SplAction";
+import { SplAction } from "@splat/splat-react";
 import Button from "../Components/Button";
 import { useStyles } from "../Hooks/useStyles";
-import { useProcessState } from "../SplatComponents/SplProcess";
+import { useSplatProcessState } from "@splat/splat-react";
 import Select from "../Components/Select";
 
 import FormRow from "../Components/common/FormRow";
@@ -17,18 +17,17 @@ import DebugButton from "../Components/quick-business/DebugButton";
 import ReportingUnit from "../Components/quick-business/ReportingUnit";
 
 export default function CreateQuickBusiness(props) {
-  const processState = useProcessState();
+  const processState = useSplatProcessState();
   const classes = useStyles();
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      
       <BusinessTitle />
       <TypeOfBusiness />
       {/* TODO: Hide/show IsCoinsurance and TypeOfParticipation based on TypeOfBusiness */}
       <IsCoinsurance />
       <TypeOfParticipation />
-      
+
       <ReportingUnit />
 
       <InsuredPeriod />

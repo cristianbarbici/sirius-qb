@@ -1,10 +1,10 @@
 import React from "react";
-import { useSplatActionCtx } from "../SplatComponents/SplAction";
+import { useSplatAction } from "@splat/splat-react";
 import MuiButton from "@material-ui/core/Button";
 import { useStyles } from "../Hooks/useStyles";
 
 export default function Button(props) {
-  const [disabled, handleClick] = useSplatActionCtx();
+  const [disabled, handleClick] = useSplatAction();
   const classes = useStyles();
 
   return (

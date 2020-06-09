@@ -1,6 +1,6 @@
 import React from "react";
 import Switch from "@material-ui/core/Switch";
-import { useSplatField } from "../../SplatComponents/SplField";
+import { useSplatField } from "@splat/splat-react";
 import FormRow from "../common/FormRow";
 
 export default function IsCoinsurance(props) {
@@ -8,14 +8,11 @@ export default function IsCoinsurance(props) {
 
   const handleChange = (e) => {
     setValue(!value);
-  }
+  };
 
   return (
-    <FormRow label={'Is coinsurance'}>
-      <Switch
-        checked={value}
-        onChange={handleChange}
-      />
+    <FormRow label={"Is coinsurance"}>
+      <Switch checked={value} onChange={handleChange} />
     </FormRow>
   );
 }

@@ -1,4 +1,9 @@
-import { startProcess, getCorrelationId, updateProcess, executeAction } from "../lib/splatComms";
+import {
+  startProcess,
+  getCorrelationId,
+  updateProcess,
+  executeAction,
+} from "../lib/splatComms";
 
 export const logger = (next) => (action) => {
   console.log("dispatching", action);
@@ -25,21 +30,40 @@ export const updateState = (
   }
 };
 
-export const splatBackendReducer = (next, localState, setLocalState, setProcessType) => {
+export const splatBackendReducer = (
+  next,
+  localState,
+  setLocalState,
+  setProcessType
+) => {
   return (action) => {
     console.log("updateBackend", action, localState);
     switch (action.type) {
       case "start-process":
         const startCorrelationId = getCorrelationId();
-        startProcess(action.name, startCorrelationId).subscribe(updateState(next, setLocalState, "startProcess", (msg) => setProcessType({ name: action.name, typeData: msg.typeData })));
+        startProcess(action.name, startCorrelationId).subscribe(
+          updateState(next, setLocalState, "startProcess", (msg) =>
+            setProcessType({ name: action.name, typeData: msg.typeData })
+          )
+        );
         return;
       case "invoke-action":
         const actionCorrelationId = getCorrelationId();
-        executeAction(localState.instanceUri, action.name, actionCorrelationId).subscribe(updateState(next, setLocalState, "executeAction"));
+        executeAction(
+          localState.instanceUri,
+          action.name,
+          actionCorrelationId
+        ).subscribe(updateState(next, setLocalState, "executeAction"));
         break;
       case "update":
         const correlationId = getCorrelationId();
-        updateProcess(localState.instanceUri, action.path, action.value, localState.lastKnownEventId, correlationId).subscribe(updateState(next, setLocalState, "updateProcess"));
+        updateProcess(
+          localState.instanceUri,
+          action.path,
+          action.value,
+          localState.lastKnownEventId,
+          correlationId
+        ).subscribe(updateState(next, setLocalState, "updateProcess"));
         break;
       default:
         break;

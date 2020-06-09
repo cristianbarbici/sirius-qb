@@ -1,13 +1,13 @@
 import React from "react";
-import { useSplatFieldCtx } from "../SplatComponents/SplField";
+import { useSplatField } from "@splat/splat-react";
 import MuiTextField from "@material-ui/core/TextField";
 import { useStyles } from "../Hooks/useStyles";
 import { MenuItem } from "@material-ui/core";
 
 export default function Select(props) {
-  const [value, setValue] = useSplatFieldCtx();
+  const [value, setValue] = useSplatField();
   const classes = useStyles();
-  const emptyIfNull = (arr) => !arr ? [] : arr;
+  const emptyIfNull = (arr) => (!arr ? [] : arr);
   const valueKey = value ? value[props.optionKey] : {};
   // according to https://material-ui.com/api/select/ :
   // If the value is an object it must have reference equality with the option
