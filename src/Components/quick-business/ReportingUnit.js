@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
-import _ from "lodash";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete, {
-  createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { useSplatProcessState } from "@splat/splat-react";
-import { useSplatField } from "@splat/splat-react";
-import FormRow from "../common/FormRow";
+import React, { useEffect } from "react"
+import clsx from 'clsx'
+import _ from "lodash"
+import TextField from "@material-ui/core/TextField"
+import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete"
+import ListSubheader from '@material-ui/core/ListSubheader'
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import { useSplatProcessState } from "@splat/splat-react"
+import { useSplatField } from "@splat/splat-react"
+import FormRow from "../common/FormRow"
 
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import { ListItem } from "@material-ui/core";
+
+
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +18,26 @@ export const useStyles = makeStyles((theme) => ({
   },
   field: {
     width: "100%",
+  },
+  reinsurer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  reinsurerName: {},
+  reinsurerCode: {
+    marginLeft: theme.spacing(1),
+    fontWeight: 400,
+    flex: 1,
+    color: 'rgba(0,0,0,.38)'
+  },
+  reinsurerAmount: {
+    color: 'rgba(0,0,0,.24)'
+  },
+  option: {},
+  optionName: {},
+  optionCode: {
+    marginLeft: theme.spacing(1),
+    color: 'rgba(0,0,0,.38)'
   },
 }));
 
@@ -59,7 +78,7 @@ export default function ReportingUnit(props) {
 
   const filterOptions = createFilterOptions({
     stringify: (option) =>
-      option.reinsurer.Name + " " + option.Name + " " + option.Code,
+      option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
   })
 
   useEffect(() => {
@@ -70,9 +89,14 @@ export default function ReportingUnit(props) {
 
   // TODO: needed if to add some styling to subheader or other values
   const handleRenderGroup = (props) => {
-    const { key, group, children } = props;
+    const { key, group, children } = props
+    const reinsurer = group.split(';')
     return <li key={key}>
-      <ListSubheader className='MuiAutocomplete-groupLabel' component='div'>{group} ({children.length})</ListSubheader>
+      <ListSubheader className={clsx(classes.reinsurer, 'MuiAutocomplete-groupLabel')} component='div'>
+        <span className={classes.reinsurerName}>{_.head(reinsurer)}</span>
+        <span className={classes.reinsurerCode}>({_.tail(reinsurer)})</span>
+        <span className={classes.reinsurerAmount}>#{children.length}</span>
+      </ListSubheader>
       <ul className='MuiAutocomplete-groupUl'>
         {_.map(children, child => <li key={child.key} {...child.props}>{child.props.children}</li>)}
       </ul>
@@ -87,11 +111,11 @@ export default function ReportingUnit(props) {
           openOnFocus
           options={options}
           filterOptions={filterOptions}
-          groupBy={(option) => option.reinsurer.Name}
-          getOptionLabel={option => option.Name}
+          groupBy={option => option.reinsurer.Name + ';' + option.reinsurer.Code}
+          getOptionLabel={option => option.Name + ' (' + option.Code + ')'}
           getOptionSelected={option => option && value ? option.Code === value.Code : false}
           renderInput={(params) => <TextField {...params} variant="filled" />} // helperText={value.reinsurer && value.reinsurer.Name}
-          renderOption={option => option.Name}
+          renderOption={option => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>}
           renderGroup={handleRenderGroup}
           onChange={handleChange}
           value={value}
