@@ -1982,7 +1982,7 @@ let state = {
   },
   process_TypeOfParticipation: {
   },
-  process_StartDate: undefined,
+  process_StartDate: new Date(),
   process_EndDate: undefined,
   process_ReportingUnit: {
     Name: "CH Zurich Branch",

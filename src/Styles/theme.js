@@ -29,7 +29,7 @@ export const theme = createMuiTheme({
     },
     typography: {
         caption: {
-            letterSpacing: '2px'
+            letterSpacing: '.5px'
         }
     },
     shape: {

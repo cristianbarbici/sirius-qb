@@ -1,96 +1,37 @@
 import React from "react";
-import SplField, { useSplatField, dateFormat } from "../SplatComponents/SplField";
+import SplField from "../SplatComponents/SplField";
 import TextField from "../Components/TextField";
-import DatePicker from "../Components/DatePicker";
 import SplAction from "../SplatComponents/SplAction";
 import Button from "../Components/Button";
 import { useStyles } from "../Hooks/useStyles";
-import { Box } from "@material-ui/core";
 import { useProcessState } from "../SplatComponents/SplProcess";
 import Select from "../Components/Select";
-
 
 import FormRow from "../Components/common/FormRow";
 import BusinessTitle from "../Components/quick-business/BusinessTitle";
 import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness";
 import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation";
 import IsCoinsurance from "../Components/quick-business/IsCoinsurance";
+import InsuredPeriod from "../Components/quick-business/InsuredPeriod";
+import DebugButton from "../Components/quick-business/DebugButton";
+import ReportingUnit from "../Components/quick-business/ReportingUnit";
 
 export default function CreateQuickBusiness(props) {
-  const [startDate, handleStartDateChange] = useSplatField("process_StartDate", dateFormat);
-  const [endDate, handleEndDateChange] = useSplatField("process_EndDate", dateFormat);
-
   const processState = useProcessState();
   const classes = useStyles();
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-
       
       <BusinessTitle />
       <TypeOfBusiness />
-      <TypeOfParticipation />
+      {/* TODO: Hide/show IsCoinsurance and TypeOfParticipation based on TypeOfBusiness */}
       <IsCoinsurance />
-
-
+      <TypeOfParticipation />
       
-{/* 
-      <FormRow>
-        <SplField path="process_TypeOfBusiness.Name">
-          <TextField id="TypeOfBusiness" label="Type of Business" select>
-            {processState.TypeOfBusinessOptions.map((option) => (
-              <MenuItem key={option.Code} value={option.Name}>
-                {option.Name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </SplField>
-      </FormRow>
-      <FormRow>
-        <SplField path="process_TypeOfParticipation.Name">
-          <TextField
-            id="TypeOfParticipation"
-            label="Type of Participation Method"
-          >
-          </TextField>
-        </SplField>
-      </FormRow>
-*/}
+      <ReportingUnit />
 
-
-      <FormRow>
-        <Box display="flex" flexDirection="row">
-          <DatePicker
-            label="Start Date"
-            value={startDate}
-            onChange={handleStartDateChange}
-          ></DatePicker>
-          <DatePicker
-            label="End Date"
-            value={endDate}
-            onChange={handleEndDateChange}
-          ></DatePicker>
-        </Box>
-      </FormRow>
-
-      <FormRow>
-        <SplField path="process_ReportingUnit.Name">
-          <TextField id="ReportingUnit" label="Reporting Unit">
-            {/* ReportingUnit depends on selected Reinsurer? */}
-          </TextField>
-        </SplField>
-        {/* 
-        <SplField path="process_Reinsurer">
-          <Select
-            id="Reinsurer"
-            label="Reinsurer"
-            options={processState.ReinsurerOptions}
-            optionKey="Code"
-            optionName="Name"
-          />
-        </SplField>
-        */}
-      </FormRow>
+      <InsuredPeriod />
 
       <FormRow>
         <SplField path="process_MainClassOfBusiness">
@@ -103,6 +44,8 @@ export default function CreateQuickBusiness(props) {
           />
         </SplField>
       </FormRow>
+
+      <DebugButton />
 
       <FormRow>
         <SplAction name="CreateBusiness">

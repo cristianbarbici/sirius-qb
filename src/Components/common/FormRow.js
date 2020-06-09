@@ -1,5 +1,6 @@
-import React from "react";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from "react"
+import clsx from "clsx"
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 // local styles
 export const useStyles = makeStyles((theme) => ({
@@ -15,20 +16,21 @@ export const useStyles = makeStyles((theme) => ({
     },
     label: {
         display: 'block',
-        marginBottom: theme.spacing(1.25),
+        marginBottom: theme.spacing(1),
         paddingLeft: theme.spacing(.5),
-        fontSize: '13px',
-        color: 'rgba(0,0,0,.4)'
+        fontSize: '14px',
+        color: 'rgba(0,0,0,.6)',
+        letterSpacing: '.5px'
     },
   }));
 
 export default function FormRow(props) {
-    const { label, children } = props;
+    const { label, children, className } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
 
     return (
-        <div className={classes.root}>
+        <div className={clsx(classes.root, className)}>
             <label className={classes.label}>{label}</label>
             {children}
         </div>
