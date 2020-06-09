@@ -7,6 +7,16 @@ import SirTextField from "../common/SirTextField";
 export const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: theme.spacing(50), // based on font
+
+    '& .MuiFormHelperText-contained': {
+      textAlign: 'right',
+      marginRight: theme.spacing(.5),
+      color: 'rgba(0,0,0,.24)',
+
+      '& span:first-child': {
+        color: 'rgba(0,0,0,.6)'
+      }
+    }
   },
 }));
 
@@ -36,8 +46,8 @@ export default function BusinessTitle(props) {
         inputProps={{
           maxLength: maxLength,
         }}
+        helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
       />
-      {count} / {maxLength}
     </FormRow>
   );
 }

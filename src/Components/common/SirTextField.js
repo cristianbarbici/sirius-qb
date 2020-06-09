@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     root: {
-    },
+    }
   }));
 
 export default function SirTextField(props) {
@@ -15,7 +15,7 @@ export default function SirTextField(props) {
       <TextField
         className={classes.root}
         variant="outlined"
-        size="small"
+        //size="small"
         InputLabelProps={{ shrink: true }}
         fullWidth
         {...props}  // label, value, onChange
