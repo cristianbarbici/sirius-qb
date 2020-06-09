@@ -81,6 +81,7 @@ export default function ReportingUnit(props) {
       option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
   })
 
+  // run only once, disregard console warning react-hooks/exhaustive-deps
   useEffect(() => {
     if (!value.reinsurer) {
       setValue(addReinsurer(value));
