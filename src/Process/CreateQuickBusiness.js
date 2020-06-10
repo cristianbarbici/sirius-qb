@@ -6,7 +6,7 @@ import TypeOfParticipation from "../Components/quick-business/TypeOfParticipatio
 import IsCoinsurance from "../Components/quick-business/IsCoinsurance"
 import ReportingUnit from "../Components/quick-business/ReportingUnit"
 import Section from "../Components/common/Section"
-import { useSplatField } from "@splat/splat-react"
+import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +21,6 @@ export const useStyles = makeStyles((theme) => ({
 
 export default function CreateQuickBusiness(props) {
   const classes = useStyles();
-  const [value] = useSplatField("process_TypeOfBusiness");
 
   return (
     <div className={classes.root} noValidate autoComplete="off">
@@ -40,7 +39,9 @@ export default function CreateQuickBusiness(props) {
       <Section>
         <ReportingUnit />
       </Section>
-      
+      <Section>
+        <LifeCycleStatus />
+      </Section>
       {/*
       
 
