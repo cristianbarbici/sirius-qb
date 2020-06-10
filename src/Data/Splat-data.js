@@ -1920,9 +1920,9 @@ let state = {
     Code: "MAD",
   },
   process_BusinessLayer: {
-    created: "2020-05-15T11:33:49.389920Z",
-    BusinessTitle: "Some Title",
-    modified: "2020-05-15T11:35:44.291831Z",
+    created: new Date(), //"2020-05-15T11:33:49.389920Z",
+    BusinessTitle: '', //"Some Title",
+    modified: undefined, //"2020-05-15T11:35:44.291831Z",
     InsuredPeriods: [
       {
         TypeOfBusiness: {
@@ -1976,22 +1976,22 @@ let state = {
     ],
   },
   process_Insured: {
-    RelationshipCode: "IR",
-    Name: "Pharmacon",
-    Code: "66993",
+    //RelationshipCode: "IR",
+    //Name: "Pharmacon",
+    //Code: "66993",
   },
   process_TypeOfParticipation: {
   },
-  process_StartDate: new Date(),
+  process_StartDate: undefined,
   process_EndDate: undefined,
   process_ReportingUnit: {
-    Name: "CH Zurich Branch",
-    Code: "2391",
+    //Name: "CH Zurich Branch",
+    //Code: "2391",
   },
   process_Reinsurer: {
-    ReportingUnitCodes: ["2391", "2395"],
-    Name: "Boink",
-    Code: "100571",
+    //ReportingUnitCodes: ["2391", "2395"],
+    //Name: "Boink",
+    //Code: "100571",
   },
   process_UWYear: undefined, //2020
   process_TypeOfBusiness: {

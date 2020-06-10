@@ -1,35 +1,56 @@
-import React from "react";
-import { SplField } from "@splat/splat-react";
-import { SplAction } from "@splat/splat-react";
-import Button from "../Components/Button";
-import { useStyles } from "../Hooks/useStyles";
-import { useSplatProcessState } from "@splat/splat-react";
-import Select from "../Components/Select";
-import FormRow from "../Components/common/FormRow";
-import BusinessTitle from "../Components/quick-business/BusinessTitle";
-import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness";
-import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation";
-import IsCoinsurance from "../Components/quick-business/IsCoinsurance";
-import InsuredPeriod from "../Components/quick-business/InsuredPeriod";
-import DebugButton from "../Components/quick-business/DebugButton";
-import ReportingUnit from "../Components/quick-business/ReportingUnit";
+import React from "react"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import BusinessTitle from "../Components/quick-business/BusinessTitle"
+import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness"
+import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation"
+import IsCoinsurance from "../Components/quick-business/IsCoinsurance"
+import ReportingUnit from "../Components/quick-business/ReportingUnit"
+import Section from "../Components/common/Section"
+import { useSplatField } from "@splat/splat-react"
+
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    maxWidth: theme.spacing(72),
+    margin: `0 auto ${theme.spacing(6)}px`,
+    backgroundColor: '#fdfdfd' // $hexPanelBg: #fdfdfd;
+  }
+}));
 
 export default function CreateQuickBusiness(props) {
-  const processState = useSplatProcessState();
   const classes = useStyles();
+  const [value] = useSplatField("process_TypeOfBusiness");
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <BusinessTitle />
+    <div className={classes.root} noValidate autoComplete="off">
+      <Section>
+        <BusinessTitle />
+      </Section>
+      <Section>
+        <TypeOfBusiness />
+      </Section>
+      <Section> {/* toggle: process_TypeOfBusiness */}
+        <IsCoinsurance />
+      </Section>
+      <Section>
+        <TypeOfParticipation />
+      </Section>
+      <Section>
+        <ReportingUnit />
+      </Section>
+      
+      {/*
+      
 
-      <TypeOfBusiness />
+      
 
-      {/* TODO: Hide/show IsCoinsurance and TypeOfParticipation based on TypeOfBusiness */}
-      <IsCoinsurance />
-      <TypeOfParticipation />
+      
 
-      <ReportingUnit />
+      
 
+       
       <InsuredPeriod />
 
       <FormRow>
@@ -57,6 +78,7 @@ export default function CreateQuickBusiness(props) {
           <Button label="Generate" />
         </SplAction>
       </FormRow>
-    </form>
+      */}
+    </div>
   );
 }

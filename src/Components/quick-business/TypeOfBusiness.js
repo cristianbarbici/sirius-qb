@@ -1,18 +1,46 @@
-import React, { useState, useEffect } from "react"
-import _ from "lodash"
+import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
+import clsx from 'clsx'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
+import AddIcon from '@material-ui/icons/Add'
 import FormRow from "../common/FormRow"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
 
+import { hexSecondary, rgbSecondary } from '../../Styles/colors'
+
+const bgColor = `rgba(${rgbSecondary}, .12)`
+const bgColorHover = `rgba(${rgbSecondary}, .2)`
+const borderColor = `rgba(${rgbSecondary}, .38)`
+
 export const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center'
   },
+  add: {
+    color: 'rgba(0,0,0,.38)',
+    margin: theme.spacing(0, 1)
+  },
+  group: {
+    margin: 0,
+
+    '& $btnSelected': {
+      borderRightColor: borderColor,
+    }
+  },
+  btn: {},
+  btnSelected: {
+    backgroundColor: bgColor,
+    color: hexSecondary,
+    borderColor: borderColor,
+    '&:hover': {
+      backgroundColor: bgColorHover,
+    }
+  }
 }));
 
 export default function TypeOfBusiness(props) {
@@ -66,42 +94,27 @@ export default function TypeOfBusiness(props) {
     handleInitValue(value)
   }, [])
 
+  const renderBtn = (label, value, isPrimary) =>
+    <Button
+      className={clsx(classes.btn, { [classes.btnSelected]: isPrimary ? primary === value : secondary === value })}
+      onClick={() => isPrimary ? setPrimary(value) : setSecondary(value)}
+    >
+      {label}
+    </Button>
+
+
   return (
     <FormRow label={label}>
       <div className={classes.root}>
-        <ButtonGroup>
-          <Button
-            color={handleSelected(primary, "NONPROP")}
-            onClick={() => handlePrimary("NONPROP")}
-          >
-            Non-Prop
-          </Button>
-          <Button
-            color={handleSelected(primary, "PROP")}
-            onClick={() => handlePrimary("PROP")}
-          >
-            Proportional
-          </Button>
+        <ButtonGroup className={classes.group}>
+          { renderBtn('Non-Prop', 'NONPROP', true) }
+          { renderBtn('Proportional', 'PROP', true) }
         </ButtonGroup>
-        <ButtonGroup>
-          <Button
-            color={handleSelected(secondary, "DIR")}
-            onClick={() => handleSecondary("DIR")}
-          >
-            Direct
-          </Button>
-          <Button
-            color={handleSelected(secondary, "FAC")}
-            onClick={() => handleSecondary("FAC")}
-          >
-            Facultative
-          </Button>
-          <Button
-            color={handleSelected(secondary, "TTY")}
-            onClick={() => handleSecondary("TTY")}
-          >
-            Treaty
-          </Button>
+        <AddIcon className={classes.add} />
+        <ButtonGroup className={classes.group}>
+          { renderBtn('Direct', 'DIR', false) }
+          { renderBtn('Facultative', 'FAC', false) }
+          { renderBtn('Treaty', 'TTY', false) }
         </ButtonGroup>
       </div>
     </FormRow>

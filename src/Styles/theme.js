@@ -1,9 +1,9 @@
-import {createMuiTheme} from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 
 // TODO: move to separate file
 // vars
-const hexPrimary        = "#002C73";
-const hexSecondary      = "#0060A5";
+const hexPrimary = "#002C73";
+const hexSecondary = "#0060A5";
 
 /*
 $rgbSecondary: 0,96,165;
@@ -19,33 +19,54 @@ $hexPanelBg: #fdfdfd;
 
 
 export const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: hexPrimary
-        },
-        secondary: {
-            main: hexSecondary
-        }
+  palette: {
+    primary: {
+      main: hexPrimary
     },
-    typography: {
-        caption: {
-            letterSpacing: '.5px'
-        }
-    },
-    shape: {
-        borderRadius: 4
-    },
-    overrides: {
-        MuiOutlinedInput: {
-            root: {
-                '&:hover $notchedOutline': {
-                    borderColor: hexSecondary,
-                }
-            },
-            notchedOutline: {
-                borderColor: 'rgba(0,0,0,.12)',
-                transition: 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1)'
-            }
-        },
+    secondary: {
+      main: hexSecondary
     }
+  },
+  typography: {
+    caption: {
+      letterSpacing: '.5px'
+    }
+  },
+  shape: {
+    borderRadius: 4
+  },
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        '&:hover $notchedOutline': {
+          borderColor: hexSecondary,
+        }
+      },
+      notchedOutline: {
+        borderColor: 'rgba(0,0,0,.12)',
+        transition: 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1)'
+      }
+    },
+    MuiButtonGroup: {
+      root: {
+
+      },
+      grouped: {
+        padding: '0 .5rem',
+        minHeight: '2rem',
+        whiteSpace: 'nowrap',
+        fontSize: '.775rem',
+        color: 'rgba(0,0,0,.6)'
+      }
+    },
+    MuiButton: {
+      root: {
+
+      },
+      outlined: {
+        borderColor: 'rgba(0,0,0,.12)',
+      },
+    },
+    
+  }
 });

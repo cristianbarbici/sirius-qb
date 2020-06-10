@@ -7,6 +7,7 @@
     "@date-io/core": "1.x",
     "@date-io/moment": "1.x",
     "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
     "@splat/splat-react": "^0.1.25",

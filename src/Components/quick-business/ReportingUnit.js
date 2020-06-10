@@ -9,9 +9,6 @@ import { useSplatProcessState } from "@splat/splat-react"
 import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 
-
-
-
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -71,25 +68,36 @@ export default function ReportingUnit(props) {
     ruOptions.map((option) => addReinsurer(option)),
     [(item) => item.reinsurer.Name]
   )
-
-  const handleChange = (event, value, reson) => {
-    setValue(value)
-  }
-
+  
   const filterOptions = createFilterOptions({
     stringify: (option) =>
       option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
   })
 
-  // run only once, disregard console warning react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (!value.reinsurer) {
-      setValue(addReinsurer(value));
-    }
-  }, [])
+  const handleChange = (event, value, reson) => {
+    setValue(value)
+  }
 
-  // TODO: needed if to add some styling to subheader or other values
-  const handleRenderGroup = (props) => {
+
+
+  const isValueEmpty = _.isEmpty(value)
+
+  const handleGroupBy = (option)            => option.reinsurer.Name + ';' + option.reinsurer.Code                                                    // group label
+  const handleGetOptionLabel = (option)     => isValueEmpty ? '' : option.Name + ' (' + option.Code + ')'                                             // Used to determine the string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
+  const handleGetOptionSelected = (option)  => isValueEmpty ? false : option.Code === value.Code
+  const handleRenderInput = (params)        => {
+    // LAB: remove clear end-adornment when value is empty
+    /*
+    const customAdornments = _.filter(params.InputProps.endAdornment.props.children, el => el.props.title !== 'Clear')
+    const customParams = _.cloneDeep(params)
+    customParams.InputProps.endAdornment.props.children = customAdornments
+    */
+
+    return <TextField {...params} variant="filled" />
+  }
+  const handleRenderOption = (option)       => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
+  
+  const handleRenderGroup = (props) => { // TODO: needed if to add some styling to subheader or other values
     const { key, group, children } = props
     const reinsurer = group.split(';')
     return <li key={key}>
@@ -104,22 +112,31 @@ export default function ReportingUnit(props) {
     </li>
   }
 
+  // run only once, disregard console warning react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (!_.isEmpty(value) && !value.reinsurer) {
+      setValue(addReinsurer(value));
+    }
+  }, [])
+
   return (
     <FormRow label={label}>
       <div className={classes.root}>
         <Autocomplete
-          debug
           openOnFocus
           options={options}
           filterOptions={filterOptions}
-          groupBy={option => option.reinsurer.Name + ';' + option.reinsurer.Code}
-          getOptionLabel={option => option.Name + ' (' + option.Code + ')'}
-          getOptionSelected={option => option && value ? option.Code === value.Code : false}
-          renderInput={(params) => <TextField {...params} variant="filled" />} // helperText={value.reinsurer && value.reinsurer.Name}
-          renderOption={option => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>}
-          renderGroup={handleRenderGroup}
+          value={isValueEmpty ? '' : value}
+          disableClearable={isValueEmpty}
+          freeSolo={isValueEmpty}
+          forcePopupIcon
           onChange={handleChange}
-          value={value}
+          groupBy={handleGroupBy}
+          getOptionLabel={handleGetOptionLabel}
+          getOptionSelected={handleGetOptionSelected}
+          renderInput={handleRenderInput}
+          renderOption={handleRenderOption}
+          renderGroup={handleRenderGroup}
         />
       </div>
     </FormRow>

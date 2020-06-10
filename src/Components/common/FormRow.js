@@ -18,8 +18,8 @@ export const useStyles = makeStyles((theme) => ({
         display: 'block',
         marginBottom: theme.spacing(1),
         paddingLeft: theme.spacing(.5),
-        fontSize: '14px',
-        color: 'rgba(0,0,0,.6)',
+        fontSize: '13px',
+        color: '#777',
         letterSpacing: '.5px'
     },
   }));
