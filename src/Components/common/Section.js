@@ -8,7 +8,11 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     position: 'relative',
     margin: 0,
-    padding: theme.spacing(3, 6)
+    padding: 0, //theme.spacing(3, 6)
+    
+    '& + &': {
+      //borderTop: 'solid 1px rgba(0,0,0,.08)',
+    }
 
     /*
 

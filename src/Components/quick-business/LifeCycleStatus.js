@@ -2,7 +2,7 @@ import React from 'react'
 import { useSplatProcessState } from '@splat/splat-react'
 import { useSplatField } from '@splat/splat-react'
 import FormRow from '../common/FormRow'
-import SirRadioGroup from '../common/SirRadioGroup'
+import SirListGroup from '../common/SirListGroup'
 
 export default function LifeCycleStatus(props) {
   const label = 'Life cycle status'
@@ -12,7 +12,7 @@ export default function LifeCycleStatus(props) {
 
   return (
     <FormRow label={label}>
-      <SirRadioGroup value={value} setValue={setValue} data={lifeCycleStatusOptions} />
+      <SirListGroup value={value} setValue={setValue} data={lifeCycleStatusOptions} />
     </FormRow>
   );
 }

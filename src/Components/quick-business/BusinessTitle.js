@@ -6,19 +6,19 @@ import SirTextField from "../common/SirTextField";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: theme.spacing(50), // based on font
-
     '& .MuiFormHelperText-contained': {
       textAlign: 'right',
       marginRight: theme.spacing(.5),
       color: 'rgba(0,0,0,.24)',
+      fontSize: '12px',
+      lineHeight: '14px',
 
       '& span:first-child': {
         color: 'rgba(0,0,0,.6)'
       }
     }
   },
-}));
+}))
 
 export default function BusinessTitle(props) {
   const label = "Business title";
@@ -41,7 +41,7 @@ export default function BusinessTitle(props) {
   return (
     <FormRow label={label} className={classes.root}>
       <SirTextField
-        value={value || ""}
+        value={value || ''}
         onChange={handleChange}
         inputProps={{
           maxLength: maxLength,

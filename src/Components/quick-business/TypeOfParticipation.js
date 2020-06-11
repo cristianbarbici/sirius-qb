@@ -3,7 +3,7 @@ import _ from "lodash"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
-import SirRadioGroup from "../common/SirRadioGroup"
+import SirListGroup from "../common/SirListGroup"
 
 export default function TypeOfParticipation(props) {
   const label = 'Type of participation method'
@@ -18,7 +18,7 @@ export default function TypeOfParticipation(props) {
 
   return (
     <FormRow label={label}>
-      <SirRadioGroup value={value} setValue={setValue} data={typeOfParticipationOptionsFiltered} />
+      <SirListGroup value={value} setValue={setValue} data={typeOfParticipationOptionsFiltered} />
     </FormRow>
   );
 }

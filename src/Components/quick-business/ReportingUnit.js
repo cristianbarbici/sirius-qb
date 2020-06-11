@@ -8,13 +8,20 @@ import { makeStyles, useTheme } from "@material-ui/core/styles"
 import { useSplatProcessState } from "@splat/splat-react"
 import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
+import SirTextField from "../common/SirTextField"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: '100%',
   },
-  field: {
-    width: "100%",
+  autocomplete: { // not nice hack
+    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"][class*="MuiOutlinedInput-marginDense"]': {
+      padding: 0
+    },
+
+    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      padding: theme.spacing(1, 2)
+    }
   },
   reinsurer: {
     display: 'flex',
@@ -68,7 +75,7 @@ export default function ReportingUnit(props) {
     ruOptions.map((option) => addReinsurer(option)),
     [(item) => item.reinsurer.Name]
   )
-  
+
   const filterOptions = createFilterOptions({
     stringify: (option) =>
       option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
@@ -82,21 +89,11 @@ export default function ReportingUnit(props) {
 
   const isValueEmpty = _.isEmpty(value)
 
-  const handleGroupBy = (option)            => option.reinsurer.Name + ';' + option.reinsurer.Code                                                    // group label
-  const handleGetOptionLabel = (option)     => isValueEmpty ? '' : option.Name + ' (' + option.Code + ')'                                             // Used to determine the string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
-  const handleGetOptionSelected = (option)  => isValueEmpty ? false : option.Code === value.Code
-  const handleRenderInput = (params)        => {
-    // LAB: remove clear end-adornment when value is empty
-    /*
-    const customAdornments = _.filter(params.InputProps.endAdornment.props.children, el => el.props.title !== 'Clear')
-    const customParams = _.cloneDeep(params)
-    customParams.InputProps.endAdornment.props.children = customAdornments
-    */
-
-    return <TextField {...params} variant="filled" />
-  }
-  const handleRenderOption = (option)       => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
-  
+  const handleGroupBy = (option) => option.reinsurer.Name + ';' + option.reinsurer.Code                                                    // group label
+  const handleGetOptionLabel = (option) => isValueEmpty ? '' : option.Name + ' (' + option.Code + ')'                                             // Used to determine the string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
+  const handleGetOptionSelected = (option) => isValueEmpty ? false : option.Code === value.Code
+  const handleRenderInput = (params) => <SirTextField {...params} variant="outlined" hiddenLabel />
+  const handleRenderOption = (option) => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
   const handleRenderGroup = (props) => { // TODO: needed if to add some styling to subheader or other values
     const { key, group, children } = props
     const reinsurer = group.split(';')
@@ -123,6 +120,9 @@ export default function ReportingUnit(props) {
     <FormRow label={label}>
       <div className={classes.root}>
         <Autocomplete
+          debug
+          size='small'
+          className={classes.autocomplete}
           openOnFocus
           options={options}
           filterOptions={filterOptions}

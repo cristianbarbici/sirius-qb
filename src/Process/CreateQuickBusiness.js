@@ -1,12 +1,17 @@
 import React from "react"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import BusinessTitle from "../Components/quick-business/BusinessTitle"
-import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness"
+
+import TypeOfBusinessButtonGroup from "../Components/quick-business/TypeOfBusinessButtonGroup"
+import TypeOfBusinessRadioGroup from "../Components/quick-business/TypeOfBusinessRadioGroup"
+import TypeOfBusinessListGroup from "../Components/quick-business/TypeOfBusinessListGroup"
+
 import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation"
 import IsCoinsurance from "../Components/quick-business/IsCoinsurance"
 import ReportingUnit from "../Components/quick-business/ReportingUnit"
 import Section from "../Components/common/Section"
 import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
+import MainClassOfBusiness from "../Components/quick-business/MainClassOfBusiness"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,9 +32,11 @@ export default function CreateQuickBusiness(props) {
       <Section>
         <BusinessTitle />
       </Section>
+
       <Section>
-        <TypeOfBusiness />
+        <TypeOfBusinessListGroup />
       </Section>
+
       <Section> {/* toggle: process_TypeOfBusiness */}
         <IsCoinsurance />
       </Section>
@@ -42,16 +49,11 @@ export default function CreateQuickBusiness(props) {
       <Section>
         <LifeCycleStatus />
       </Section>
+      <Section>
+        <MainClassOfBusiness />
+      </Section>
       {/*
-      
 
-      
-
-      
-
-      
-
-       
       <InsuredPeriod />
 
       <FormRow>

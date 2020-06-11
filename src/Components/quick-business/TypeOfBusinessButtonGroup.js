@@ -8,7 +8,6 @@ import AddIcon from '@material-ui/icons/Add'
 import FormRow from "../common/FormRow"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
-
 import { hexSecondary, rgbSecondary } from '../../Styles/colors'
 
 const bgColor = `rgba(${rgbSecondary}, .12)`
@@ -43,14 +42,12 @@ export const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TypeOfBusiness(props) {
+export default function TypeOfBusinessButtonGroup(props) {
   const label = 'Type of business';
   const theme = useTheme();
   const classes = useStyles(theme);
   const processState = useSplatProcessState();
-
   const [value, setValue] = useSplatField("process_TypeOfBusiness");
-
   // TODO: set primary and secondary based on initial value
   const [primary, setPrimary] = useState('');
   const [secondary, setSecondary] = useState('');

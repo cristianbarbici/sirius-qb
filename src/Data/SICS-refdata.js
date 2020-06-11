@@ -1222,10 +1222,6 @@ let typeOfParticipationOptions = [
 
 let mainClassOfBusinessOptions = [
   {
-    Name: "<None>",
-    Code: "NONE",
-  },
-  {
     Name: "Accident & Health",
     Code: "A&H",
   },

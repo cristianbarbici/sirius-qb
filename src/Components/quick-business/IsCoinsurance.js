@@ -12,7 +12,7 @@ export default function IsCoinsurance(props) {
 
   return (
     <FormRow label={"Is coinsurance"}>
-      <Switch checked={value} onChange={handleChange} />
+      <Switch size='small' checked={value} onChange={handleChange} />
     </FormRow>
   );
 }

@@ -1,24 +1,35 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { pxFieldHeight } from "../../Styles/colors";
 
 export const useStyles = makeStyles((theme) => ({
-    root: {
+  root: {
+    '& .MuiInputBase-root': {
+      fontSize: '0.875rem',
+      lineHeight: '1.43',
+      height: pxFieldHeight
+    },
+
+    '& .MuiInputBase-input': {
+      height: 'unset',
+      padding: theme.spacing(1, 2)
     }
-  }));
+  }
+}));
 
 export default function SirTextField(props) {
-    const theme = useTheme();
-    const classes = useStyles(theme);
+  const classes = useStyles();
 
-    return (
-      <TextField
-        className={classes.root}
-        variant="outlined"
-        //size="small"
-        InputLabelProps={{ shrink: true }}
-        fullWidth
-        {...props}  // label, value, onChange
-      />
-    );
+  return (
+    <TextField
+      className={classes.root}
+      variant='outlined'
+      size='small'
+      InputLabelProps={{ shrink: true }}
+      fullWidth
+      hiddenLabel
+      {...props}  // value, onChange
+    />
+  );
 }
