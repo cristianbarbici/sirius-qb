@@ -70,8 +70,8 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SirListGroup(props) {
-  const { data, value, setValue } = props
-  const hasValue = !_.isEmpty(value)
+  const { data, value, setValue, callBack } = props
+  const hasValue = _.isEmpty(value)
   const classes = useStyles()
   const [open, setOpen] = useState(hasValue)
   const amount = data.length
@@ -83,12 +83,17 @@ export default function SirListGroup(props) {
       (item) => item.Code === code
     ))
     setValue(selected)
+    handleOpen()
+  }
+
+  const handleOpen = () => {
     setOpen(!open)
+    callBack && callBack(!open)
   }
 
   return (
-    open ? 
-      <ListItem dense button className={clsx(classes.item, classes.editable)} onClick={() => setOpen(!open)}>
+    !open ? 
+      <ListItem dense button className={clsx(classes.item, classes.editable)} onClick={handleOpen}>
         <ListItemText primary={value.Name || '(None)'} />
         <EditIcon className={classes.editIcon} />
         <CheckIcon className={classes.validIcon} />

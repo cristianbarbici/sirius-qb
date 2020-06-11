@@ -1,11 +1,7 @@
 import React from "react"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import BusinessTitle from "../Components/quick-business/BusinessTitle"
-
-import TypeOfBusinessButtonGroup from "../Components/quick-business/TypeOfBusinessButtonGroup"
-import TypeOfBusinessRadioGroup from "../Components/quick-business/TypeOfBusinessRadioGroup"
-import TypeOfBusinessListGroup from "../Components/quick-business/TypeOfBusinessListGroup"
-
+import TypeOfBusiness from "../Components/quick-business/TypeOfBusiness"
 import TypeOfParticipation from "../Components/quick-business/TypeOfParticipation"
 import IsCoinsurance from "../Components/quick-business/IsCoinsurance"
 import ReportingUnit from "../Components/quick-business/ReportingUnit"
@@ -33,13 +29,8 @@ export default function CreateQuickBusiness(props) {
         <BusinessTitle />
       </Section>
 
-      <Section>
-        <TypeOfBusinessListGroup />
-      </Section>
+      <TypeOfBusiness />
 
-      <Section> {/* toggle: process_TypeOfBusiness */}
-        <IsCoinsurance />
-      </Section>
       <Section>
         <TypeOfParticipation />
       </Section>

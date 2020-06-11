@@ -39,14 +39,17 @@ export const useStyles = makeStyles((theme) => ({
   } 
     */
   },
+  row: {
+    flexDirection: 'row'
+  }
 }));
 
 export default function Section(props) {
-  const { children, className } = props
+  const { children, className, row = false } = props
   const classes = useStyles()
 
   return (
-    <div className={clsx(classes.root, className)}>
+    <div className={clsx(classes.root, className, {[classes.row]: row})}>
       {children}
     </div>
   )
