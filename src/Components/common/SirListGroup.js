@@ -29,6 +29,12 @@ export const useStyles = makeStyles((theme) => ({
     border: 'solid 1px rgba(0,0,0,.06)',
     margin: theme.spacing(.5),
 
+    '& .MuiListItemText-root .MuiListItemText-primary': {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    },
+
     '& .MuiSvgIcon-root': {
       opacity: 0,
       color: 'rgba(0,0,0,.24)',
@@ -71,9 +77,9 @@ export const useStyles = makeStyles((theme) => ({
 
 export default function SirListGroup(props) {
   const { data, value, setValue, callBack } = props
-  const hasValue = _.isEmpty(value)
+  const hasValue = !_.isEmpty(value)
   const classes = useStyles()
-  const [open, setOpen] = useState(hasValue)
+  const [open, setOpen] = useState(!hasValue)
   const amount = data.length
   const maxGroupHeight = itemHeight * (amount + amount % 2) / 2
 

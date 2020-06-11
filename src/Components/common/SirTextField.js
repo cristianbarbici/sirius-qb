@@ -1,7 +1,7 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { pxFieldHeight } from "../../Styles/colors";
+import React from 'react'
+import TextField from '@material-ui/core/TextField'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { pxFieldHeight } from '../../Styles/colors'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,12 +14,22 @@ export const useStyles = makeStyles((theme) => ({
     '& .MuiInputBase-input': {
       height: 'unset',
       padding: theme.spacing(1, 2)
+    },
+
+    '& .MuiOutlinedInput-adornedEnd .MuiSvgIcon-root': {
+      color: 'rgba(0,0,0,.24)',
+      fontSize: '1.25rem',
+    },
+
+    '& .MuiOutlinedInput-adornedStart .MuiSvgIcon-root': {
+      color: 'rgba(0,0,0,.24)',
+      fontSize: '1.25rem',
     }
   }
-}));
+}))
 
 export default function SirTextField(props) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <TextField
@@ -31,5 +41,5 @@ export default function SirTextField(props) {
       hiddenLabel
       {...props}  // value, onChange
     />
-  );
+  )
 }

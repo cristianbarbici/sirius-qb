@@ -1,8 +1,8 @@
 import React from 'react'
-import FormRow from '../common/FormRow'
+import FormRow from '../../common/FormRow'
 import { useSplatField } from '@splat/splat-react'
 import { useSplatProcessState } from '@splat/splat-react'
-import SirRadioGroup from '../common/SirRadioGroup'
+import SirRadioGroup from './SirRadioGroup'
 
 export default function TypeOfBusinessButtonGroup(props) {
   const label = 'Type of business'

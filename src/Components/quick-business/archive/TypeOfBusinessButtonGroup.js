@@ -5,10 +5,10 @@ import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
 import AddIcon from '@material-ui/icons/Add'
-import FormRow from "../common/FormRow"
+import FormRow from "../../common/FormRow"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
-import { hexSecondary, rgbSecondary } from '../../Styles/colors'
+import { hexSecondary, rgbSecondary } from '../../../Styles/colors'
 
 const bgColor = `rgba(${rgbSecondary}, .12)`
 const bgColorHover = `rgba(${rgbSecondary}, .2)`

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSplatField } from "@splat/splat-react";
 import MuiTextField from "@material-ui/core/TextField";
-import { useStyles } from "../Hooks/useStyles";
+import { useStyles } from "../../../Hooks/useStyles";
 
 export default function TextField(props) {
   const [value, setValue] = useSplatField();

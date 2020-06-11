@@ -15,9 +15,9 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(.5),
     fontSize: '12px',
     lineHeight: '16px',
-    color: 'rgba(0,0,0,.87)',
+    color: 'rgba(0,0,0,.72)',
     fontWeight: 600,
-    letterSpacing: '.25px'
+    letterSpacing: '.5px'
   },
 }));
 

@@ -8,14 +8,16 @@ import ReportingUnit from "../Components/quick-business/ReportingUnit"
 import Section from "../Components/common/Section"
 import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
 import MainClassOfBusiness from "../Components/quick-business/MainClassOfBusiness"
+import Currency from "../Components/quick-business/Currency"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    maxWidth: theme.spacing(72),
-    margin: `0 auto ${theme.spacing(6)}px`,
+    maxWidth: theme.spacing(64),
+    margin: '0 auto', // `0 auto ${theme.spacing(6)}px`,
+    padding: theme.spacing(3, 0),
     backgroundColor: '#fdfdfd' // $hexPanelBg: #fdfdfd;
   }
 }));
@@ -25,6 +27,7 @@ export default function CreateQuickBusiness(props) {
 
   return (
     <div className={classes.root} noValidate autoComplete="off">
+
       <Section>
         <BusinessTitle />
       </Section>
@@ -32,32 +35,22 @@ export default function CreateQuickBusiness(props) {
       <TypeOfBusiness />
 
       <Section>
-        <TypeOfParticipation />
-      </Section>
-      <Section>
         <ReportingUnit />
       </Section>
+
       <Section>
         <LifeCycleStatus />
       </Section>
+
       <Section>
         <MainClassOfBusiness />
       </Section>
+
+      <Section>
+        <Currency />
+      </Section>
+
       {/*
-
-      <InsuredPeriod />
-
-      <FormRow>
-        <SplField path="process_MainClassOfBusiness">
-          <Select
-            id="MainClassOfBusiness"
-            label="Main class of business"
-            options={processState.MainClassOfBusinessOptions}
-            optionKey="Code"
-            optionName="Name"
-          />
-        </SplField>
-      </FormRow>
 
       <DebugButton />
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { DatePicker as MuiDatePicker } from "@material-ui/pickers";
-import { useStyles } from "../Hooks/useStyles";
+import { useStyles } from "../../../Hooks/useStyles";
 
 export default function DatePicker(props) {
   const classes = useStyles();

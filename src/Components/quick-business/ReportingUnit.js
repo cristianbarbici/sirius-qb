@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import clsx from 'clsx'
 import _ from "lodash"
-import TextField from "@material-ui/core/TextField"
-import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete"
+import SearchIcon from '@material-ui/icons/Search'
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import { useSplatProcessState } from "@splat/splat-react"
@@ -25,19 +25,26 @@ export const useStyles = makeStyles((theme) => ({
   },
   reinsurer: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    lineHeight: 1.43,
+    fontSize: '12px',
+    padding: theme.spacing(2, 1, 1, 1)
   },
-  reinsurerName: {},
   reinsurerCode: {
-    marginLeft: theme.spacing(1),
     fontWeight: 400,
+    color: 'rgba(0,0,0,.38)',
+    marginRight: theme.spacing(1)
+  },
+  reinsurerName: {
     flex: 1,
-    color: 'rgba(0,0,0,.38)'
   },
   reinsurerAmount: {
+    fontWeight: 400,
     color: 'rgba(0,0,0,.24)'
   },
-  option: {},
+  option: {
+    fontSize: '14px'
+  },
   optionName: {},
   optionCode: {
     marginLeft: theme.spacing(1),
@@ -81,27 +88,21 @@ export default function ReportingUnit(props) {
       option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
   })
 
-  const handleChange = (event, value, reson) => {
-    setValue(value)
-  }
-
-
-
   const isValueEmpty = _.isEmpty(value)
-
+  const handleChange = (event, value, reson) => setValue(value)
   const handleGroupBy = (option) => option.reinsurer.Name + ';' + option.reinsurer.Code                                                    // group label
   const handleGetOptionLabel = (option) => isValueEmpty ? '' : option.Name + ' (' + option.Code + ')'                                             // Used to determine the string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
   const handleGetOptionSelected = (option) => isValueEmpty ? false : option.Code === value.Code
-  const handleRenderInput = (params) => <SirTextField {...params} variant="outlined" hiddenLabel />
-  const handleRenderOption = (option) => <div><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
+  const handleRenderInput = (params) => <SirTextField {...params} variant="outlined" hiddenLabel  /> // InputProps={{ startAdornment: <SearchIcon /> }}
+  const handleRenderOption = (option) => <div className={classes.option}><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
   const handleRenderGroup = (props) => { // TODO: needed if to add some styling to subheader or other values
     const { key, group, children } = props
     const reinsurer = group.split(';')
     return <li key={key}>
       <ListSubheader className={clsx(classes.reinsurer, 'MuiAutocomplete-groupLabel')} component='div'>
+        <span className={classes.reinsurerCode}>{_.tail(reinsurer)}</span>
         <span className={classes.reinsurerName}>{_.head(reinsurer)}</span>
-        <span className={classes.reinsurerCode}>({_.tail(reinsurer)})</span>
-        <span className={classes.reinsurerAmount}>#{children.length}</span>
+        <span className={classes.reinsurerAmount}>({children.length})</span>
       </ListSubheader>
       <ul className='MuiAutocomplete-groupUl'>
         {_.map(children, child => <li key={child.key} {...child.props}>{child.props.children}</li>)}
@@ -120,16 +121,15 @@ export default function ReportingUnit(props) {
     <FormRow label={label}>
       <div className={classes.root}>
         <Autocomplete
-          debug
           size='small'
           className={classes.autocomplete}
           openOnFocus
+          popupIcon={<></>}
           options={options}
           filterOptions={filterOptions}
           value={isValueEmpty ? '' : value}
           disableClearable={isValueEmpty}
           freeSolo={isValueEmpty}
-          forcePopupIcon
           onChange={handleChange}
           groupBy={handleGroupBy}
           getOptionLabel={handleGetOptionLabel}
