@@ -31,7 +31,11 @@ export const useStyles = makeStyles((theme) => ({
       borderRightColor: borderColor,
     }
   },
-  btn: {},
+  btn: {
+    fontSize: '13px',
+    whiteSpace: 'nowrap',
+    
+  },
   btnSelected: {
     backgroundColor: bgColor,
     color: hexSecondary,
@@ -93,6 +97,7 @@ export default function TypeOfBusinessButtonGroup(props) {
 
   const renderBtn = (label, value, isPrimary) =>
     <Button
+      size='small'
       className={clsx(classes.btn, { [classes.btnSelected]: isPrimary ? primary === value : secondary === value })}
       onClick={() => isPrimary ? setPrimary(value) : setSecondary(value)}
     >

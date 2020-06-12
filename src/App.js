@@ -8,6 +8,13 @@ import { theme } from "./Styles/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Splat from "./Data/Splat-data";
 import { logger } from "./SplatComponents/splatBackendReducer";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
+import TestTOB from "./Process/TestTOB";
 
 function App() {
   // make sure we can see in the console what kind of actions we are creating
@@ -24,7 +31,17 @@ function App() {
               middleware={middleware}
               name="ContractPOCoverview"
             >
-              <CreateQuickBusiness />
+              <Router>
+                <Switch>
+                  <Route path="/qb">
+                    <CreateQuickBusiness />
+                  </Route>
+                  <Route path="/">
+                    <TestTOB />
+                  </Route>
+                </Switch>
+              </Router>
+
             </SplProcess>
           </MuiPickersUtilsProvider>
         </div>

@@ -9,63 +9,40 @@ import Section from "../Components/common/Section"
 import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
 import MainClassOfBusiness from "../Components/quick-business/MainClassOfBusiness"
 import Currency from "../Components/quick-business/Currency"
+import TypeOfBusinessButtonGroup from "../Components/quick-business/archive/TypeOfBusinessButtonGroup"
+import TypeOfBusinessRadioGroup from "../Components/quick-business/archive/TypeOfBusinessRadioGroup"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    maxWidth: theme.spacing(64),
-    margin: `0 auto ${theme.spacing(6)}px`,
+    maxWidth: theme.spacing(72),
+    margin: '0 auto', // `0 auto ${theme.spacing(6)}px`,
     padding: theme.spacing(3, 0),
     backgroundColor: '#fdfdfd' // $hexPanelBg: #fdfdfd;
+  },
+  section: {
+    margin: theme.spacing(4, 0)
   }
 }));
 
-export default function CreateQuickBusiness(props) {
+export default function TestTOB(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root} noValidate autoComplete="off">
 
-      <Section>
-        <BusinessTitle />
+      <Section className={classes.section}>
+        <TypeOfBusinessButtonGroup />
+      </Section>
+
+      <Section className={classes.section}>
+        <TypeOfBusinessRadioGroup />
       </Section>
 
       <TypeOfBusiness />
 
-      <Section>
-        <ReportingUnit />
-      </Section>
-
-      <Section>
-        <LifeCycleStatus />
-      </Section>
-
-      <Section>
-        <MainClassOfBusiness />
-      </Section>
-
-      <Section>
-        <Currency />
-      </Section>
-
-      {/*
-
-      <DebugButton />
-
-      <FormRow>
-        <SplAction name="CreateBusiness">
-          <Button label="Create Business" />
-        </SplAction>
-        <SplAction name="Init">
-          <Button label="Reset All" />
-        </SplAction>
-        <SplAction name="GenerateDummyData">
-          <Button label="Generate" />
-        </SplAction>
-      </FormRow>
-      */}
     </div>
   );
 }

@@ -147,7 +147,11 @@ export default function Currency(props) {
     )
   }
 
-  const handleRenderInput = (params) => <SirTextField {...params} variant="outlined" hiddenLabel />
+  const filterOptions = createFilterOptions({
+    stringify: (option) => option.Name + ' ' + option.Code
+  })
+
+  const handleRenderInput = (params) => <SirTextField {...params} variant="outlined" hiddenLabel placeholder='Search...' />
   const handleGetOptionLabel = (option) => hasValue ? option.Code : ''
   const handleGetOptionSelected = (option) => hasValue ? option.Code === value.Code : false
   const handleRenderOption = (option) => <div className={classes.option}>{option.Code}</div>
@@ -177,7 +181,8 @@ export default function Currency(props) {
             size='small'
             className={classes.autocomplete}
             openOnFocus
-            popupIcon={<></>}
+            //popupIcon={<></>}
+            filterOptions={filterOptions}
             options={mainCurrencyOptions}
             disableClearable={!hasValue}
             freeSolo={!hasValue}
@@ -186,7 +191,7 @@ export default function Currency(props) {
             getOptionLabel={handleGetOptionLabel}
             getOptionSelected={handleGetOptionSelected}
             onChange={handleAutocompleteChange}
-            value={hasValue ? value : ''}
+            value={hasValue ? value.Code : ''}
           />
         </div>
       }

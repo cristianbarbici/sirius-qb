@@ -1916,8 +1916,8 @@ let state = {
   modified: "2020-05-15T11:36:01.839408Z",
   process_IsCoinsurance: false,
   process_MainCurrency: {
-    Name: "MAD",
-    Code: "MAD",
+    //Name: "MAD",
+    //Code: "MAD",
   },
   process_BusinessLayer: {
     created: new Date(), //"2020-05-15T11:33:49.389920Z",

@@ -86,10 +86,12 @@ export default function BusinessTitle(props) {
   const hasValue = !_.isEmpty(value)
   const [open, setOpen] = useState(!hasValue)
   const inputRef = useRef()
+
   const handleOnChange = (e) => {
     e.target.value.length === 0 ? setErr(true) : setErr(false)
     setValue(e.target.value)
   }
+  
   const handleOnBlur = (e) => {
     if (e.target.value.length === 0) {
       setErr(true)
@@ -105,7 +107,7 @@ export default function BusinessTitle(props) {
   }, [value])
 
   useEffect(() => {
-    if (open) { 
+    if (open && inputRef.current) { 
       inputRef.current.focus()
       inputRef.current.select()
     }

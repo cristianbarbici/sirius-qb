@@ -33,8 +33,8 @@ export default function TypeOfBusiness(props) {
 
   return (
     <>
-      <Section row={hasCoinsurance && !open}>
-        <FormRow label={label} className={clsx({ [classes.twoCol]: hasCoinsurance && !open })}>
+      <Section row={(hasCoinsurance && !open).toString()}>
+        <FormRow label={label} className={clsx({ [classes.twoCol]: hasCoinsurance && !open })} hint={hasValue ? '' : 'Select an option an all will be revealed'}>
           <SirListGroup value={value} setValue={setValue} data={typeOfBusinessOptions} callBack={callBackOpen} />
         </FormRow>
         {hasCoinsurance && !open ? <IsCoinsurance /> : null}
