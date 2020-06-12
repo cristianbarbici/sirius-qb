@@ -34,11 +34,11 @@ export default function TestTOB(props) {
     <div className={classes.root} noValidate autoComplete="off">
 
       <Section className={classes.section}>
-        <TypeOfBusinessButtonGroup />
+        <TypeOfBusinessRadioGroup />
       </Section>
 
       <Section className={classes.section}>
-        <TypeOfBusinessRadioGroup />
+        <TypeOfBusinessButtonGroup />
       </Section>
 
       <TypeOfBusiness />
