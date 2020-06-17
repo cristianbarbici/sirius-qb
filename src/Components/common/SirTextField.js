@@ -1,7 +1,9 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { makeStyles } from '@material-ui/core/styles'
 import { pxFieldHeight } from '../../Styles/colors'
+import SearchIcon from '@material-ui/icons/Search'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +31,7 @@ export const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SirTextField(props) {
+  const { startIcon, ...other } = props
   const classes = useStyles()
 
   return (
@@ -36,10 +39,19 @@ export default function SirTextField(props) {
       className={classes.root}
       variant='outlined'
       size='small'
+      InputProps={{
+        startAdornment: (
+          startIcon === 'search' ?
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment> :
+          null
+        ),
+      }}
       InputLabelProps={{ shrink: true }}
       fullWidth
       hiddenLabel
-      {...props}  // value, onChange
+      {...other}
     />
   )
 }

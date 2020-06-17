@@ -114,8 +114,10 @@ export default function ReportingUnit(props) {
   const reinsurerOptions = processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
   
   const [err, setErr] = useState(false)
-  const [open, setOpen] = useState(isValueEmpty)
+  const [open, setOpen] = useState(isValueEmpty)          // if there is a value close ...otherwise keep field open for input
   const [inputValue, setInputValue] = useState('')
+  const [touched, setTouched] = useState(!isValueEmpty)   // set touched if value is present from back-end
+  const [click, setClick] = useState(false)
   const inputRef = useRef(null)
 
   const addReinsurer = (option) => {
@@ -176,7 +178,7 @@ export default function ReportingUnit(props) {
       <span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span>
     </div>
 
-  const handleRenderInput = (params) => 
+  const handleRenderInput = params => 
     <SirTextField
       {...params}
       error={err}
@@ -186,13 +188,27 @@ export default function ReportingUnit(props) {
       onBlur={handleOnBlur}
     />
 
-  
+  const validateValue = React.useCallback(() => {
+    if (!_.isEmpty(value)) {
+      setOpen(false)
+      setErr(false)
+    } else {
+      setOpen(true)
+      if (touched)
+        setErr(true)
+    }
+  }, [value, touched])
 
-  // On
-  const handleOnBlur = (e) => _.isEmpty(value) ? setOpen(true) : setOpen(false)
+  const handleOnBlur = (e) => {
+    if (!touched)
+      setTouched(true)
+
+    setClick(false)
+    validateValue()
+  }
 
   const handleOnChange = (event, value, reson) => {
-    //console.log('handleOnChange', reson) // TODO: handle 'clear' differently if inputvalue does not match
+    // TODO: handle 'clear' differently if inputvalue does not match (?)
     if (_.isObject(value) || _.isNull(value)) {
       setValue(value)
       _.isNull(value) ? setOpen(true) : setOpen(false)
@@ -202,7 +218,7 @@ export default function ReportingUnit(props) {
   const handleOnInputChange = (event, value, reson) => {
     if(event && event.keyCode === 13) {
       event.preventDefault()
-      // TODO: try to find a match and set that option or set message that there is no match?
+      // TODO: try to find a match and set that option or set message that there is no match (?)
       setErr(true)
     } else {
       if (value.length === 0)
@@ -213,22 +229,37 @@ export default function ReportingUnit(props) {
     }
   }
 
-  const handleOnClick = () => setOpen(true)
+  const handleOnClick = () => setClick(true)
   
+  // used to decorate current set-up and will run only when there is no 'reinsurer' object on value
+  // TODO: might not be needed if this is set on back-end
   useEffect(() => {
     if (!_.isEmpty(value) && _.isEmpty(value.reinsurer)) {
       setValue(addReinsurer(value));
     } 
-  })
+  }) //, []) <<-- exaustive error but should be set according to doc to run only once
 
+  // set open state when clicked
   useEffect(() => {
-    if (open && inputRef.current) {
-      // TODO: fix hack with React.forwardRef?
+    if (click)
+      setOpen(true)
+  }, [click, setOpen])
+
+  // focus input onClick
+  useEffect(() => {
+    if (click && open && inputRef.current) {
+      // TODO: fix this hack with React.forwardRef?
       const input = inputRef.current.querySelectorAll("input[type='text']")[0]
       input.focus()
       input.select()
     }
-  }, [open])
+  }, [click, open])
+
+  // validate when value is changed
+  useEffect(() => {
+    validateValue()
+  }, [value, validateValue])
+  
 
   return (
     <FormRow label={label}>
@@ -236,11 +267,12 @@ export default function ReportingUnit(props) {
         <SirReadOnlyField value={handleGetOptionLabel(value)} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
+            autoHighlight
+            openOnFocus
+            blurOnSelect  // has an effect
             popupIcon={<></>}
             size='small'
             className={classes.autocomplete}
-            openOnFocus
-            blurOnSelect
             filterOptions={filterOptions}
             options={options}
             groupBy={handleGroupBy}
@@ -255,7 +287,7 @@ export default function ReportingUnit(props) {
             getOptionLabel={handleGetOptionLabel}
             getOptionSelected={handleGetOptionSelected}
 
-            value={isValueEmpty ? '' : value}
+            value={!isValueEmpty ? value : null}
             onChange={handleOnChange}
 
             inputValue={inputValue}
