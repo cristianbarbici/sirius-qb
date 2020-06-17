@@ -1,5 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
-import { pxFieldHeight } from "./colors";
+//import { pxFieldHeight } from "./colors";
 
 // TODO: move to separate file
 // vars

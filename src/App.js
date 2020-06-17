@@ -11,8 +11,7 @@ import { logger } from "./SplatComponents/splatBackendReducer";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom"
 import TestTOB from "./Process/TestTOB";
 
@@ -33,11 +32,11 @@ function App() {
             >
               <Router>
                 <Switch>
-                  <Route path="/qb">
-                    <CreateQuickBusiness />
+                  <Route path="/test">
+                    <TestTOB />
                   </Route>
                   <Route path="/">
-                    <TestTOB />
+                    <CreateQuickBusiness />
                   </Route>
                 </Switch>
               </Router>

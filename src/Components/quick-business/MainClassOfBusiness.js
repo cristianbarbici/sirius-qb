@@ -1,5 +1,4 @@
 import React from "react"
-import _ from "lodash"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
 import FormRow from "../common/FormRow"

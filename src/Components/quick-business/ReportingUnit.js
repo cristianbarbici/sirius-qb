@@ -9,10 +9,7 @@ import { useSplatProcessState } from "@splat/splat-react"
 import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 import SirTextField from "../common/SirTextField"
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import CheckIcon from '@material-ui/icons/Check'
-import EditIcon from '@material-ui/icons/Edit'
+import SirReadOnlyField from '../common/SirReadOnlyField'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,14 +108,15 @@ export default function ReportingUnit(props) {
   const theme = useTheme()
   const classes = useStyles(theme)
   const [value, setValue] = useSplatField("process_ReportingUnit")
+  const isValueEmpty = _.isEmpty(value)
   const processState = useSplatProcessState()
-  const ruOptions = processState.ReportingUnitOptions // Name, Code, (add Reinsurer {Name, Code})
-  const reinsurerOptions = processState.ReinsurerOptions // Name, Code, ReportingUnitCodes
+  const ruOptions = processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
+  const reinsurerOptions = processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
+  
   const [err, setErr] = useState(false)
-  const hasValue = !_.isEmpty(value)
-  const [open, setOpen] = useState(!hasValue)
-  //const inputRef = useRef()
-
+  const [open, setOpen] = useState(isValueEmpty)
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef(null)
 
   const addReinsurer = (option) => {
     const matchedReinsurer = _.head(
@@ -146,35 +144,13 @@ export default function ReportingUnit(props) {
       option.reinsurer.Code + ' ' + option.reinsurer.Name + ' ' + option.Name + ' ' + option.Code,
   })
 
-  const isValueEmpty = _.isEmpty(value)
-  const handleOnChange = (event, value, reson) => setValue(value)
-  const handleOnInputChange = (event, value, reson) => value.length === 0 ? setErr(true) : setErr(false)
-  const handleGroupBy = (option) => option.reinsurer.Name + ';' + option.reinsurer.Code                                                    // group label
-  const handleGetOptionLabel = (option) => isValueEmpty ? '' : option.Name + ' (' + option.Code + ')'                                             // Used to determine the string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
-  const handleGetOptionSelected = (option) => isValueEmpty ? false : option.Code === value.Code
-  const handleOnBlur = (e) => {
-    console.log('handleOnBlur', e)
-    if (e.target.value.length === 0) {
-      setErr(true)
-      setOpen(true)
-    } else {
-      setErr(false)
-      setOpen(false)
-    }
-  }
-  const handleRenderInput = (params) =>
-    <SirTextField
-      {...params}
-      error={err}
-      variant="outlined"
-      hiddenLabel
-      placeholder={'Search...'}
-      onBlur={handleOnBlur}
-    /> // InputProps={{ startAdornment: <SearchIcon /> }}
-  const handleRenderOption = (option) => <div className={classes.option}><span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span></div>
+  // data for group
+  const handleGroupBy = option => option.reinsurer.Name + ';' + option.reinsurer.Code
+
+  // rendered group
   const handleRenderGroup = (props) => { // TODO: needed if to add some styling to subheader or other values
     const { key, group, children } = props
-    const reinsurer = group.split(';')
+    const reinsurer = group.split(';') // TODO: might be nice with a not so hacky solution
     return <li key={key}>
       <ListSubheader className={clsx(classes.reinsurer, 'MuiAutocomplete-groupLabel')} component='div'>
         <span className={classes.reinsurerCode}>{_.tail(reinsurer)}</span>
@@ -186,52 +162,107 @@ export default function ReportingUnit(props) {
       </ul>
     </li>
   }
+ 
+  // string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
+  // used for input display value
+  const handleGetOptionLabel = option => option && !isValueEmpty ? option.Name + ' (' + option.Code + ')' : ''
 
-  // run only once, disregard console warning react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (!_.isEmpty(value) && !value.reinsurer) {
-      setValue(addReinsurer(value));
+  // determine if option is selected
+  const handleGetOptionSelected = option => option && !isValueEmpty ? option.Code === value.Code : false 
+  
+  // render option element in list
+  const handleRenderOption = option => 
+    <div className={classes.option}>
+      <span>{option.Name}</span><span className={classes.optionCode}>({option.Code})</span>
+    </div>
+
+  const handleRenderInput = (params) => 
+    <SirTextField
+      {...params}
+      error={err}
+      variant="outlined"
+      hiddenLabel
+      placeholder={'Search...'}
+      onBlur={handleOnBlur}
+    />
+
+  
+
+  // On
+  const handleOnBlur = (e) => _.isEmpty(value) ? setOpen(true) : setOpen(false)
+
+  const handleOnChange = (event, value, reson) => {
+    //console.log('handleOnChange', reson) // TODO: handle 'clear' differently if inputvalue does not match
+    if (_.isObject(value) || _.isNull(value)) {
+      setValue(value)
+      _.isNull(value) ? setOpen(true) : setOpen(false)
     }
-  }, [])
+  }
 
-  // useEffect(() => {
-  //   if (open && inputRef.current) { 
-  //     inputRef.current.focus()
-  //     inputRef.current.select()
-  //   }
-  // }, [open])
+  const handleOnInputChange = (event, value, reson) => {
+    if(event && event.keyCode === 13) {
+      event.preventDefault()
+      // TODO: try to find a match and set that option or set message that there is no match?
+      setErr(true)
+    } else {
+      if (value.length === 0)
+        setErr(true)
+      else
+        setErr(false)
+      setInputValue(value)
+    }
+  }
+
+  const handleOnClick = () => setOpen(true)
+  
+  useEffect(() => {
+    if (!_.isEmpty(value) && _.isEmpty(value.reinsurer)) {
+      setValue(addReinsurer(value));
+    } 
+  })
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      // TODO: fix hack with React.forwardRef?
+      const input = inputRef.current.querySelectorAll("input[type='text']")[0]
+      input.focus()
+      input.select()
+    }
+  }, [open])
 
   return (
     <FormRow label={label}>
-      {/* {!open && !_.isEmpty(value) ?
-        <ListItem dense button className={clsx(classes.item, classes.editable)} onClick={() => setOpen(true)}>
-          <ListItemText primary={_.isEmpty(value) ? '' : value} />
-          <EditIcon className={classes.editIcon} />
-          <CheckIcon className={classes.validIcon} />
-        </ListItem> : */}
+      { !open ? 
+        <SirReadOnlyField value={handleGetOptionLabel(value)} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
-            //ref={inputRef}
+            popupIcon={<></>}
             size='small'
             className={classes.autocomplete}
             openOnFocus
-            popupIcon={<></>}
-            options={options}
+            blurOnSelect
             filterOptions={filterOptions}
-            value={isValueEmpty ? '' : value}
+            options={options}
+            groupBy={handleGroupBy}
             disableClearable={isValueEmpty}
             freeSolo={isValueEmpty}
-            onChange={handleOnChange}
-            onInputChange={handleOnInputChange}
-            groupBy={handleGroupBy}
+            ref={inputRef}
+
+            renderGroup={handleRenderGroup}
+            renderOption={handleRenderOption}
+            renderInput={handleRenderInput}
+
             getOptionLabel={handleGetOptionLabel}
             getOptionSelected={handleGetOptionSelected}
-            renderInput={handleRenderInput}
-            renderOption={handleRenderOption}
-            renderGroup={handleRenderGroup}
+
+            value={isValueEmpty ? '' : value}
+            onChange={handleOnChange}
+
+            inputValue={inputValue}
+            onInputChange={handleOnInputChange}
           />
         </div>
-      {/* */}
+      }
     </FormRow>
   );
 }

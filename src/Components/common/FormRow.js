@@ -8,6 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     padding: theme.spacing(2.5, 4.5),
+    height: 'auto',
+    transition: 'height 500ms cubic-bezier(0.4, 0, 0.2, 1)' // TODO: make it work smoother
   },
   label: {
     display: 'block',

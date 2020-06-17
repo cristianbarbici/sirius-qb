@@ -6,7 +6,7 @@ import {
 } from "../lib/splatComms";
 
 export const logger = (next) => (action) => {
-  console.log("dispatching", action);
+  //console.log("dispatching", action);
   let result = next(action);
   return result;
 };
@@ -19,7 +19,7 @@ export const updateState = (
   source,
   tewsCallback = () => {}
 ) => (msg) => {
-  console.log(`from ${source} subscription: `, msg);
+  //console.log(`from ${source} subscription: `, msg);
   if (msg.type === "TypeEventWithState") {
     setLocalState({
       lastKnownEventId: msg.lastKnownEventId,

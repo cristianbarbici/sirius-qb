@@ -6,8 +6,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CheckIcon from '@material-ui/icons/Check'
-import EditIcon from '@material-ui/icons/Edit'
 import { pxFieldHeight } from '../../Styles/colors'
+import SirReadOnlyField from './SirReadOnlyField'
 
 // in px
 const pxItemMargin = 4
@@ -97,13 +97,11 @@ export default function SirListGroup(props) {
     callBack && callBack(!open)
   }
 
+  const renderValue = (vlu) => vlu || '(None)'
+
   return (
-    !open ? 
-      <ListItem dense button className={clsx(classes.item, classes.editable)} onClick={handleOpen}>
-        <ListItemText primary={value.Name || '(None)'} />
-        <EditIcon className={classes.editIcon} />
-        <CheckIcon className={classes.validIcon} />
-      </ListItem> : 
+    !open ?
+      <SirReadOnlyField value={renderValue(value.Name)} onClick={handleOpen} /> : 
       <List
         className={classes.group}
         style={{ maxHeight: maxGroupHeight }}
@@ -113,7 +111,7 @@ export default function SirListGroup(props) {
           function (el) {
             return (
               <ListItem dense button className={clsx(classes.item, { [classes.selected]: el.Code === value.Code })} key={el.Code} onClick={() => handleChange(el.Code)}>
-                <ListItemText primary={el.Name || '(None)'} />
+                <ListItemText primary={renderValue(el.Name)} />
                 <CheckIcon className={classes.validIcon} />
               </ListItem>
             );

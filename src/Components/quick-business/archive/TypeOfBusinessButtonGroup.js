@@ -56,18 +56,6 @@ export default function TypeOfBusinessButtonGroup(props) {
   const [primary, setPrimary] = useState('');
   const [secondary, setSecondary] = useState('');
 
-  const handleSelected = (compare, fix) => {
-    return compare === fix ? "primary" : "";
-  };
-
-  const handlePrimary = (type) => {
-    setPrimary(type);
-  };
-
-  const handleSecondary = (type) => {
-    setSecondary(type);
-  };
-
   const handleChange = () => {
     // TODO: recommend we have the same logic for 'DIRECT'
     const code =
