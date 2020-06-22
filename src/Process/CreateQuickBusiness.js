@@ -8,6 +8,7 @@ import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
 import MainClassOfBusiness from "../Components/quick-business/MainClassOfBusiness"
 import Currency from "../Components/quick-business/Currency"
 import Reinsurer from "../Components/quick-business/Reinsurer"
+import InsuredPeriod from "../Components/quick-business/InsuredPeriod"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,10 @@ export default function CreateQuickBusiness(props) {
 
       <Section>
         <ReportingUnit />
+      </Section>
+
+      <Section>
+        <InsuredPeriod />
       </Section>
 
       <Section>

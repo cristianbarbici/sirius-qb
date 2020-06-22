@@ -51,11 +51,11 @@ export const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SirReadOnlyField(props) {
-  const { value, onClick } = props
+  const { value, onClick, ...other } = props
   const classes = useStyles()
 
   return (
-    <ListItem dense button className={classes.root} onClick={onClick}>
+    <ListItem dense button className={classes.root} onClick={onClick} {...other}>
       <ListItemText primary={value} />
       <EditIcon className={classes.editIcon} />
       <CheckIcon className={classes.validIcon} />

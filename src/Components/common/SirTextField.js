@@ -30,8 +30,14 @@ export const useStyles = makeStyles((theme) => ({
   }
 }))
 
+// const FancyButton = React.forwardRef((props, ref) => (
+//   <button ref={ref} className="FancyButton">
+//     {props.children}
+//   </button>
+// ));
+
 export default function SirTextField(props) {
-  const { startIcon, ...other } = props
+  const { startIcon, inputRef, ...other } = props
   const classes = useStyles()
 
   return (
@@ -39,15 +45,16 @@ export default function SirTextField(props) {
       className={classes.root}
       variant='outlined'
       size='small'
-      InputProps={{
-        startAdornment: (
-          startIcon === 'search' ?
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment> :
-          null
-        ),
-      }}
+      inputRef={inputRef}
+      // InputProps={{
+      //   startAdornment: (
+      //     startIcon === 'search' ?
+      //     <InputAdornment position="start">
+      //       <SearchIcon />
+      //     </InputAdornment> :
+      //     null
+      //   ),
+      // }}
       InputLabelProps={{ shrink: true }}
       fullWidth
       hiddenLabel

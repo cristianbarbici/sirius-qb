@@ -14,5 +14,5 @@ export default function TypeOfBusinessButtonGroup(props) {
     <FormRow label={label}>
       <SirRadioGroup value={value} setValue={setValue} data={typeOfBusinessOptions} />
     </FormRow>
-  );
+  )
 }

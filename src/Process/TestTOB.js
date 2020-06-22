@@ -24,17 +24,19 @@ export default function TestTOB(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} noValidate autoComplete="off">
+    <div className={classes.root}>
 
       <Section className={classes.section}>
         <TypeOfBusinessRadioGroup />
       </Section>
 
+{/* 
       <Section className={classes.section}>
         <TypeOfBusinessButtonGroup />
       </Section>
 
       <TypeOfBusiness />
+*/}
 
     </div>
   );

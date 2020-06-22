@@ -1,42 +1,19 @@
 import React, { useState } from 'react'
 import _ from 'lodash'
-import clsx from 'clsx'
 import { makeStyles } from "@material-ui/core/styles"
 import FormRow from '../common/FormRow'
 import { useSplatField } from '@splat/splat-react'
 import { useSplatProcessState } from '@splat/splat-react'
-import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
-import { hexSecondary, rgbSecondary } from '../../Styles/colors'
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
-
-const bgColor = `rgba(${rgbSecondary}, .12)`
-const bgColorHover = `rgba(${rgbSecondary}, .2)`
-const borderColor = `rgba(${rgbSecondary}, .38)`
+import SirButtonGroup from '../common/SirButtonGroup'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     display: 'flex',
     alignItems: 'center'
-  },
-  group: {
-    margin: 0,
-
-    '& $selected': {
-      borderRightColor: borderColor,
-    }
-  },
-  btn: {},
-  selected: {
-    backgroundColor: bgColor,
-    color: hexSecondary,
-    borderColor: borderColor,
-    '&:hover': {
-      backgroundColor: bgColorHover,
-    }
   },
   autocomplete: { // not nice hack
     marginLeft: theme.spacing(3),
@@ -84,18 +61,6 @@ export default function Currency(props) {
       Order: 3
     },
   ]
-  
-  const commonButton = (currency) => {
-    return (
-      <Button
-        key={currency.Code}
-        className={clsx(classes.btn, { [classes.selected]: hasValue && currency.Code === value.Code })}
-        onClick={() => handleButtonChange(currency)}
-      >
-        {currency.Code}
-      </Button>
-    )
-  }
 
   const filterOptions = createFilterOptions({
     stringify: (option) => option.Name + ' ' + option.Code
@@ -109,7 +74,7 @@ export default function Currency(props) {
     setValue(value)
     _.isEmpty(value) ? setOpen(true) : handleOpen()
   }
-  const handleButtonChange = (currency) => {
+  const handleOnClick = (currency) => {
     setValue(currency)
     handleOpen()
   }
@@ -120,9 +85,7 @@ export default function Currency(props) {
       {!open ?
         <SirReadOnlyField value={value.Code || ''} onClick={handleOpen} /> :
         <div className={classes.root}>
-          <ButtonGroup className={classes.group}>
-            {_.map(commonCurrency, curr => commonButton(curr))}
-          </ButtonGroup>
+          <SirButtonGroup data={commonCurrency} value={value} callbackClick={handleOnClick} />
           <Autocomplete
             size='small'
             className={classes.autocomplete}

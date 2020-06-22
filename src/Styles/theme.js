@@ -40,15 +40,15 @@ export const theme = createMuiTheme({
   
   overrides: {
     MuiOutlinedInput: {
-      root: {
-        '&.Mui-focused $notchedOutline': {
-          borderColor: hexSecondary,
-          borderWidth: 1
-        },
-        '&:hover $notchedOutline': {
-          borderColor: 'rgba(0,0,0,.87)',
-        }
-      },
+      // root: {
+      //   '&.Mui-focused $notchedOutline': {
+      //     borderColor: hexSecondary,
+      //     borderWidth: 1
+      //   },
+      //   '&:hover $notchedOutline': {
+      //     borderColor: 'rgba(0,0,0,.87)',
+      //   }
+      // },
       notchedOutline: {
         borderColor: 'rgba(0,0,0,.12)',
         transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1)'

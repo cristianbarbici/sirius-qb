@@ -35,7 +35,7 @@ export default function BusinessTitle(props) {
   const [err, setErr] = useState(false)
   const hasValue = !_.isEmpty(value)
   const [open, setOpen] = useState(!hasValue)
-  const inputRef = useRef()
+  const inputRef = useRef(null)
   const renderValue = value || ''
 
   const handleOnChange = (e) => {

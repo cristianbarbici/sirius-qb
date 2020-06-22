@@ -1,19 +1,24 @@
 import React from "react";
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { SplProcess } from "@splat/splat-react";
-import CreateQuickBusiness from "./Process/CreateQuickBusiness";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { theme } from "./Styles/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Splat from "./Data/Splat-data";
-import { logger } from "./SplatComponents/splatBackendReducer";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom"
-import TestTOB from "./Process/TestTOB";
+
+import { LocalizationProvider } from '@material-ui/pickers'
+import MomentUtils from '@material-ui/pickers/adapter/moment'
+
+import { SplProcess } from "@splat/splat-react";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./Styles/theme";
+import Splat from "./Data/Splat-data";
+import { logger } from "./SplatComponents/splatBackendReducer";
+
+import CreateQuickBusiness from "./Process/CreateQuickBusiness";
+import TestTOB from "./Process/TestTOB"
+import TestDatePickers from './Process/TestDatePickers'
 
 function App() {
   // make sure we can see in the console what kind of actions we are creating
@@ -23,27 +28,29 @@ function App() {
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <SplProcess
-              state={Splat.state}
-              middleware={middleware}
-              name="ContractPOCoverview"
-            >
-              <Router>
-                <Switch>
-                  <Route path="/test">
-                    <TestTOB />
-                  </Route>
-                  <Route path="/">
-                    <CreateQuickBusiness />
-                  </Route>
-                </Switch>
-              </Router>
-
-            </SplProcess>
-          </MuiPickersUtilsProvider>
-        </div>
+        <SplProcess
+          state={Splat.state}
+          middleware={middleware}
+          name="ContractPOCoverview"
+        >
+          <Router>
+            <Switch>
+              
+              <Route path="/test">
+                <TestTOB />
+              </Route>
+              
+              <Route path='/date'>
+                <TestDatePickers />
+              </Route>
+              
+              <Route path="/">
+                <CreateQuickBusiness />
+              </Route>
+              
+            </Switch>
+          </Router>
+        </SplProcess>
       </ThemeProvider>
     </>
   );
