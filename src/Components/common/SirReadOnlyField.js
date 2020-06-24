@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'inline-flex',
     width: '100%',
     borderRadius: 3,
-    backgroundColor: 'rgba(0,0,0,.02)',
+    backgroundColor: 'rgba(0,0,0,.01)',
     border: 'solid 1px rgba(0,0,0,.06)',
     margin: 0,
 
@@ -21,18 +21,18 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiSvgIcon-root': {
-      opacity: 0,
       color: 'rgba(0,0,0,.24)',
-      fontSize: '1.25rem',
       transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)'
     },
 
     '& $validIcon': {
-      opacity: 1
+      opacity: 1,
+      fontSize: '1.25rem',
     },
 
     '& $editIcon': {
-      opacity: 0
+      opacity: 0,
+      fontSize: '1.25rem',
     },
 
     '&:hover': {

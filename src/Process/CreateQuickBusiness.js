@@ -8,14 +8,14 @@ import LifeCycleStatus from "../Components/quick-business/LifeCycleStatus"
 import MainClassOfBusiness from "../Components/quick-business/MainClassOfBusiness"
 import Currency from "../Components/quick-business/Currency"
 import Reinsurer from "../Components/quick-business/Reinsurer"
-import InsuredPeriod from "../Components/quick-business/InsuredPeriod"
+import InsuredPeriod from "../Components/quick-business/insured-period/InsuredPeriod"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    maxWidth: theme.spacing(64),
+    maxWidth: theme.spacing(68),
     margin: `0 auto ${theme.spacing(6)}px`,
     padding: theme.spacing(3, 0),
     backgroundColor: '#fdfdfd' // $hexPanelBg: #fdfdfd;
@@ -54,12 +54,12 @@ export default function CreateQuickBusiness(props) {
         <Currency />
       </Section>
 
+
+
+      {/*
       <Section>
         <Reinsurer />
       </Section>
-
-      {/*
-
       <DebugButton />
 
       <FormRow>

@@ -5,11 +5,15 @@ import _ from "lodash"
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
-import { useSplatProcessState } from "@splat/splat-react"
-import { useSplatField } from "@splat/splat-react"
+// import { useSplatProcessState } from "@splat/splat-react"
+// import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 import SirTextField from "../common/SirTextField"
 import SirReadOnlyField from '../common/SirReadOnlyField'
+import refData from '../../Data/SICS-refdata'
+import reportingUnitOptions from '../../Data/SICS-refdata'
+import reinsurerOptions from '../../Data/SICS-refdata'
+
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,11 +111,11 @@ export default function ReportingUnit(props) {
   const label = "Reporting unit"
   const theme = useTheme()
   const classes = useStyles(theme)
-  const [value, setValue] = useSplatField("process_ReportingUnit")
+  const [value, setValue] = useState({}) //useSplatField("process_ReportingUnit")
   const isValueEmpty = _.isEmpty(value)
-  const processState = useSplatProcessState()
-  const ruOptions = processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
-  const reinsurerOptions = processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
+  // const processState = useSplatProcessState()
+  const ruOptions = refData.reportingUnitOptions //processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
+  const reinsurerOptions = refData.reinsurerOptions // processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
   
   const [err, setErr] = useState(false)
   const [open, setOpen] = useState(isValueEmpty)          // if there is a value close ...otherwise keep field open for input
@@ -137,7 +141,7 @@ export default function ReportingUnit(props) {
   }
 
   const options = _.sortBy(
-    ruOptions.map((option) => addReinsurer(option)),
+    _.map(ruOptions, option => addReinsurer(option)),
     [(item) => item.reinsurer.Name]
   )
 
@@ -181,6 +185,7 @@ export default function ReportingUnit(props) {
   const handleRenderInput = params => 
     <SirTextField
       {...params}
+      inputRef={inputRef}
       error={err}
       variant="outlined"
       hiddenLabel
@@ -249,7 +254,7 @@ export default function ReportingUnit(props) {
   useEffect(() => {
     if (click && open && inputRef.current) {
       // TODO: fix this hack with React.forwardRef?
-      const input = inputRef.current.querySelectorAll("input[type='text']")[0]
+      const input = inputRef.current //.querySelectorAll("input[type='text']")[0]
       input.focus()
       input.select()
     }
@@ -262,23 +267,23 @@ export default function ReportingUnit(props) {
   
 
   return (
-    <FormRow label={label}>
+    <FormRow label={label} error={err} valid={!open}>
       { !open ? 
         <SirReadOnlyField value={handleGetOptionLabel(value)} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
             autoHighlight
-            openOnFocus
+            //openOnFocus
             blurOnSelect  // has an effect
-            popupIcon={<></>}
+            //popupIcon={<></>}
             size='small'
             className={classes.autocomplete}
             filterOptions={filterOptions}
             options={options}
             groupBy={handleGroupBy}
-            disableClearable={isValueEmpty}
-            freeSolo={isValueEmpty}
-            ref={inputRef}
+            //disableClearable={isValueEmpty}
+            //freeSolo={isValueEmpty}
+            // ref={inputRef}
 
             renderGroup={handleRenderGroup}
             renderOption={handleRenderOption}

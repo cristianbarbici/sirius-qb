@@ -138,7 +138,7 @@ export default function SirAutocomplete(props) {
   useEffect(() => {
     if (click && open && inputRef.current) {
       // TODO: fix this hack with React.forwardRef?
-      const input = inputRef.current.querySelectorAll("input[type='text']")[0]
+      const input = inputRef.current //.querySelectorAll("input[type='text']")[0]
       input.focus()
       input.select()
     }
@@ -156,11 +156,10 @@ export default function SirAutocomplete(props) {
             size='small'
             className={classes.autocomplete}
             popupIcon={<></>}
-            ref={inputRef}
             options={options}
             getOptionLabel={(option) => option ? option.Name : ''}
             getOptionSelected={(option) => !isEmpty ? option.Name === value.Name : false}
-            renderInput={(params) => <SirTextField {...params} variant="outlined" hiddenLabel placeholder={'Search...'} onBlur={handleOnBlur} />}
+            renderInput={(params) => <SirTextField inputRef={inputRef} {...params} placeholder={'Search...'} onBlur={handleOnBlur} />} // variant and hiddenLabel is already true..
             value={!isEmpty ? value : null}
             onChange={handleOnChange}
           />

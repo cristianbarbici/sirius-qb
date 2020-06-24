@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import { useSplatField } from '@splat/splat-react'
+// import { useSplatField } from '@splat/splat-react'
 import FormRow from '../common/FormRow'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
@@ -30,7 +30,7 @@ export default function BusinessTitle(props) {
   const label = "Business title";
   const maxLength = 40; // TODO: might be set from server
   const classes = useStyles()
-  const [value, setValue] = useSplatField("process_BusinessLayer.BusinessTitle")
+  const [value, setValue] = useState('') //useSplatField("process_BusinessLayer.BusinessTitle")
   const [count, setCount] = useState(0)
   const [err, setErr] = useState(false)
   const hasValue = !_.isEmpty(value)
@@ -65,7 +65,7 @@ export default function BusinessTitle(props) {
   }, [open])
 
   return (
-    <FormRow label={label} className={classes.root}>
+    <FormRow label={label} className={classes.root} error={err} valid={!open}>
       {!open ?
         <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
         <SirTextField

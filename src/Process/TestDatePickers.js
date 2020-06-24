@@ -1,10 +1,9 @@
 import React, {useRef, useState} from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Section from "../Components/common/Section"
-import BasicDatePicker from "../Components/labs/BasicDatePicker";
-import InsuredPeriod from "../Components/quick-business/InsuredPeriod";
-import Button from '@material-ui/core/Button'
-import SirTextField from "../Components/common/SirTextField";
+import SirDatePicker from "../Components/common/SirDatePicker";
+import InsuredPeriod from "../Components/quick-business/insured-period/InsuredPeriod";
+
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,33 +23,17 @@ export const useStyles = makeStyles((theme) => ({
 
 export default function TestDatePickers(props) {
   const classes = useStyles()
-  const inputRef = useRef(null)
-  const [sel, setSel] = useState(false)
-
-  const handleOnClick = () => {
-    inputRef.current.focus();
-    inputRef.current.select();
-  }
-
+  
   return (
     <div className={classes.root}>
-
+ 
       <Section className={classes.section}>
-        <InsuredPeriod />
+        <SirDatePicker />
       </Section>
 
       <Section>
-        <Button onClick={() => setSel(true)}>Show</Button>
-
-        {sel && <Button onClick={handleOnClick}>Focus textfield</Button> }
-
-        {sel && <SirTextField
-          fullWidth
-          inputRef={inputRef}
-          placeholder="Enter Your First Name"
-        />}
+        <InsuredPeriod />
       </Section>
-
     </div>
-  );
+  )
 }

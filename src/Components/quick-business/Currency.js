@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import { makeStyles } from "@material-ui/core/styles"
 import FormRow from '../common/FormRow'
-import { useSplatField } from '@splat/splat-react'
-import { useSplatProcessState } from '@splat/splat-react'
+// import { useSplatField } from '@splat/splat-react'
+// import { useSplatProcessState } from '@splat/splat-react'
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirButtonGroup from '../common/SirButtonGroup'
+import refData from '../../Data/SICS-refdata'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,11 +36,11 @@ export const useStyles = makeStyles((theme) => ({
 export default function Currency(props) {
   const label = 'Main currency'
   const classes = useStyles();
-  const processState = useSplatProcessState()
-  const [value, setValue] = useSplatField('process_MainCurrency')
+  // const processState = useSplatProcessState()
+  const [value, setValue] = useState({}) //useSplatField('process_MainCurrency')
   const hasValue = !_.isEmpty(value)
   const [open, setOpen] = useState(!hasValue)
-  const mainCurrencyOptions = processState.MainCurrencyOptions
+  const mainCurrencyOptions = refData.mainCurrencyOptions //processState.MainCurrencyOptions
   // TODO: get from back-end
   const commonCurrency = [
     {
@@ -75,13 +76,14 @@ export default function Currency(props) {
     _.isEmpty(value) ? setOpen(true) : handleOpen()
   }
   const handleOnClick = (currency) => {
-    setValue(currency)
+    console.log('handleOnClick', currency)
+    setValue({Code: currency})
     handleOpen()
   }
   const handleOpen = () => setOpen(!open)
   
   return (
-    <FormRow label={label}>
+    <FormRow label={label} valid={!open}>
       {!open ?
         <SirReadOnlyField value={value.Code || ''} onClick={handleOpen} /> :
         <div className={classes.root}>

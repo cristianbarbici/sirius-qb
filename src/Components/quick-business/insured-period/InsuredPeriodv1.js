@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles"
-import FormRow from "../common/FormRow"
-import SirButtonGroup from "../common/SirButtonGroup"
-import SirReadOnlyField from "../common/SirReadOnlyField"
-import SirTextField from '../common/SirTextField'
+import FormRow from "../../common/FormRow"
+import SirButtonGroup from "../../common/SirButtonGroup"
+import SirReadOnlyField from "../../common/SirReadOnlyField"
+import SirTextField from '../../common/SirTextField'
 
 import MomentUtils from '@material-ui/pickers/adapter/moment'
 import { StaticDatePicker, LocalizationProvider } from '@material-ui/pickers';
@@ -13,13 +13,14 @@ import { StaticDatePicker, LocalizationProvider } from '@material-ui/pickers';
 import Popper from '@material-ui/core/Popper'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
-
+import Button from '@material-ui/core/Button'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
     position: "relative",
+    width: '100%'
   },
   picker: {
     "& .MuiInputAdornment-root": {
@@ -92,10 +93,34 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: '.5px'
   },
 
+  popper: {
+    marginTop: theme.spacing(.5),
+
+    '& .MuiPickersCalendar-calendarContainer': {
+      minHeight: theme.spacing(30)
+    }
+  },
+
+  date: {
+    width: '30%'
+  },
+
+  disabledDatePicker: {
+    position: 'relative',
+
+    '&:before': {
+      zIndex: 99,
+      content: '""',
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(255,255,255,.6)'
+    }
+  }
 }));
 
 const componentMode = { 
-  SELECT: 'select', 
+  UNSELECTED: 'unselected', 
   VIEW: 'view',
   EDIT: 'edit'
 }
@@ -126,28 +151,39 @@ const commonDates = [
 const format = 'YYYY-MM-DD'                                                 // TODO: format based on local
 const displayFormat = 'Do MMM YYYY'
 
-export default function InsuredPeriod(props) {
-  const label = 'Insured period'
+export default function InsuredPeriodv1(props) {
+  const label = 'Insured period (old)'
   const classes = useStyles()
   
-  const [mode, setMode] = useState(componentMode.SELECT)
+  const [mode, setMode] = useState(componentMode.UNSELECTED)
   const [from, setFrom] = useState(null)
   const [inputFrom, setInputFrom] = useState('')
+  const [inputTo, setInputTo] = useState('')
   const [to, setTo] = useState(null)
   const [duration, setDuration] = useState(null)
   const [fromErr, setFromErr] = useState(false)
+  const [toErr, setToErr] = useState(false)
   const [popperAnchor, setPopperAnchor] = React.useState(null)
   const [popperOpen, setPopperOpen] = React.useState(false)
+  const [locked, setLocked] = React.useState(true)
 
-  const inputRef = useRef(null)
+  const fromRef = useRef(null)
+  const toRef = useRef(null)
+  const parentRef = useRef(null)
 
-  const handleGroupButtonClick = (date) => {
-    const from = moment(date)
-    const to = moment(date).add(1, 'year').subtract(1, 'day')
-    const duration = to.diff(from, 'days')
+  const isDateValid = (date) => moment(date, format, true).isValid()
 
+  const cleanUp = () => {
     setPopperOpen(false)
     setFromErr(false)
+  }
+
+  const setInsuredPeriod = (fromDate, toDate = null) => {
+    const from = isDateValid(fromDate) ? moment(fromDate) : null
+    const to = toDate && isDateValid(toDate) ? moment(toDate) : (isDateValid(fromDate) ? moment(fromDate).add(1, 'year').subtract(1, 'day') : null)
+    const duration = from && to ? to.diff(from, 'days') : null
+
+    cleanUp()
 
     setFrom(from)
     setInputFrom(from.format(format))
@@ -157,24 +193,37 @@ export default function InsuredPeriod(props) {
     setMode(componentMode.VIEW)
   }
 
+  const handleQuickSelect = (date) => {
+    setInsuredPeriod(date)
+  }
+
   const handleShowEditMode = () => {
+    setInputFrom(from.format(format))
+    setInputTo(to.format(format))
     setMode(componentMode.EDIT)
-    
-
   }
 
-  const handleDatePickerOnChange = (date) => {
-    handleGroupButtonClick(date)
+  const handleOnChangeFromDatePicker = (date) => {
+    if (locked) {
+      setInsuredPeriod(date)
+    } else {
+      const from = isDateValid(date) ? moment(date) : null
+      const duration = from && to ? to.diff(from, 'days') : null
+      setFrom(from)
+      setInputFrom(from.format(format))
+      setDuration(duration)
+    }
   }
 
-  const isDateValid = (date) => moment(date, format, true).isValid()
-  const validateField = (txt) => {
-    const isDate = isDateValid(txt)
-    if (isDate)
-      handleGroupButtonClick(txt)
+  const handleOnChangeToDatePicker = (date) => {
+    console.log('handleOnChangeToDatePicker TODO')
+    const to = isDateValid(date) ? moment(date) : null
+    const duration = from && to ? to.diff(from, 'days') : null
+    setTo(to)
+    setDuration(duration)
   }
 
-  const handleOnFromTextChange = (e) => {
+  const handleOnChangeFromDateText = (e) => {
     const txt = e.target.value
     setInputFrom(txt)
 
@@ -185,24 +234,41 @@ export default function InsuredPeriod(props) {
       setFromErr(true)
   }
 
-  const handleOnKeyPress = (e) => {
+  const handleOnKeyPressFromDateText = (e) => {
     const txt = e.target.value
     if (e.key === 'Enter') {
-      validateField(txt)
+      setInsuredPeriod(txt)
     }
   }
 
-  const handleOnBlur = (e) => {
+  const handleOnBlurFromDateText = (e) => {
     if (!popperOpen) {
       const txt = e.target.value
-      validateField(txt)
-      setPopperOpen(false)
+      setInsuredPeriod(txt)
     }
   }
 
-  const handleOnFocus = (e) => {
-    setPopperAnchor(e.currentTarget)
+  const handleOnFocusFromDateText = (e) => {
+    const target = locked ? fromRef.current : parentRef.current
+    setPopperAnchor(target)
     setPopperOpen(true)
+  }
+
+  const handleOnChangeToDateText = (e) => {}
+  const handleOnKeyPressToDateText = (e) => {}
+  const handleOnBlurToDateText = (e) => {}
+  const handleOnFocusToDateText = (e) => {}
+
+
+  const handleCloseCalendar = (e) => {
+    cleanUp()
+    setMode(componentMode.VIEW)
+  }
+
+  const toggleLocked = (e) => {
+    const target = !locked ? fromRef.current : parentRef.current
+    setPopperAnchor(target)
+    setLocked(!locked)
   }
 
   const renderValue = () =>
@@ -210,38 +276,47 @@ export default function InsuredPeriod(props) {
       <span className={classes.from}>{from.format(displayFormat)}</span>
       <span className={classes.separator}>&mdash;</span>
       <span className={classes.to}>{to.format(displayFormat)}</span>
-      <span className={classes.duration}>({duration <= 1 ? duration + ' day' : duration + ' days'})</span>
+      <span className={classes.duration}>({duration <= 1 ? duration + ' day' : ( duration === 364 ? '1 year' : duration + ' days' )})</span>
     </div>
 
   useEffect(() => {
-    if (mode === componentMode.EDIT && inputRef.current) {
-      inputRef.current.focus()
-      inputRef.current.select()
+    if (mode === componentMode.EDIT && fromRef.current) {
+      fromRef.current.focus()
+      fromRef.current.select()
     }
   }, [mode])
 
+
+  const isUnselectedMode = mode === componentMode.UNSELECTED
+
+
+  
+
+
   return (
-    <FormRow label={label}>
-      { mode === componentMode.SELECT ? 
+    <FormRow label={label} hint={isUnselectedMode ? 'Select start date. The 1st of the month and 1y duration are set automatically.' : null}>
+      { isUnselectedMode ? 
         <div className={classes.root}>
-          <SirButtonGroup data={commonDates} callbackClick={handleGroupButtonClick} />
+          <SirButtonGroup data={commonDates} callbackClick={handleQuickSelect} />
         </div> : null }
 
       { mode === componentMode.VIEW ? 
         <SirReadOnlyField value={renderValue()} onClick={handleShowEditMode} /> : null }
 
       { mode === componentMode.EDIT ? 
-        <>
+        <div className={classes.root} ref={parentRef}>
           <SirTextField
-            inputRef={inputRef}
+            className={classes.date}
+            inputRef={fromRef}
             value={inputFrom}
-            onChange={handleOnFromTextChange}
-            onKeyPress={handleOnKeyPress}
-            onBlur={handleOnBlur}
-            onFocus={handleOnFocus}
+            onChange={handleOnChangeFromDateText}
+            onKeyPress={handleOnKeyPressFromDateText}
+            onBlur={handleOnBlurFromDateText}
+            onFocus={handleOnFocusFromDateText}
             error={fromErr}
-          /> 
+          />
           <Popper 
+            className={classes.popper}
             open={popperOpen} 
             anchorEl={popperAnchor} 
             transition
@@ -265,24 +340,63 @@ export default function InsuredPeriod(props) {
               <Fade {...TransitionProps} timeout={350}>
                 <Paper>
                   <LocalizationProvider dateAdapter={MomentUtils}>
-                    <StaticDatePicker
-                      autoOk
-                      displayStaticWrapperAs="desktop"
-                      value={from}
-                      onChange={handleDatePickerOnChange}
-                      renderInput={props => <SirTextField {...props} />}
-                    />
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                      <div>
+                        <StaticDatePicker
+                          autoOk
+                          displayStaticWrapperAs="desktop"
+                          //allowKeyboardControl={true} // will set focus to calendar and not field as needed
+                          value={from}
+                          onChange={handleOnChangeFromDatePicker}
+                          renderInput={props => <SirTextField {...props} />}
+                        />
+                      </div>
+                      { !locked && //  className={classes.disabledDatePicker}
+                        <div>
+                          <StaticDatePicker
+                            autoOk
+                            disabled={true}
+                            displayStaticWrapperAs="desktop"
+                            //allowKeyboardControl={true} // will set focus to calendar and not field as needed
+                            value={to}
+                            onChange={handleOnChangeToDatePicker}
+                            renderInput={props => <SirTextField {...props} />}
+                          />
+                        </div>
+                      }
+                    </div>
+                    {!locked && <div style={{ textAlign: 'right', width: '100%', padding: '0 1rem 1rem 0' }}>
+                      <Button onClick={handleCloseCalendar}>Close</Button>
+                    </div>}
                   </LocalizationProvider>
                 </Paper>
               </Fade>
             )}
           </Popper>
-        </>
+          <span className={classes.separator}>&mdash;</span>
+          { locked ? 
+            <span className={classes.to} style={{ flex: 1 }}>{to.format(displayFormat)}</span> :
+            <SirTextField
+              className={classes.date}
+              inputRef={toRef}
+              value={inputTo}
+              onChange={handleOnChangeToDateText}
+              onKeyPress={handleOnKeyPressToDateText}
+              onBlur={handleOnBlurToDateText}
+              onFocus={handleOnFocusToDateText}
+              error={toErr}
+            />
+          }
+          <div>
+            <Button onClick={toggleLocked}>{locked ? 'Unlock' : 'Lock'}</Button>
+          </div>
+        </div>
         : null }
 
     </FormRow>
-  );
+  )
 }
+
 
 
       {/* { mode === componentMode.EDIT ? 

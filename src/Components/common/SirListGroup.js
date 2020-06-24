@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   item: {
     display: 'inline-flex',
-    width: `calc(50% - ${theme.spacing(1)}px)`,
+    width: `calc(50% - ${theme.spacing(.5)}px)`,
     borderRadius: 3,
     border: 'solid 1px rgba(0,0,0,.06)',
     margin: theme.spacing(.5),

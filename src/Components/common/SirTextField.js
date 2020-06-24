@@ -1,9 +1,8 @@
 import React from 'react'
+import clsx from 'clsx'
 import TextField from '@material-ui/core/TextField'
-import InputAdornment from '@material-ui/core/InputAdornment'
 import { makeStyles } from '@material-ui/core/styles'
 import { pxFieldHeight } from '../../Styles/colors'
-import SearchIcon from '@material-ui/icons/Search'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,34 +29,19 @@ export const useStyles = makeStyles((theme) => ({
   }
 }))
 
-// const FancyButton = React.forwardRef((props, ref) => (
-//   <button ref={ref} className="FancyButton">
-//     {props.children}
-//   </button>
-// ));
-
 export default function SirTextField(props) {
-  const { startIcon, inputRef, ...other } = props
+  const { inputRef, className, ...other } = props
   const classes = useStyles()
 
   return (
     <TextField
-      className={classes.root}
+      className={clsx(classes.root, className)}
       variant='outlined'
       size='small'
-      inputRef={inputRef}
-      // InputProps={{
-      //   startAdornment: (
-      //     startIcon === 'search' ?
-      //     <InputAdornment position="start">
-      //       <SearchIcon />
-      //     </InputAdornment> :
-      //     null
-      //   ),
-      // }}
       InputLabelProps={{ shrink: true }}
       fullWidth
       hiddenLabel
+      inputRef={inputRef} // must be explicitly set for focus() to work
       {...other}
     />
   )
