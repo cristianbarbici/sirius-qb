@@ -6,8 +6,11 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CheckIcon from '@material-ui/icons/Check'
-import { pxFieldHeight } from '../../Styles/colors'
+import { pxFieldHeight, bgColor, hexSecondary, brdColor, bgColorHover } from '../../Styles/colors'
 import SirReadOnlyField from './SirReadOnlyField'
+import IconButton from '@material-ui/core/IconButton'
+import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
+import Tooltip from '@material-ui/core/Tooltip'
 
 // in px
 const pxItemMargin = 4
@@ -37,49 +40,42 @@ export const useStyles = makeStyles((theme) => ({
 
     '& .MuiSvgIcon-root': {
       opacity: 0,
-      color: 'rgba(0,0,0,.24)',
-      fontSize: '1.25rem',
       transition: 'opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)'
     }
   },
   validIcon: {
-    opacity: 0
-  },
-  editIcon: {
     opacity: 0,
-    marginRight: theme.spacing(1)
-  },
-  editable: {
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,.02)',
-    margin: 0,
-
-    '& $validIcon': {
-      opacity: 1
-    },
-
-    '& $editIcon': {
-      opacity: 0
-    },
-
-    '&:hover': {
-      '& $editIcon': {
-        opacity: 1
-      }
-    }
+    color: hexSecondary,
   },
   selected: {
+    backgroundColor: bgColor,
+    color: hexSecondary,
+    borderColor: brdColor,
+    '&:hover': {
+      backgroundColor: bgColorHover,
+    },
     '& $validIcon': {
       opacity: 1
     }
-  }
+  },
+  // unfoldBtn: {
+  //   position: 'absolute',
+  //   right: 0,
+  //   top: 0,
+  //   opacity: .38,
+
+  //   '&:hover': {
+  //     opacity: .87
+  //   }
+  // },
+  // unfoldIcon: {
+  //   fontSize: '1rem'
+  // }
 }));
 
 export default function SirListGroup(props) {
-  const { data, value, setValue, callBack } = props
-  const hasValue = !_.isEmpty(value)
+  const { data, value, setValue, open, setOpen, hideValidationIcon } = props
   const classes = useStyles()
-  const [open, setOpen] = useState(!hasValue)
   const amount = data.length
   const maxGroupHeight = itemHeight * (amount + amount % 2) / 2
 
@@ -89,19 +85,13 @@ export default function SirListGroup(props) {
       (item) => item.Code === code
     ))
     setValue(selected)
-    handleOpen()
-  }
-
-  const handleOpen = () => {
     setOpen(!open)
-    callBack && callBack(!open)
   }
-
   const renderValue = (vlu) => vlu || '(None)'
 
   return (
     !open ?
-      <SirReadOnlyField value={renderValue(value.Name)} onClick={handleOpen} /> : 
+      <SirReadOnlyField value={renderValue(value.Name)} onClick={setOpen} hideValidationIcon={hideValidationIcon} /> : 
       <List
         className={classes.group}
         style={{ maxHeight: maxGroupHeight }}
@@ -112,7 +102,7 @@ export default function SirListGroup(props) {
             return (
               <ListItem dense button className={clsx(classes.item, { [classes.selected]: el.Code === value.Code })} key={el.Code} onClick={() => handleChange(el.Code)}>
                 <ListItemText primary={renderValue(el.Name)} />
-                <CheckIcon className={classes.validIcon} />
+                <CheckIcon className={classes.validIcon} fontSize='small' />
               </ListItem>
             );
           }

@@ -3,11 +3,11 @@ import _ from 'lodash'
 import clsx from 'clsx'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import FormRow from '../../common/FormRow'
-import SirButtonGroup from '../../common/SirButtonGroup'
-import SirReadOnlyField from '../../common/SirReadOnlyField'
-import SirDatePicker from '../../common/SirDatePicker'
+
+import FormRow from '../common/FormRow'
+import SirButtonGroup from '../common/SirButtonGroup'
+import SirReadOnlyField from '../common/SirReadOnlyField'
+import SirDatePicker from '../common/SirDatePicker'
 
 import IconButton from '@material-ui/core/IconButton'
 import LockIcon from '@material-ui/icons/Lock'
@@ -16,6 +16,10 @@ import ClearIcon from '@material-ui/icons/Clear'
 import Tooltip from '@material-ui/core/Tooltip'
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import EditIcon from '@material-ui/icons/Edit'
+import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
+import { hexSecondary, rgbSecondary, bgColorHover } from '../../Styles/colors'
+import CtrlActions from '../common/CtrlActions'
 
 export const useStyles = makeStyles((theme) => ({
   unselected: {
@@ -59,7 +63,17 @@ export const useStyles = makeStyles((theme) => ({
   },
   editActions: {
     flex: 1,
-    textAlign: 'right'
+    textAlign: 'right',
+    marginRight: -theme.spacing(1)
+  },
+  actionBtn: {
+    padding: theme.spacing(1.25)
+  },
+  actionBtnFirst: {
+    marginRight: -theme.spacing(.5)
+  },
+  actionIcon: {
+    fontSize: '1.1rem'
   }
 }));
 
@@ -72,23 +86,28 @@ const componentMode = {
 const commonDates = [
   {
     Name: 'SEP',
-    Code: '2020-09-01'
+    Code: '2020-09-01',
+    Alt: '1st Sep 2020'
   },
   {
     Name: 'OCT',
-    Code: '2020-10-01'
+    Code: '2020-10-01',
+    Alt: '1st Oct 2020'
   },
   {
     Name: 'NOV',
-    Code: '2020-11-01'
+    Code: '2020-11-01',
+    Alt: '1st Nov 2020'
   },
   {
     Name: 'DEC',
-    Code: '2020-12-01'
+    Code: '2020-12-01',
+    Alt: '1st Dec 2020'
   },
   {
     Name: 'JAN',
-    Code: '2021-01-01'
+    Code: '2021-01-01',
+    Alt: '1st Jan 2021'
   },
 ]
 
@@ -108,7 +127,7 @@ export default function InsuredPeriod(props) {
   const [errorTo, setErrorTo] = useState(false)
   const [locked, setLocked] = React.useState(true)
   const fromRef = useRef(null)
-
+  const toRef = useRef(null)
 
   const setViewMode = () => {
     setMode(componentMode.VIEW)
@@ -125,6 +144,7 @@ export default function InsuredPeriod(props) {
     setFrom(from)
     setTo(to)
     setDuration(duration)
+    setLocked(false) // TODO: ...
     if (changeMode)
       setViewMode()
   }
@@ -143,6 +163,7 @@ export default function InsuredPeriod(props) {
     setErrorTo(false)
     setTo(to)
     setDuration(calcDuration(from, to))
+    setViewMode()
   }
 
   const handleQuickSelect = (date) => setInsuredPeriod(date)
@@ -172,6 +193,14 @@ export default function InsuredPeriod(props) {
     setErrorTo(false)
     setViewMode()
   }
+  const clearPeriod = () => {
+    setErrorFrom(false)
+    setErrorTo(false)
+    setFrom(null)
+    setTo(null)
+    setDuration(null)
+    setMode(componentMode.UNSELECTED)
+  }
 
   // set focus on edit
   useEffect(() => {
@@ -181,25 +210,35 @@ export default function InsuredPeriod(props) {
     }
   }, [mode])
 
+  useEffect(() => {
+    if (mode === componentMode.EDIT && toRef.current) {
+      toRef.current.focus()
+      toRef.current.select()
+    }
+  }, [locked])
+
   const renderDuration = () =>
     <span className={classes.duration}>({duration === 364 ? '1 year' : duration + ' days'})</span>
 
   const renderTo = (edit) =>
-    <span className={clsx(classes.to, {[classes.toUnlocked]: !locked})}>
-      { !edit ? 
-        to.format(displayFormat) : 
-          locked ? 
+    <>
+      <span className={clsx(classes.to, {[classes.toUnlocked]: !locked})}>
+        { !edit ? 
           to.format(displayFormat) : 
-          <SirDatePicker
-            value={to}
-            error={errorTo}
-            onChange={handleOnChangeTo}
-            onAccept={handleOnAcceptTo}
-            onEnter={handleOnEnterTo}
-          />
-      }
+            locked ? 
+            <Link href='#' onClick={toggleLocked}>{to.format(displayFormat)}</Link> : 
+            <SirDatePicker
+              inputRef={toRef}
+              value={to}
+              error={errorTo}
+              onChange={handleOnChangeTo}
+              onAccept={handleOnAcceptTo}
+              onEnter={handleOnEnterTo}
+            />
+        }
+      </span>
       {renderDuration()}
-    </span>
+    </>
 
   const renderMode = (edit) => {
     return (
@@ -217,14 +256,14 @@ export default function InsuredPeriod(props) {
         }
         <span className={classes.separator}>&mdash;</span>
         {renderTo(edit)}
-        {edit && 
+        { edit &&
           <span className={classes.editActions}>
-            <Tooltip title={locked ? 'Click to set to date' : 'Click to set duration to 1 year'}>
-              <IconButton onClick={toggleLocked}>{!locked ? <LockIcon fontSize="small" /> : <LockOpenIcon fontSize="small" />}</IconButton>
-            </Tooltip>
-            <Tooltip title='Close edit'>
-              <IconButton onClick={closeEditMode}><ClearIcon fontSize="small" /></IconButton>
-            </Tooltip>
+            <CtrlActions 
+              titleClear='Clear period and start over' 
+              callbackClear={clearPeriod} 
+              titleOk='Close edit mode' 
+              callbackOk={closeEditMode} 
+            />
           </span>
         }
       </div>
@@ -241,7 +280,12 @@ export default function InsuredPeriod(props) {
       error={errorFrom || errorTo}
       valid={isViewMode}
       label={label} 
-      hint={isUnselectedMode ? 'Select start date. The 1st of the month and 1y duration are set automatically.' : null}>
+      hint={
+        isUnselectedMode ? 
+        'Select periods start date. The end date is initially set 1 year away.' : null
+        // (isEditMode ? 'Change default duration by selecting a custom end date.' : null)
+      }
+    >
 
       {isUnselectedMode && // TODO: fix correct helper texts
         <div className={classes.unselected}>
@@ -250,6 +294,7 @@ export default function InsuredPeriod(props) {
             callbackClick={handleQuickSelect}
           />
           <SirDatePicker
+            placeholder={'Custom...'}
             value={null}
             error={errorFrom}
             onChange={handleOnChangeFrom}

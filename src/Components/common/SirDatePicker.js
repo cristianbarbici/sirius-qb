@@ -1,8 +1,7 @@
-import React, {useState} from "react"
+import React from "react"
 import clsx from 'clsx'
-import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles"
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from "@material-ui/pickers"
+import { DesktopDatePicker, LocalizationProvider } from "@material-ui/pickers"
 import MomentUtils from '@material-ui/pickers/adapter/moment'
 import SirTextField from './SirTextField'
 
@@ -31,6 +30,7 @@ export default function SirDatePicker(props) {
     error, 
     onEnter,
     fullWidth = false, 
+    placeholder,
     value, 
     onChange, 
     onAccept
@@ -55,7 +55,7 @@ export default function SirDatePicker(props) {
   )
 
   return (    
-    <LocalizationProvider dateAdapter={MomentUtils}>
+    <LocalizationProvider dateAdapter={MomentUtils}>      
       <DesktopDatePicker
         autoOk
         inputFormat='YYYY-MM-DD'
@@ -64,6 +64,7 @@ export default function SirDatePicker(props) {
         value={value}
         onChange={onChange}
         onAccept={onAccept}
+        inputProps={placeholder ? { placeholder: placeholder } : null}
       />
     </LocalizationProvider>
   )

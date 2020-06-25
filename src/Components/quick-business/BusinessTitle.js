@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-// import { useSplatField } from '@splat/splat-react'
+import { useSplatField } from '@splat/splat-react'
 import FormRow from '../common/FormRow'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
+import { hexError } from '../../Styles/colors'
+import {SPLATFIELD} from './splat/vars'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#b22000' // TODO: globalize
+      borderColor: hexError
     }
   }
 }))
@@ -30,7 +32,8 @@ export default function BusinessTitle(props) {
   const label = "Business title";
   const maxLength = 40; // TODO: might be set from server
   const classes = useStyles()
-  const [value, setValue] = useState('') //useSplatField("process_BusinessLayer.BusinessTitle")
+  const [value, setValue] = useSplatField(SPLATFIELD.BUSINESSTITLE)
+  // const [value, setValue] = useState('')
   const [count, setCount] = useState(0)
   const [err, setErr] = useState(false)
   const hasValue = !_.isEmpty(value)

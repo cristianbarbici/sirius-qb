@@ -1293,6 +1293,27 @@ let lifeCycleStatusOptions = [
 
 let nrOfBusinessesToCreateOptions = [(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)];
 
+let commonCurrency = [
+  {
+    Name: "USD",
+    Code: "USD",
+    Currency: 'US Dollar',
+    Order: 1
+  },
+  {
+    Name: "SEK",
+    Code: "SEK",
+    Currency: 'Swedish Krona',
+    Order: 2
+  },
+  {
+    Name: "EUR",
+    Code: "EUR",
+    Currency: 'Euro',
+    Order: 3
+  },
+]
+
 export default {
   mainCurrencyOptions,
   reportingUnitOptions,
@@ -1303,6 +1324,7 @@ export default {
   relationshipCodes,
   lifeCycleStatusOptions,
   nrOfBusinessesToCreateOptions,
+  commonCurrency,
 };
 
 

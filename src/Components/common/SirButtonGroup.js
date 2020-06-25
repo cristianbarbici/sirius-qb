@@ -2,26 +2,23 @@ import React from 'react'
 import _ from 'lodash'
 import clsx from 'clsx'
 import { makeStyles } from "@material-ui/core/styles"
+import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import { hexSecondary, rgbSecondary } from '../../Styles/colors'
-
-const bgColor = `rgba(${rgbSecondary}, .12)`
-const bgColorHover = `rgba(${rgbSecondary}, .2)`
-const borderColor = `rgba(${rgbSecondary}, .38)`
+import { hexSecondary, bgColor, brdColor, bgColorHover } from '../../Styles/colors'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     margin: 0,
     '& $selected': {
-      borderRightColor: borderColor,
+      borderRightColor: brdColor,
     }
   },
   btn: {},
   selected: {
     backgroundColor: bgColor,
     color: hexSecondary,
-    borderColor: borderColor,
+    borderColor: brdColor,
     '&:hover': {
       backgroundColor: bgColorHover,
     }
@@ -34,14 +31,15 @@ export default function SirButtonGroup(props) {
   const isEmpty = _.isEmpty(value)
 
   const commonButton = (item) =>
-    <Button
-      key={item.Code}
-      className={clsx(classes.btn, { [classes.selected]: !isEmpty && item.Code === value.Code })}
-      onClick={() => callbackClick(item.Code)}
-    >
-      {item.Name}
-    </Button>
-
+    <Tooltip title={item.Alt ? item.Alt : ''}>
+      <Button
+        key={item.Code}
+        className={clsx(classes.btn, { [classes.selected]: !isEmpty && item.Code === value.Code })}
+        onClick={() => callbackClick(item.Code)}
+      >
+        {item.Name}
+      </Button>
+    </Tooltip>
   return (
     <ButtonGroup className={classes.root}>
       {_.map(data, item => commonButton(item))}

@@ -1,8 +1,9 @@
-import React, {useState} from "react"
+import React from "react"
 import Switch from "@material-ui/core/Switch"
 import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 import { makeStyles } from '@material-ui/core/styles'
+import {SPLATFIELD} from './splat/vars'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +15,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IsCoinsurance(props) {
-  const [value, setValue] = useState(false) //useSplatField("process_IsCoinsurance")
+  const [value, setValue] = useSplatField(SPLATFIELD.ISCOINSURANCE)
   const classes = useStyles()
 
   return (

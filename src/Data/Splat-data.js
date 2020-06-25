@@ -1897,6 +1897,7 @@ let state = {
   RelationshipCodes: refData.relationshipCodes,
   ReportingUnitOptions: refData.reportingUnitOptions,
   NrOfBusinessesToCreateOptions: refData.nrOfBusinessesToCreateOptions,
+  CommonCurrency: refData.commonCurrency,
   ShowCedentInUI: true,
   IsReadOnlyUser: false,
   CurrentActivity: "contractPOCoverview",
@@ -1985,8 +1986,8 @@ let state = {
   process_StartDate: undefined,
   process_EndDate: undefined,
   process_ReportingUnit: {
-    Name: "CH Zurich Branch",
-    Code: "2391",
+    // Name: "CH Zurich Branch",
+    // Code: "2391",
   },
   process_Reinsurer: {
     //ReportingUnitCodes: ["2391", "2395"],
@@ -1997,9 +1998,9 @@ let state = {
   process_TypeOfBusiness: {
   },
   process_Broker: {
-    RelationshipCode: "BR",
-    Name: "Magnafone",
-    Code: "14645",
+    // RelationshipCode: "BR",
+    // Name: "Magnafone",
+    // Code: "14645",
   },
   process_LifeCycleStatus: {
     // Name: "New Quote Requested",

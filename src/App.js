@@ -7,18 +7,14 @@ import {
   Route
 } from "react-router-dom"
 
-import { LocalizationProvider } from '@material-ui/pickers'
-import MomentUtils from '@material-ui/pickers/adapter/moment'
-
 import { SplProcess } from "@splat/splat-react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { theme } from "./Styles/theme";
 import Splat from "./Data/Splat-data";
 import { logger } from "./SplatComponents/splatBackendReducer";
-
 import CreateQuickBusiness from "./Process/CreateQuickBusiness";
-import TestTOB from "./Process/TestTOB"
-import TestDatePickers from './Process/TestDatePickers'
+// import TestTOB from "./Process/TestTOB"
+import Labs from './Process/Labs'
 
 function App() {
   // make sure we can see in the console what kind of actions we are creating
@@ -29,19 +25,19 @@ function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <SplProcess
-          state={Splat.state}
+          state={{ typeData: Splat.typeData, state: Splat.state, instanceUri: Splat.event.origin, lastKnownEventId: Splat.event.eventId }}
           middleware={middleware}
           name="ContractPOCoverview"
         >
           <Router>
             <Switch>
               
-              <Route path="/test">
+              {/* <Route path="/test">
                 <TestTOB />
-              </Route>
+              </Route> */}
               
-              <Route path='/date'>
-                <TestDatePickers />
+              <Route path='/labs'>
+                <Labs />
               </Route>
               
               <Route path="/">

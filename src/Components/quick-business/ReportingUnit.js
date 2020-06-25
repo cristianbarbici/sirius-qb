@@ -5,15 +5,16 @@ import _ from "lodash"
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
-// import { useSplatProcessState } from "@splat/splat-react"
-// import { useSplatField } from "@splat/splat-react"
+import { useSplatProcessState } from "@splat/splat-react"
+import { useSplatField } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 import SirTextField from "../common/SirTextField"
 import SirReadOnlyField from '../common/SirReadOnlyField'
-import refData from '../../Data/SICS-refdata'
-import reportingUnitOptions from '../../Data/SICS-refdata'
-import reinsurerOptions from '../../Data/SICS-refdata'
-
+// import refData from '../../Data/SICS-refdata'
+// import reportingUnitOptions from '../../Data/SICS-refdata'
+// import reinsurerOptions from '../../Data/SICS-refdata'
+import { hexError } from "../../Styles/colors"
+import {SPLATFIELD} from './splat/vars'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#b22000'
+      borderColor: hexError
     }
   },
   reinsurer: {
@@ -111,11 +112,11 @@ export default function ReportingUnit(props) {
   const label = "Reporting unit"
   const theme = useTheme()
   const classes = useStyles(theme)
-  const [value, setValue] = useState({}) //useSplatField("process_ReportingUnit")
+  const [value, setValue] = useSplatField(SPLATFIELD.REPORTINGUNIT)
   const isValueEmpty = _.isEmpty(value)
-  // const processState = useSplatProcessState()
-  const ruOptions = refData.reportingUnitOptions //processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
-  const reinsurerOptions = refData.reinsurerOptions // processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
+  const processState = useSplatProcessState()
+  const ruOptions = processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
+  const reinsurerOptions = processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
   
   const [err, setErr] = useState(false)
   const [open, setOpen] = useState(isValueEmpty)          // if there is a value close ...otherwise keep field open for input

@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Section from "../Components/common/Section"
 import SirDatePicker from "../Components/common/SirDatePicker";
-import InsuredPeriod from "../Components/quick-business/insured-period/InsuredPeriod";
+import InsuredPeriod from "../Components/quick-business/InsuredPeriod";
 
 
 export const useStyles = makeStyles((theme) => ({
@@ -21,16 +21,11 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function TestDatePickers(props) {
+export default function Labs(props) {
   const classes = useStyles()
   
   return (
     <div className={classes.root}>
- 
-      <Section className={classes.section}>
-        <SirDatePicker />
-      </Section>
-
       <Section>
         <InsuredPeriod />
       </Section>

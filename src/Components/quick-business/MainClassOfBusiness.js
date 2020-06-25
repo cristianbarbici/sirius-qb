@@ -1,21 +1,24 @@
 import React, {useState} from "react"
+import _ from 'lodash'
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
 import FormRow from "../common/FormRow"
 import SirListGroup from "../common/SirListGroup"
-import refData from '../../Data/SICS-refdata'
+import {SPLATFIELD} from './splat/vars'
 
 export default function MainClassOfBusiness(props) {
   const label = 'Main class of business'
   const processState = useSplatProcessState()
-  const [value, setValue] = useState({}) //useSplatField('process_MainClassOfBusiness')
-  //const mainClassOfBusinessOptions = processState.MainClassOfBusinessOptions
+  const [value, setValue] = useSplatField(SPLATFIELD.MAINCLASSOFBUSINESS)
+  const hasValue = !_.isEmpty(value)
+  const mainClassOfBusinessOptions = processState.MainClassOfBusinessOptions
   const [open, setOpen] = useState(true)
-  const callBackOpen = open => setOpen(open)
+  const editMode = open && hasValue
+  const untouched = open && !hasValue
 
   return (
-    <FormRow label={label} valid={!open}>
-      <SirListGroup value={value} setValue={setValue} data={refData.mainClassOfBusinessOptions} callBack={callBackOpen} />
+    <FormRow label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
+      <SirListGroup value={value} setValue={setValue} data={mainClassOfBusinessOptions} open={open} setOpen={setOpen} />
     </FormRow>
   );
 }

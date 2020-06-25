@@ -5,6 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from "@material-ui/core/styles"
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirTextField from "./SirTextField"
+import { hexError } from "../../Styles/colors"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#b22000'
+      borderColor: hexError
     }
   },
   reinsurer: {

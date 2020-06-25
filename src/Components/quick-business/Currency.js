@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import { makeStyles } from "@material-ui/core/styles"
 import FormRow from '../common/FormRow'
-// import { useSplatField } from '@splat/splat-react'
-// import { useSplatProcessState } from '@splat/splat-react'
+import { useSplatField } from '@splat/splat-react'
+import { useSplatProcessState } from '@splat/splat-react'
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirButtonGroup from '../common/SirButtonGroup'
-import refData from '../../Data/SICS-refdata'
+import {SPLATFIELD} from './splat/vars'
+import CtrlActions from '../common/CtrlActions'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,43 +31,23 @@ export const useStyles = makeStyles((theme) => ({
   },
   option: {
     fontSize: '14px'
+  },
+  actions: {
+    marginLeft: theme.spacing(2)
   }
 }));
 
 export default function Currency(props) {
   const label = 'Main currency'
   const classes = useStyles();
-  // const processState = useSplatProcessState()
-  const [value, setValue] = useState({}) //useSplatField('process_MainCurrency')
+  const processState = useSplatProcessState()
+  const [value, setValue] = useSplatField(SPLATFIELD.CURRENCY)
   const hasValue = !_.isEmpty(value)
   const [open, setOpen] = useState(!hasValue)
-  const mainCurrencyOptions = refData.mainCurrencyOptions //processState.MainCurrencyOptions
-  // TODO: get from back-end
-  const commonCurrency = [
-    {
-      Name: "USD",
-      Code: "USD",
-      Currency: 'US Dollar',
-      Order: 1
-    },
-    {
-      Name: "SEK",
-      Code: "SEK",
-      Currency: 'Swedish Krona',
-      Order: 2
-    },
-    {
-      Name: "EUR",
-      Code: "EUR",
-      Currency: 'Euro',
-      Order: 3
-    },
-  ]
+  const mainCurrencyOptions = processState.MainCurrencyOptions
+  const commonCurrency = processState.CommonCurrency
 
-  const filterOptions = createFilterOptions({
-    stringify: (option) => option.Name + ' ' + option.Code
-  })
-
+  const filterOptions = createFilterOptions({ stringify: (option) => option.Name + ' ' + option.Code })
   const handleRenderInput = params => <SirTextField {...params} variant="outlined" hiddenLabel placeholder='Search...' />
   const handleGetOptionLabel = option => hasValue ? option.Code : ''
   const handleGetOptionSelected = option => option && hasValue ? option.Code === value.Code : false
@@ -76,14 +57,15 @@ export default function Currency(props) {
     _.isEmpty(value) ? setOpen(true) : handleOpen()
   }
   const handleOnClick = (currency) => {
-    console.log('handleOnClick', currency)
     setValue({Code: currency})
     handleOpen()
   }
   const handleOpen = () => setOpen(!open)
-  
+  const editMode = open && hasValue
+  const untouched = open && !hasValue
+
   return (
-    <FormRow label={label} valid={!open}>
+    <FormRow label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
       {!open ?
         <SirReadOnlyField value={value.Code || ''} onClick={handleOpen} /> :
         <div className={classes.root}>
@@ -96,7 +78,6 @@ export default function Currency(props) {
             options={mainCurrencyOptions}
             disableClearable={!hasValue}
             freeSolo={!hasValue}
-            
             renderInput={handleRenderInput}
             renderOption={handleRenderOption}
             getOptionLabel={handleGetOptionLabel}
@@ -104,6 +85,15 @@ export default function Currency(props) {
             onChange={handleAutocompleteChange}
             value={value}
           />
+          { editMode &&             
+            <CtrlActions
+              className={classes.actions} 
+              titleClear='Clear currency and start over' 
+              callbackClear={() => setValue({})} 
+              titleOk='Close edit mode' 
+              callbackOk={() => setOpen(false)} 
+            /> 
+          }
         </div>
       }
     </FormRow>
