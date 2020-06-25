@@ -33,7 +33,6 @@ export default function BusinessTitle(props) {
   const maxLength = 40; // TODO: might be set from server
   const classes = useStyles()
   const [value, setValue] = useSplatField(SPLATFIELD.BUSINESSTITLE)
-  // const [value, setValue] = useState('')
   const [count, setCount] = useState(0)
   const [err, setErr] = useState(false)
   const hasValue = !_.isEmpty(value)
@@ -51,6 +50,14 @@ export default function BusinessTitle(props) {
       setErr(true)
       setOpen(true)
     } else {
+      setErr(false)
+      setOpen(false)
+    }
+  }
+
+  const handleOnKeyDown = (e) => {
+    if ((e.key === 'Enter' || e.key === 'Escape') && e.target.value.length > 0) {
+      setValue(e.target.value)    
       setErr(false)
       setOpen(false)
     }
@@ -76,6 +83,7 @@ export default function BusinessTitle(props) {
           value={renderValue}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
+          onKeyDown={handleOnKeyDown}
           inputProps={{ maxLength: maxLength }}
           inputRef={inputRef}
           helperText={<><span>{count}</span> / <span>{maxLength}</span></>}

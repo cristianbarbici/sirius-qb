@@ -15,7 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     '& .MuiInputAdornment-positionEnd': {
       position: 'absolute',
       right: theme.spacing(1),
-      transform: 'scale(.85)'
+      transform: 'scale(.85)',
+      opacity: .6,
+      '&:hover': {
+        opacity: 1
+      }
     }
   },
   fullWidth: {
