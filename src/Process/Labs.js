@@ -29,6 +29,9 @@ export default function Labs(props) {
       <Section>
         <InsuredPeriod />
       </Section>
+      <Section>
+        <InsuredPeriod lockTo />
+      </Section>
     </div>
   )
 }

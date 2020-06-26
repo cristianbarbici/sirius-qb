@@ -6,7 +6,8 @@ import FormRow from '../common/FormRow'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import { hexError } from '../../Styles/colors'
-import {SPLATFIELD} from './splat/vars'
+import { SPLATFIELD } from './splat/vars'
+import Section from '../common/Section'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ export default function BusinessTitle(props) {
     e.target.value.length === 0 ? setErr(true) : setErr(false)
     setValue(e.target.value)
   }
-  
+
   const handleOnBlur = (e) => {
     if (e.target.value.length === 0) {
       setErr(true)
@@ -57,7 +58,7 @@ export default function BusinessTitle(props) {
 
   const handleOnKeyDown = (e) => {
     if ((e.key === 'Enter' || e.key === 'Escape') && e.target.value.length > 0) {
-      setValue(e.target.value)    
+      setValue(e.target.value)
       setErr(false)
       setOpen(false)
     }
@@ -68,27 +69,29 @@ export default function BusinessTitle(props) {
   }, [value])
 
   useEffect(() => {
-    if (open && inputRef.current) { 
+    if (open && inputRef.current) {
       inputRef.current.focus()
       inputRef.current.select()
     }
   }, [open])
 
   return (
-    <FormRow label={label} className={classes.root} error={err} valid={!open}>
-      {!open ?
-        <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
-        <SirTextField
-          error={err}
-          value={renderValue}
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          onKeyDown={handleOnKeyDown}
-          inputProps={{ maxLength: maxLength }}
-          inputRef={inputRef}
-          helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
-        />
-      }
-    </FormRow>
+    <Section>
+      <FormRow label={label} className={classes.root} error={err} valid={!open}>
+        {!open ?
+          <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
+          <SirTextField
+            error={err}
+            value={renderValue}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            onKeyDown={handleOnKeyDown}
+            inputProps={{ maxLength: maxLength }}
+            inputRef={inputRef}
+            helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
+          />
+        }
+      </FormRow>
+    </Section>
   )
 }

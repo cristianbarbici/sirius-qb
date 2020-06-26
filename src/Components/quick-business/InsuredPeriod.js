@@ -74,6 +74,15 @@ export const useStyles = makeStyles((theme) => ({
   },
   actionIcon: {
     fontSize: '1.1rem'
+  },
+  linkTo: {
+    color: 'rgba(0,0,0,.38)',
+    padding: theme.spacing(.5,0),
+  
+    '&:hover': {
+      textDecoration: 'none',
+      borderBottom: 'dashed 1px rgba(0,0,0,.12)'
+    }
   }
 }));
 
@@ -116,6 +125,7 @@ const displayFormat = 'Do MMM YYYY'
 const isDateValid = (date) => moment(date, format, true).isValid()
 
 export default function InsuredPeriod(props) {
+  const { lockTo } = props
   const label = 'Insured period'
   const classes = useStyles()
 
@@ -144,7 +154,8 @@ export default function InsuredPeriod(props) {
     setFrom(from)
     setTo(to)
     setDuration(duration)
-    setLocked(false) // TODO: ...
+    if (lockTo)
+      setLocked(false) // TODO: ...
     if (changeMode)
       setViewMode()
   }
@@ -226,7 +237,7 @@ export default function InsuredPeriod(props) {
         { !edit ? 
           to.format(displayFormat) : 
             locked ? 
-            <Link href='#' onClick={toggleLocked}>{to.format(displayFormat)}</Link> : 
+            <Tooltip title='Edit end date'><Link className={classes.linkTo} href='#' onClick={toggleLocked}>{to.format(displayFormat)}</Link></Tooltip> : 
             <SirDatePicker
               inputRef={toRef}
               value={to}
@@ -269,7 +280,6 @@ export default function InsuredPeriod(props) {
       </div>
     )
   }
-
 
   const isUnselectedMode = mode === componentMode.UNSELECTED
   const isViewMode = mode === componentMode.VIEW

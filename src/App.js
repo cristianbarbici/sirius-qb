@@ -13,7 +13,6 @@ import { theme } from "./Styles/theme";
 import Splat from "./Data/Splat-data";
 import { logger } from "./SplatComponents/splatBackendReducer";
 import CreateQuickBusiness from "./Process/CreateQuickBusiness";
-// import TestTOB from "./Process/TestTOB"
 import Labs from './Process/Labs'
 
 function App() {
@@ -22,8 +21,8 @@ function App() {
 
   return (
     <>
-      <CssBaseline />
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <SplProcess
           state={{ typeData: Splat.typeData, state: Splat.state, instanceUri: Splat.event.origin, lastKnownEventId: Splat.event.eventId }}
           middleware={middleware}
@@ -31,19 +30,13 @@ function App() {
         >
           <Router>
             <Switch>
-              
-              {/* <Route path="/test">
-                <TestTOB />
-              </Route> */}
-              
               <Route path='/labs'>
                 <Labs />
               </Route>
               
               <Route path="/">
                 <CreateQuickBusiness />
-              </Route>
-              
+              </Route>              
             </Switch>
           </Router>
         </SplProcess>

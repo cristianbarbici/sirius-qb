@@ -54,7 +54,7 @@ export default function TypeOfBusiness(props) {
         <FormRow 
           label={label} 
           className={clsx({ [classes.formRow]: hasCoinsuranceClosed })} 
-          hint={untouched ? 'Select an option and more will be revealed' : (editMode ? 'Select to close' : null)}
+          hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}
           valid={!open}
           edit={hasValue && open}
         >

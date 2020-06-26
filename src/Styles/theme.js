@@ -1,31 +1,24 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core/styles";
 //import { pxFieldHeight } from "./colors";
 
 // TODO: move to separate file
 // vars
-const hexPrimary = "#002C73";
-const hexSecondary = "#0060A5";
-
-/*
-$rgbSecondary: 0,96,165;
-$hexError: #B00020;
-$rgbError: rgb(176, 0, 32);
-$rgbTextHigh: rgba(0,0,0,.87);
-$rgbTextMedium: rgba(0,0,0,.6);
-$rgbTextDisabled: rgba(0,0,0,.38);
-$rgbTextHint: rgba(0,0,0,.24);
-$rgbSeparator: rgba(0,0,0,.12);
-$hexPanelBg: #fdfdfd;
-*/
-
+const hexPrimary = '#002C73'
+const hexSecondary = '#0060A5'
+const hexDefault = '#f2f2f2'
 
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: hexPrimary
+      main: hexSecondary
     },
     secondary: {
       main: hexSecondary
+    },
+    background: {
+
+      paper: '#fcfcfc',
+      default: hexDefault
     }
   },
   typography: {

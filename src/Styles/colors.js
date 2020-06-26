@@ -17,6 +17,10 @@ export const hexWarning50     = '#fdd8a6'
 // vars
 export const pxFieldHeight    = 38 // px
 
+// panel / surface
+export const bgSurface        = '#fcfcfc'
+
+// ctrl
 export const bgColor          = `rgba(${rgbSecondary}, .12)`
 export const bgColorHover     = `rgba(${rgbSecondary}, .2)`
 export const brdColor         = `rgba(${rgbSecondary}, .38)`

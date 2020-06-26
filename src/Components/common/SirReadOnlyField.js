@@ -16,9 +16,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   item: {
     display: 'inline-flex',
-    // width: theme.spacing(40),
-    // maxWidth: theme.spacing(40),
     borderRadius: 3,
+    // backgroundColor: '#f8faf3',
     backgroundColor: 'rgba(0,0,0,.01)',
     border: 'solid 1px rgba(0,0,0,.06)',
     margin: theme.spacing(0, 2, 0, 0),
@@ -30,6 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     '&:hover': {
+      // backgroundColor: '#f2f5e6',
       '& $editIcon': {
         opacity: 1
       }

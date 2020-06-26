@@ -9,20 +9,13 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    padding: theme.spacing(4, 4.5), // theme.spacing(2.5, 4.5),
+    padding: theme.spacing(3.5, 4.5), // theme.spacing(2.5, 4.5),
     height: 'auto',
     transition: 'padding 150ms cubic-bezier(0.4, 0, 0.2, 1)' // TODO: make it work smoother
   },
   rootValid: {
     padding: theme.spacing(1, 4.5, 1, 4.5),
   },
-  // rootEdit: {
-  //   padding: theme.spacing(3, 5),
-  //   marginTop: theme.spacing(3),
-  //   marginBottom: theme.spacing(3),
-  //   borderTop: 'solid 1px rgba(0,0,0,.04)',
-  //   borderBottom: 'solid 1px rgba(0,0,0,.04)'
-  // },
   label: {
     display: 'block',
     marginBottom: theme.spacing(1),
@@ -50,7 +43,8 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: '16px',
     color: 'rgba(0,0,0,.38)',
     paddingLeft: theme.spacing(.5),
-    marginBottom: theme.spacing(2),
+    // marginTop: theme.spacing(.5),
+    marginBottom: theme.spacing(1.5),
     letterSpacing: '.5px',
   }
 }));
