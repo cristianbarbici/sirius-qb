@@ -9,14 +9,18 @@ export const useStyles = makeStyles((theme) => ({
     position: 'relative',
     margin: 0,
     padding: 0,
+  },
+  brd_none: {},
+  brd_top: {
+    borderTop: 'solid 1px rgba(0,0,0,.06)'
   }
 }))
 
 export default function Section(props) {
-  const { className, ...other } = props
+  const { border = 'none', className, ...other } = props
   const classes = useStyles()
 
   return (
-    <div className={clsx(classes.root, className)} {...other} />
+    <div className={clsx(classes.root, className, classes['brd_' + border])} {...other} />
   )
 }

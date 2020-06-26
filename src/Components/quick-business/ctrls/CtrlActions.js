@@ -2,7 +2,7 @@ import React from "react"
 import clsx from 'clsx'
 import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import { rgbSecondary, hexSecondary } from "../../Styles/colors";
+import { rgbSecondary, hexSecondary } from "../../../Styles/colors";
 import { Tooltip, Link } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({

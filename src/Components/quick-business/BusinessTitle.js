@@ -7,7 +7,6 @@ import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import { hexError } from '../../Styles/colors'
 import { SPLATFIELD } from './splat/vars'
-import Section from '../common/Section'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,23 +74,21 @@ export default function BusinessTitle(props) {
     }
   }, [open])
 
-  return (
-    <Section>
-      <FormRow label={label} className={classes.root} error={err} valid={!open}>
-        {!open ?
-          <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
-          <SirTextField
-            error={err}
-            value={renderValue}
-            onChange={handleOnChange}
-            onBlur={handleOnBlur}
-            onKeyDown={handleOnKeyDown}
-            inputProps={{ maxLength: maxLength }}
-            inputRef={inputRef}
-            helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
-          />
-        }
-      </FormRow>
-    </Section>
+  return (    
+    <FormRow label={label} className={classes.root} error={err} valid={!open}>
+      {!open ?
+        <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
+        <SirTextField
+          error={err}
+          value={renderValue}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+          onKeyDown={handleOnKeyDown}
+          inputProps={{ maxLength: maxLength }}
+          inputRef={inputRef}
+          helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
+        />
+      }
+    </FormRow>
   )
 }

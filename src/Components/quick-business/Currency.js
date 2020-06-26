@@ -9,7 +9,7 @@ import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirButtonGroup from '../common/SirButtonGroup'
 import {SPLATFIELD} from './splat/vars'
-import CtrlActions from '../common/CtrlActions'
+import CtrlActions from './ctrls/CtrlActions'
 
 export const useStyles = makeStyles((theme) => ({
   root: {

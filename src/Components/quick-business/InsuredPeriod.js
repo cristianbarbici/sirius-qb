@@ -19,7 +19,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import { hexSecondary, rgbSecondary, bgColorHover } from '../../Styles/colors'
-import CtrlActions from '../common/CtrlActions'
+import CtrlActions from './ctrls/CtrlActions'
 
 export const useStyles = makeStyles((theme) => ({
   unselected: {

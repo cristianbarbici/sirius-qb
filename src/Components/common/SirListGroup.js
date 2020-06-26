@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import _ from 'lodash'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,9 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import CheckIcon from '@material-ui/icons/Check'
 import { pxFieldHeight, bgColor, hexSecondary, brdColor, bgColorHover } from '../../Styles/colors'
 import SirReadOnlyField from './SirReadOnlyField'
-import IconButton from '@material-ui/core/IconButton'
-import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
-import Tooltip from '@material-ui/core/Tooltip'
 
 // in px
 const pxItemMargin = 4
@@ -58,19 +55,6 @@ export const useStyles = makeStyles((theme) => ({
       opacity: 1
     }
   },
-  // unfoldBtn: {
-  //   position: 'absolute',
-  //   right: 0,
-  //   top: 0,
-  //   opacity: .38,
-
-  //   '&:hover': {
-  //     opacity: .87
-  //   }
-  // },
-  // unfoldIcon: {
-  //   fontSize: '1rem'
-  // }
 }));
 
 export default function SirListGroup(props) {

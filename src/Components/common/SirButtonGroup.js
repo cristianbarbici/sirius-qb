@@ -31,9 +31,8 @@ export default function SirButtonGroup(props) {
   const isEmpty = _.isEmpty(value)
 
   const commonButton = (item) =>
-    <Tooltip title={item.Alt ? item.Alt : ''}>
+    <Tooltip title={item.Alt ? item.Alt : ''} key={item.Code}>
       <Button
-        key={item.Code}
         className={clsx(classes.btn, { [classes.selected]: !isEmpty && item.Code === value.Code })}
         onClick={() => callbackClick(item.Code)}
       >

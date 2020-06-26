@@ -67,11 +67,7 @@ export default function TypeOfBusiness(props) {
           </> : 
           null}
       </Section>
-      {hasValue ?
-        <Section>
-          <TypeOfParticipation />
-        </Section> : null
-      }
+      {hasValue && <TypeOfParticipation />}
     </>
   );
 }
