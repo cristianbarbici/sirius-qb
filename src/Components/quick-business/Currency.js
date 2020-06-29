@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import _ from 'lodash'
 import { makeStyles } from "@material-ui/core/styles"
-import FormRow from '../common/FormRow'
+import SirField from '../common/SirField'
 import { useSplatField } from '@splat/splat-react'
 import { useSplatProcessState } from '@splat/splat-react'
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
@@ -65,7 +65,7 @@ export default function Currency(props) {
   const untouched = open && !hasValue
 
   return (
-    <FormRow label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
+    <SirField label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
       {!open ?
         <SirReadOnlyField value={value.Code || ''} onClick={handleOpen} /> :
         <div className={classes.root}>
@@ -96,6 +96,6 @@ export default function Currency(props) {
           }
         </div>
       }
-    </FormRow>
+    </SirField>
   );
 }

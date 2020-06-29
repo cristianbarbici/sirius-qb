@@ -2030,6 +2030,309 @@ let event = {
   },
 };
 
+let fakeCompanies = [
+  {
+    "Name": "Rubadub",
+    "Code": 3575
+  },
+  {
+    "Name": "Anacho",
+    "Code": 3726
+  },
+  {
+    "Name": "Elentrix",
+    "Code": 9869
+  },
+  {
+    "Name": "Parleynet",
+    "Code": 6165
+  },
+  {
+    "Name": "Zillar",
+    "Code": 1167
+  },
+  {
+    "Name": "Geekol",
+    "Code": 2083
+  },
+  {
+    "Name": "Puria",
+    "Code": 1871
+  },
+  {
+    "Name": "Polarium",
+    "Code": 5760
+  },
+  {
+    "Name": "Zuvy",
+    "Code": 3927
+  },
+  {
+    "Name": "Techade",
+    "Code": 8240
+  },
+  {
+    "Name": "Futurity",
+    "Code": 5970
+  },
+  {
+    "Name": "Insurety",
+    "Code": 2176
+  },
+  {
+    "Name": "Netur",
+    "Code": 6512
+  },
+  {
+    "Name": "Zenthall",
+    "Code": 3574
+  },
+  {
+    "Name": "Solaren",
+    "Code": 5012
+  },
+  {
+    "Name": "Accufarm",
+    "Code": 4486
+  },
+  {
+    "Name": "Rodeocean",
+    "Code": 2157
+  },
+  {
+    "Name": "Corpulse",
+    "Code": 8863
+  },
+  {
+    "Name": "Idealis",
+    "Code": 3071
+  },
+  {
+    "Name": "Mangelica",
+    "Code": 4610
+  },
+  {
+    "Name": "Spherix",
+    "Code": 1820
+  },
+  {
+    "Name": "Mazuda",
+    "Code": 2192
+  },
+  {
+    "Name": "Opticall",
+    "Code": 4096
+  },
+  {
+    "Name": "Uplinx",
+    "Code": 7624
+  },
+  {
+    "Name": "Xyqag",
+    "Code": 9232
+  },
+  {
+    "Name": "Zomboid",
+    "Code": 2468
+  },
+  {
+    "Name": "Insuresys",
+    "Code": 4859
+  },
+  {
+    "Name": "Corecom",
+    "Code": 4899
+  },
+  {
+    "Name": "Besto",
+    "Code": 6096
+  },
+  {
+    "Name": "Isotrack",
+    "Code": 9637
+  },
+  {
+    "Name": "Gaptec",
+    "Code": 9028
+  },
+  {
+    "Name": "Isoswitch",
+    "Code": 1909
+  },
+  {
+    "Name": "Petigems",
+    "Code": 7450
+  },
+  {
+    "Name": "Sarasonic",
+    "Code": 4731
+  },
+  {
+    "Name": "Zilidium",
+    "Code": 2199
+  },
+  {
+    "Name": "Ludak",
+    "Code": 9011
+  },
+  {
+    "Name": "Acumentor",
+    "Code": 6483
+  },
+  {
+    "Name": "Flexigen",
+    "Code": 8256
+  },
+  {
+    "Name": "Maroptic",
+    "Code": 9880
+  },
+  {
+    "Name": "Ziore",
+    "Code": 4369
+  },
+  {
+    "Name": "Slambda",
+    "Code": 2082
+  },
+  {
+    "Name": "Dreamia",
+    "Code": 4415
+  },
+  {
+    "Name": "Utara",
+    "Code": 5072
+  },
+  {
+    "Name": "Circum",
+    "Code": 1891
+  },
+  {
+    "Name": "Plasmox",
+    "Code": 3408
+  },
+  {
+    "Name": "Codact",
+    "Code": 5621
+  },
+  {
+    "Name": "Voratak",
+    "Code": 4414
+  },
+  {
+    "Name": "Apextri",
+    "Code": 5573
+  },
+  {
+    "Name": "Brainclip",
+    "Code": 6549
+  },
+  {
+    "Name": "Cyclonica",
+    "Code": 2111
+  },
+  {
+    "Name": "Comfirm",
+    "Code": 7599
+  },
+  {
+    "Name": "Datagen",
+    "Code": 9134
+  },
+  {
+    "Name": "Cipromox",
+    "Code": 5214
+  },
+  {
+    "Name": "Pawnagra",
+    "Code": 8056
+  },
+  {
+    "Name": "Gink",
+    "Code": 2353
+  },
+  {
+    "Name": "Insuron",
+    "Code": 8053
+  },
+  {
+    "Name": "Isologica",
+    "Code": 8746
+  },
+  {
+    "Name": "Tubesys",
+    "Code": 6470
+  },
+  {
+    "Name": "Organica",
+    "Code": 8852
+  },
+  {
+    "Name": "Kidgrease",
+    "Code": 1541
+  },
+  {
+    "Name": "Motovate",
+    "Code": 6725
+  },
+  {
+    "Name": "Zentix",
+    "Code": 6156
+  },
+  {
+    "Name": "Exostream",
+    "Code": 1924
+  },
+  {
+    "Name": "Fleetmix",
+    "Code": 1583
+  },
+  {
+    "Name": "Ezentia",
+    "Code": 9250
+  },
+  {
+    "Name": "Electonic",
+    "Code": 3517
+  },
+  {
+    "Name": "Golistic",
+    "Code": 2206
+  },
+  {
+    "Name": "Securia",
+    "Code": 4338
+  },
+  {
+    "Name": "Affluex",
+    "Code": 8976
+  },
+  {
+    "Name": "Enthaze",
+    "Code": 8121
+  },
+  {
+    "Name": "Eclipsent",
+    "Code": 1334
+  },
+  {
+    "Name": "Aquasseur",
+    "Code": 2105
+  },
+  {
+    "Name": "Enormo",
+    "Code": 7771
+  },
+  {
+    "Name": "Zolar",
+    "Code": 7168
+  },
+  {
+    "Name": "Columella",
+    "Code": 1672
+  }
+]
+
 export default {
   typeData,
   state,
@@ -2037,4 +2340,5 @@ export default {
   errors: {},
   lastKnownEventId: "e0e1b2a8-385e-4253-aebd-d4533e3d39c2",
   type: "TypeEventWithState",
+  fakeCompanies: fakeCompanies
 };

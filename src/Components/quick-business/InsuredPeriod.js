@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 
-import FormRow from '../common/FormRow'
+import SirField from '../common/SirField'
 import SirButtonGroup from '../common/SirButtonGroup'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirDatePicker from '../common/SirDatePicker'
@@ -286,7 +286,7 @@ export default function InsuredPeriod(props) {
   const isEditMode = mode === componentMode.EDIT
 
   return (
-    <FormRow 
+    <SirField 
       error={errorFrom || errorTo}
       valid={isViewMode}
       label={label} 
@@ -323,7 +323,7 @@ export default function InsuredPeriod(props) {
 
       {isEditMode && renderMode(true)}
 
-    </FormRow>
+    </SirField>
   )
 }
 

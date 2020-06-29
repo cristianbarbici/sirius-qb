@@ -86,7 +86,7 @@ export default function SirListGroup(props) {
             return (
               <ListItem dense button className={clsx(classes.item, { [classes.selected]: el.Code === value.Code })} key={el.Code} onClick={() => handleChange(el.Code)}>
                 <ListItemText primary={renderValue(el.Name)} />
-                <CheckIcon className={classes.validIcon} fontSize='small' />
+                {/*<CheckIcon className={classes.validIcon} fontSize='small' />*/}
               </ListItem>
             );
           }

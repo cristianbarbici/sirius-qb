@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ecf3f5',
     borderRadius: 6,
     margin: theme.spacing(0, 4, 2),
-    padding: theme.spacing(4, 4.5),
+    padding: theme.spacing(4),
     color: 'rgba(0,0,0,.3)',
     position: 'relative',
     fontSize: '.8rem',

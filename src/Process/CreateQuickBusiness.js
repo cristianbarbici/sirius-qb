@@ -12,10 +12,12 @@ import Currency from "../Components/quick-business/Currency"
 import InsuredPeriod from "../Components/quick-business/InsuredPeriod"
 import SirExpansionPanel from "../Components/common/SirExpansionPanel"
 import TypeOfBusinessPanel from "../Components/quick-business/ctrls/TypeOfBusinessPanel"
-import FormRow from "../Components/common/FormRow"
-import { Button } from "@material-ui/core"
-import Reinsurer from "../Components/quick-business/optional/Reinsurer"
-
+import SirField from "../Components/common/SirField"
+import SearchableField from "../Components/quick-business/optional/SearchableField"
+import { useSplatProcessState } from '@splat/splat-react'
+import SirButton from "../Components/common/SirButton"
+import {SPLATFIELD} from '../Components/quick-business/splat/vars'
+import SplatData from '../Data/Splat-data'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,11 +28,25 @@ export const useStyles = makeStyles((theme) => ({
     margin: `0 auto ${theme.spacing(6)}px`,
     padding: theme.spacing(3, 0),
     backgroundColor: theme.palette.background.paper
+  },
+  actions: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '& > *': {
+      // marginRight: theme.spacing(2)
+    }
   }
 }));
 
 export default function CreateQuickBusiness(props) {
   const classes = useStyles()
+  const processState = useSplatProcessState()
+  // const brokers = processState.
+  
+  const isValid = false
 
   return (
     <div className={classes.root}>
@@ -43,17 +59,24 @@ export default function CreateQuickBusiness(props) {
         <MainClassOfBusiness />
         <Currency />
 
-
         <SirExpansionPanel>
-          <Reinsurer />
+          <SearchableField label='Broker' splatField={SPLATFIELD.BROKER} data={SplatData.fakeCompanies} />
+          <SearchableField label='Insurer' splatField={SPLATFIELD.INSURED} data={SplatData.fakeCompanies} />
+          {/* 
+            Broker
+            Insurer
+            Nr.of businesses
+          */}
         </SirExpansionPanel>
       </TypeOfBusinessPanel>
 
       <Section border='top'>
-        <FormRow>
-          <Button>Create Business</Button>
-          <Button>Cancel</Button>
-        </FormRow>
+        <SirField>
+          <div className={classes.actions}>
+            <SirButton disabled={!isValid} variant='contained' color='primary' onClick={() => console.log(processState)}>Create</SirButton>
+            {/* <SirButton>Cancel</SirButton> */}
+          </div>
+        </SirField>
       </Section>
 
 

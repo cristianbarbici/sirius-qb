@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import { makeStyles } from "@material-ui/core/styles"
-import FormRow from "../../common/FormRow"
+import SirField from "../../common/SirField"
 import SirButtonGroup from "../../common/SirButtonGroup"
 import SirReadOnlyField from "../../common/SirReadOnlyField"
 import SirTextField from '../../common/SirTextField'
@@ -294,7 +294,7 @@ export default function InsuredPeriodv1(props) {
 
 
   return (
-    <FormRow label={label} hint={isUnselectedMode ? 'Select start date. The 1st of the month and 1y duration are set automatically.' : null}>
+    <SirField label={label} hint={isUnselectedMode ? 'Select start date. The 1st of the month and 1y duration are set automatically.' : null}>
       { isUnselectedMode ? 
         <div className={classes.root}>
           <SirButtonGroup data={commonDates} callbackClick={handleQuickSelect} />
@@ -393,7 +393,7 @@ export default function InsuredPeriodv1(props) {
         </div>
         : null }
 
-    </FormRow>
+    </SirField>
   )
 }
 

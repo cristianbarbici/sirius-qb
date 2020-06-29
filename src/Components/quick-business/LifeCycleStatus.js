@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import _ from 'lodash'
 import { useSplatProcessState } from '@splat/splat-react'
 import { useSplatField } from '@splat/splat-react'
-import FormRow from '../common/FormRow'
+import SirField from '../common/SirField'
 import SirListGroup from '../common/SirListGroup'
 import {SPLATFIELD} from './splat/vars'
 
@@ -17,8 +17,8 @@ export default function LifeCycleStatus(props) {
   const untouched = open && !hasValue
 
   return (
-    <FormRow label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
+    <SirField label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
       <SirListGroup value={value} setValue={setValue} data={lifeCycleStatusOptions} open={open} setOpen={setOpen} />
-    </FormRow>
+    </SirField>
   );
 }

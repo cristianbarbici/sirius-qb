@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import FormRow from "../../common/FormRow";
+import SirField from "../../common/SirField";
 import { useSplatProcessState } from "@splat/splat-react";
 
 export default function DebugButton(props) {
@@ -11,8 +11,8 @@ export default function DebugButton(props) {
   };
 
   return (
-    <FormRow>
+    <SirField>
       <Button onClick={handleClick}>Debug</Button>
-    </FormRow>
+    </SirField>
   );
 }

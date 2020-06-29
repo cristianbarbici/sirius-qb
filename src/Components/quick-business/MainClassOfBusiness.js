@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import _ from 'lodash'
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
-import FormRow from "../common/FormRow"
+import SirField from "../common/SirField"
 import SirListGroup from "../common/SirListGroup"
 import {SPLATFIELD} from './splat/vars'
 
@@ -17,8 +17,8 @@ export default function MainClassOfBusiness(props) {
   const untouched = open && !hasValue
 
   return (
-    <FormRow label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
+    <SirField label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
       <SirListGroup value={value} setValue={setValue} data={mainClassOfBusinessOptions} open={open} setOpen={setOpen} />
-    </FormRow>
+    </SirField>
   );
 }

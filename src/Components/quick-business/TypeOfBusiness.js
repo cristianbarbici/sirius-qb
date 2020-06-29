@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
-import FormRow from '../common/FormRow'
+import SirField from '../common/SirField'
 import { useSplatField } from '@splat/splat-react'
 import { useSplatProcessState } from '@splat/splat-react'
 import SirListGroup from '../common/SirListGroup'
@@ -51,7 +51,7 @@ export default function TypeOfBusiness(props) {
   return (
     <>
       <Section className={clsx({ [classes.section]: hasCoinsuranceClosed })}>
-        <FormRow 
+        <SirField 
           label={label} 
           className={clsx({ [classes.formRow]: hasCoinsuranceClosed })} 
           hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}
@@ -59,7 +59,7 @@ export default function TypeOfBusiness(props) {
           edit={hasValue && open}
         >
           <SirListGroup value={value} setValue={callbackSetValue} data={typeOfBusinessOptions} open={open} setOpen={setOpen} hideValidationIcon={hasCoinsuranceClosed} />
-        </FormRow>
+        </SirField>
         { hasCoinsuranceClosed ? 
           <>
             <IsCoinsurance />

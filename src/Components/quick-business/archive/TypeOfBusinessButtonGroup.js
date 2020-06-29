@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
 import AddIcon from '@material-ui/icons/Add'
-import FormRow from "../../common/FormRow"
+import SirField from "../../common/SirField"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
 import { hexSecondary, rgbSecondary } from '../../../Styles/colors'
@@ -94,7 +94,7 @@ export default function TypeOfBusinessButtonGroup(props) {
 
 
   return (
-    <FormRow label={label}>
+    <SirField label={label}>
       <div className={classes.root}>
         <ButtonGroup className={classes.group}>
           { renderBtn('Non-Prop', 'NONPROP', true) }
@@ -107,6 +107,6 @@ export default function TypeOfBusinessButtonGroup(props) {
           { renderBtn('Treaty', 'TTY', false) }
         </ButtonGroup>
       </div>
-    </FormRow>
+    </SirField>
   );
 }

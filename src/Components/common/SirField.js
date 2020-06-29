@@ -39,17 +39,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   hint: {
     display: 'block',
-    fontSize: '12px',
-    lineHeight: '16px',
+    fontSize: theme.typography.pxToRem(12),
+    lineHeight: theme.typography.pxToRem(16), 
     color: 'rgba(0,0,0,.38)',
     paddingLeft: theme.spacing(.5),
-    // marginTop: theme.spacing(.5),
     marginBottom: theme.spacing(1.5),
-    letterSpacing: '.5px',
+    letterSpacing: theme.typography.pxToRem(.5),
   }
 }));
 
-export default function FormRow(props) {
+export default function SirField(props) {
   const { label, hint, children, className, error, valid } = props;
   const theme = useTheme();
   const classes = useStyles(theme);

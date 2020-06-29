@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import { useSplatField } from '@splat/splat-react'
-import FormRow from '../common/FormRow'
+import SirField from '../common/SirField'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import { hexError } from '../../Styles/colors'
@@ -75,7 +75,7 @@ export default function BusinessTitle(props) {
   }, [open])
 
   return (    
-    <FormRow label={label} className={classes.root} error={err} valid={!open}>
+    <SirField label={label} className={classes.root} error={err} valid={!open}>
       {!open ?
         <SirReadOnlyField value={renderValue} onClick={() => setOpen(!open)} /> :
         <SirTextField
@@ -89,6 +89,6 @@ export default function BusinessTitle(props) {
           helperText={<><span>{count}</span> / <span>{maxLength}</span></>}
         />
       }
-    </FormRow>
+    </SirField>
   )
 }

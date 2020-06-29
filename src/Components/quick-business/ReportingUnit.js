@@ -7,7 +7,7 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import { useSplatProcessState } from "@splat/splat-react"
 import { useSplatField } from "@splat/splat-react"
-import FormRow from "../common/FormRow"
+import SirField from "../common/SirField"
 import SirTextField from "../common/SirTextField"
 import SirReadOnlyField from '../common/SirReadOnlyField'
 // import refData from '../../Data/SICS-refdata'
@@ -268,7 +268,7 @@ export default function ReportingUnit(props) {
   
 
   return (
-    <FormRow label={label} error={err} valid={!open}>
+    <SirField label={label} error={err} valid={!open}>
       { !open ? 
         <SirReadOnlyField value={handleGetOptionLabel(value)} onClick={handleOnClick} /> :
         <div className={classes.root}>
@@ -301,6 +301,6 @@ export default function ReportingUnit(props) {
           />
         </div>
       }
-    </FormRow>
+    </SirField>
   );
 }

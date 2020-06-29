@@ -1,5 +1,5 @@
 import React from 'react'
-import FormRow from '../../common/FormRow'
+import SirField from '../../common/SirField'
 import { useSplatField } from '@splat/splat-react'
 import { useSplatProcessState } from '@splat/splat-react'
 import SirRadioGroup from './SirRadioGroup'
@@ -11,8 +11,8 @@ export default function TypeOfBusinessButtonGroup(props) {
   const typeOfBusinessOptions = processState.TypeOfBusinessOptions
 
   return (
-    <FormRow label={label}>
+    <SirField label={label}>
       <SirRadioGroup value={value} setValue={setValue} data={typeOfBusinessOptions} />
-    </FormRow>
+    </SirField>
   )
 }

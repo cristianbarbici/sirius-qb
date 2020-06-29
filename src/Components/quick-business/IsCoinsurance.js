@@ -1,7 +1,7 @@
 import React from "react"
 import Switch from "@material-ui/core/Switch"
 import { useSplatField } from "@splat/splat-react"
-import FormRow from "../common/FormRow"
+import SirField from "../common/SirField"
 import { makeStyles } from '@material-ui/core/styles'
 import {SPLATFIELD} from './splat/vars'
 
@@ -19,13 +19,13 @@ export default function IsCoinsurance(props) {
   const classes = useStyles()
 
   return (
-    <FormRow label={"Is coinsurance"} className={classes.root} valid>
+    <SirField label={"Is coinsurance"} className={classes.root} valid>
       <Switch 
         size='small' 
         className={classes.switch}
         checked={value} 
         onChange={() => setValue(!value)} 
       />
-    </FormRow>
+    </SirField>
   )
 }
