@@ -71,13 +71,15 @@ export default function Currency(props) {
         <div className={classes.root}>
           <SirButtonGroup data={commonCurrency} value={value} callbackClick={handleOnClick} />
           <Autocomplete
-            size='small'
             className={classes.autocomplete}
-            openOnFocus
+            // TODO: autoHighlight
+            size='small'
+            // openOnFocus
+            // disableClearable={!hasValue}
+            // freeSolo={!hasValue}
+
             filterOptions={filterOptions}
             options={mainCurrencyOptions}
-            disableClearable={!hasValue}
-            freeSolo={!hasValue}
             renderInput={handleRenderInput}
             renderOption={handleRenderOption}
             getOptionLabel={handleGetOptionLabel}

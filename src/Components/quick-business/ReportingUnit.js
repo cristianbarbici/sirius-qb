@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import clsx from 'clsx'
 import _ from "lodash"
-//import SearchIcon from '@material-ui/icons/Search'
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { makeStyles, useTheme } from "@material-ui/core/styles"
@@ -10,11 +9,9 @@ import { useSplatField } from "@splat/splat-react"
 import SirField from "../common/SirField"
 import SirTextField from "../common/SirTextField"
 import SirReadOnlyField from '../common/SirReadOnlyField'
-// import refData from '../../Data/SICS-refdata'
-// import reportingUnitOptions from '../../Data/SICS-refdata'
-// import reinsurerOptions from '../../Data/SICS-refdata'
 import { hexError } from "../../Styles/colors"
 import {SPLATFIELD} from './splat/vars'
+import { sleep } from '../../utils/utils'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,16 +110,16 @@ export default function ReportingUnit(props) {
   const theme = useTheme()
   const classes = useStyles(theme)
   const [value, setValue] = useSplatField(SPLATFIELD.REPORTINGUNIT)
-  const isValueEmpty = _.isEmpty(value)
+  const hasValue = !_.isEmpty(value)
   const processState = useSplatProcessState()
   const ruOptions = processState.ReportingUnitOptions     // Name, Code, (add Reinsurer {Name, Code})
   const reinsurerOptions = processState.ReinsurerOptions  // Name, Code, ReportingUnitCodes
   
   const [err, setErr] = useState(false)
-  const [open, setOpen] = useState(isValueEmpty)          // if there is a value close ...otherwise keep field open for input
+  const [open, setOpen] = useState(!hasValue)          // if there is a value close ...otherwise keep field open for input
+  const [valid, setValid] = useState(!open)
   const [inputValue, setInputValue] = useState('')
-  const [touched, setTouched] = useState(!isValueEmpty)   // set touched if value is present from back-end
-  const [click, setClick] = useState(false)
+  const [touched, setTouched] = useState(hasValue)   // set touched if value is present from back-end
   const inputRef = useRef(null)
 
   const addReinsurer = (option) => {
@@ -172,10 +169,10 @@ export default function ReportingUnit(props) {
  
   // string value for a given option. It's used to fill the input (and the list box options if renderOption is not provided).
   // used for input display value
-  const handleGetOptionLabel = option => option && !isValueEmpty ? option.Name + ' (' + option.Code + ')' : ''
+  const handleGetOptionLabel = option => option && hasValue ? option.Name + ' (' + option.Code + ')' : ''
 
   // determine if option is selected
-  const handleGetOptionSelected = option => option && !isValueEmpty ? option.Code === value.Code : false 
+  const handleGetOptionSelected = option => option && hasValue ? option.Code === value.Code : false 
   
   // render option element in list
   const handleRenderOption = option => 
@@ -209,7 +206,7 @@ export default function ReportingUnit(props) {
     if (!touched)
       setTouched(true)
 
-    setClick(false)
+    // setClick(false)
     validateValue()
   }
 
@@ -235,7 +232,10 @@ export default function ReportingUnit(props) {
     }
   }
 
-  const handleOnClick = () => setClick(true)
+  const handleOnClick = () => {
+    setValid(false)
+    sleep(150).then(() => setOpen(true))
+  }
   
   // used to decorate current set-up and will run only when there is no 'reinsurer' object on value
   // TODO: might not be needed if this is set on back-end
@@ -245,21 +245,14 @@ export default function ReportingUnit(props) {
     } 
   }) //, []) <<-- exaustive error but should be set according to doc to run only once
 
-  // set open state when clicked
-  useEffect(() => {
-    if (click)
-      setOpen(true)
-  }, [click, setOpen])
-
   // focus input onClick
   useEffect(() => {
-    if (click && open && inputRef.current) {
-      // TODO: fix this hack with React.forwardRef?
-      const input = inputRef.current //.querySelectorAll("input[type='text']")[0]
+    const input = inputRef.current
+    if (hasValue && open && input) {
       input.focus()
       input.select()
     }
-  }, [click, open])
+  }, [open])
 
   // validate when value is changed
   useEffect(() => {
@@ -268,34 +261,27 @@ export default function ReportingUnit(props) {
   
 
   return (
-    <SirField label={label} error={err} valid={!open}>
+    <SirField label={label} error={err} valid={valid}>
       { !open ? 
         <SirReadOnlyField value={handleGetOptionLabel(value)} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
-            autoHighlight
-            //openOnFocus
-            blurOnSelect  // has an effect
-            //popupIcon={<></>}
-            size='small'
             className={classes.autocomplete}
+            // TODO: autoHighlight
+            blurOnSelect  // has an effect
+            openOnFocus
+            size='small'
+
             filterOptions={filterOptions}
             options={options}
             groupBy={handleGroupBy}
-            //disableClearable={isValueEmpty}
-            //freeSolo={isValueEmpty}
-            // ref={inputRef}
-
             renderGroup={handleRenderGroup}
             renderOption={handleRenderOption}
             renderInput={handleRenderInput}
-
             getOptionLabel={handleGetOptionLabel}
             getOptionSelected={handleGetOptionSelected}
-
-            value={!isValueEmpty ? value : null}
+            value={hasValue ? value : null}
             onChange={handleOnChange}
-
             inputValue={inputValue}
             onInputChange={handleOnInputChange}
           />

@@ -9,9 +9,9 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    padding: theme.spacing(3.5, 4.5), // theme.spacing(2.5, 4.5),
+    padding: theme.spacing(3.5, 4.5),
     height: 'auto',
-    transition: 'padding 150ms cubic-bezier(0.4, 0, 0.2, 1)' // TODO: make it work smoother
+    transition: 'padding 150ms cubic-bezier(0.4, 0, 0.2, 1)'
   },
   rootValid: {
     padding: theme.spacing(1, 4.5, 1, 4.5),
@@ -22,9 +22,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(.5),
     fontSize: '.8rem',
     lineHeight: '1rem',
-    color: 'rgba(0,0,0,.87)',
-    fontWeight: 500,
-    letterSpacing: '.5px',
+    fontWeight: theme.typography.fontWeightMedium,
+    letterSpacing: theme.typography.pxToRem(.25),
     transition: 'color 150ms ease-in-out',
 
     '& + $hint': {
@@ -35,13 +34,13 @@ export const useStyles = makeStyles((theme) => ({
     color: hexError
   },
   labelValid: {
-    color: 'rgba(0,0,0,.38)'
+    color: theme.palette.text.disabled
   },
   hint: {
     display: 'block',
     fontSize: theme.typography.pxToRem(12),
     lineHeight: theme.typography.pxToRem(16), 
-    color: 'rgba(0,0,0,.38)',
+    color: theme.palette.text.hint,
     paddingLeft: theme.spacing(.5),
     marginBottom: theme.spacing(1.5),
     letterSpacing: theme.typography.pxToRem(.5),

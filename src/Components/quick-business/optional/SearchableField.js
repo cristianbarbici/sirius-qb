@@ -3,10 +3,7 @@ import _ from 'lodash'
 import SirField from "../../common/SirField"
 import SirAutocomplete from "../../common/SirAutocomplete";
 import { useSplatField } from "@splat/splat-react"
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { sleep } from '../../../utils/utils'
 
 export default function Reinsurer(props) {
   const { label, splatField, data } = props

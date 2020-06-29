@@ -18,6 +18,7 @@ import { useSplatProcessState } from '@splat/splat-react'
 import SirButton from "../Components/common/SirButton"
 import {SPLATFIELD} from '../Components/quick-business/splat/vars'
 import SplatData from '../Data/Splat-data'
+import NrOfBusinesses from '../Components/quick-business/NrOfBusinesses'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,13 +61,9 @@ export default function CreateQuickBusiness(props) {
         <Currency />
 
         <SirExpansionPanel>
+          <NrOfBusinesses />
           <SearchableField label='Broker' splatField={SPLATFIELD.BROKER} data={SplatData.fakeCompanies} />
           <SearchableField label='Insurer' splatField={SPLATFIELD.INSURED} data={SplatData.fakeCompanies} />
-          {/* 
-            Broker
-            Insurer
-            Nr.of businesses
-          */}
         </SirExpansionPanel>
       </TypeOfBusinessPanel>
 

@@ -40,9 +40,11 @@ export default function TypeOfBusiness(props) {
   const [open, setOpen] = useState(!hasValue)
   const typeOfBusinessOptions = processState.TypeOfBusinessOptions
   const hasCoinsurance = hasValue && (value.Code === 'DIRECT' || value.Code === 'NONPROPDIR')
-  const callbackSetValue = value => {
-    setValueParticipation({})
-    setValue(value)
+  const callbackSetValue = newValue => {
+    if (newValue !== value) {
+      setValueParticipation({})
+      setValue(newValue)
+    }
   }
   const editMode = open && hasValue
   const untouched = open && !hasValue

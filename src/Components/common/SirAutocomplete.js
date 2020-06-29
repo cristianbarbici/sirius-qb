@@ -60,13 +60,12 @@ export default function SirAutocomplete(props) {
         <SirReadOnlyField value={value.Name || ''} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
-            autoHighlight
-            openOnFocus
-            // blurOnSelect  // does not select all input value for some reason
-            size='small'
-            className={classes.autocomplete}
+            className={classes.autocomplete}            
             classes={{ option: classes.option }}
-            // popupIcon={<></>}
+            // TODO: autoHighlight
+            openOnFocus
+            size='small'
+
             options={options}
             getOptionLabel={(option) => option ? option.Name : ''}
             getOptionSelected={(option) => !isEmpty ? option.Name === value.Name : false}

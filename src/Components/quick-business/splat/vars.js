@@ -8,6 +8,7 @@ export const SPLATFIELD = {
   ISCOINSURANCE: 'process_IsCoinsurance',
   LIFECYCLESTATUS: 'process_LifeCycleStatus',
   MAINCLASSOFBUSINESS: 'process_MainClassOfBusiness',
+  NROFBUSINESSES: 'NrOfBusinessesToCreate',
   REINSURER: 'process_Reinsurer',
   REPORTINGUNIT: 'process_ReportingUnit',
   TYPEOFBUSINESS: 'process_TypeOfBusiness',

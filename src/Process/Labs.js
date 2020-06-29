@@ -7,6 +7,10 @@ import SearchableField from "../Components/quick-business/optional/SearchableFie
 import { useSplatProcessState } from '@splat/splat-react'
 import {SPLATFIELD} from '../Components/quick-business/splat/vars'
 import SplatData from '../Data/Splat-data'
+import SirButton from "../Components/common/SirButton";
+import ReportingUnit from "../Components/quick-business/ReportingUnit";
+import Currency from "../Components/quick-business/Currency";
+import NrOfBusinesses from '../Components/quick-business/NrOfBusinesses'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +37,16 @@ export default function Labs(props) {
       <Section>
         <SearchableField label='Broker' splatField={SPLATFIELD.BROKER} data={SplatData.fakeCompanies} />
       </Section>
+      <Section>
+        <ReportingUnit />
+      </Section>
+      <Section>
+        <Currency />
+      </Section>
+      <Section>
+        <NrOfBusinesses />
+      </Section>
+
     </div>
   )
 }

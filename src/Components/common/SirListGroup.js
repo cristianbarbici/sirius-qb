@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import CheckIcon from '@material-ui/icons/Check'
 import { pxFieldHeight, bgColor, hexSecondary, brdColor, bgColorHover } from '../../Styles/colors'
 import SirReadOnlyField from './SirReadOnlyField'
 
@@ -28,6 +27,11 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
     border: 'solid 1px rgba(0,0,0,.06)',
     margin: theme.spacing(.5),
+    transition: 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+
+    '&:hover': {
+      borderColor: 'rgba(0,0,0,.38)'
+    },
 
     '& .MuiListItemText-root .MuiListItemText-primary': {
       whiteSpace: 'nowrap',
