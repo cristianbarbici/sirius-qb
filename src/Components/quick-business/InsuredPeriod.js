@@ -18,7 +18,7 @@ import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import EditIcon from '@material-ui/icons/Edit'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
-import { hexSecondary, rgbSecondary, bgColorHover } from '../../Styles/colors'
+import { hexSecondary, rgbSecondary, bgColorHover } from '../../Styles/vars'
 import CtrlActions from './ctrls/CtrlActions'
 
 export const useStyles = makeStyles((theme) => ({
@@ -65,15 +65,6 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     textAlign: 'right',
     marginRight: -theme.spacing(1)
-  },
-  actionBtn: {
-    padding: theme.spacing(1.25)
-  },
-  actionBtnFirst: {
-    marginRight: -theme.spacing(.5)
-  },
-  actionIcon: {
-    fontSize: '1.1rem'
   },
   linkTo: {
     color: 'rgba(0,0,0,.38)',

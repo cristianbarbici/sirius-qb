@@ -5,7 +5,7 @@ import { useSplatField } from '@splat/splat-react'
 import SirField from '../common/SirField'
 import SirTextField from '../common/SirTextField'
 import SirReadOnlyField from '../common/SirReadOnlyField'
-import { hexError } from '../../Styles/colors'
+import { hexError } from '../../Styles/vars'
 import { SPLATFIELD } from './splat/vars'
 
 export const useStyles = makeStyles((theme) => ({
@@ -29,8 +29,8 @@ export const useStyles = makeStyles((theme) => ({
 }))
 
 export default function BusinessTitle(props) {
+  const { maxLength = 40 } = props
   const label = "Business title";
-  const maxLength = 40; // TODO: might be set from server
   const classes = useStyles()
   const [value, setValue] = useSplatField(SPLATFIELD.BUSINESSTITLE)
   const [count, setCount] = useState(0)

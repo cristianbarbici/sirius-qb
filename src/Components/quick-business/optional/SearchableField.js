@@ -15,7 +15,7 @@ export default function Reinsurer(props) {
   const callbackSetOpen = (value) => {
     setValid(!value)
     if (value)
-      sleep(150).then(() => setOpen(true)) // need to wait a bit in order for the menu to show at the correct place
+      sleep().then(() => setOpen(true)) // need to wait a bit in order for the menu to show at the correct place
     else
       setOpen(false)
   }

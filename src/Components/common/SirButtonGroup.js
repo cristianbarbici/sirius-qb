@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import { hexSecondary, bgColor, brdColor, bgColorHover } from '../../Styles/colors'
+import { hexSecondary, bgColor, brdColor, bgColorHover } from '../../Styles/vars'
 
 export const useStyles = makeStyles((theme) => ({
   root: {

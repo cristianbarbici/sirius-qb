@@ -4,53 +4,35 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from "@material-ui/core/styles"
 import SirReadOnlyField from '../common/SirReadOnlyField'
 import SirTextField from "./SirTextField"
-import { hexError } from "../../Styles/colors"
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  autocomplete: { // ugly hack
-    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"][class*="MuiOutlinedInput-marginDense"]': {
-      padding: 0
-    },
-
-    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
-      padding: theme.spacing(1, 2)
-    },
-
-    '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-      borderColor: hexError
-    }
-  },
   option: {
     fontSize: theme.typography.pxToRem(14)
-  },
+  }
 }))
-
 
 export default function SirAutocomplete(props) {
   const { value, setValue, options, open, setOpen } = props
   const classes = useStyles()
   const inputRef = useRef(null)
-  const isEmpty = _.isEmpty(value)
-
-  const validateValue = React.useCallback(() => {
-    if (!isEmpty)
-      setOpen(false)
-    else
-      setOpen(true)
-  }, [value])
+  const hasValue = !_.isEmpty(value)
+  const [inputValue, setInputValue] = useState('') // needed to select value when going from read-only to edit mode
 
   const handleOnClick = () => setOpen(true)
-  const handleOnBlur = () => validateValue()
+  const handleOnBlur = () => setOpen(!hasValue)
   const handleOnChange = (event, value, reson) => setValue(value)
+  const handleOnInputChange = (event, value, reson) => setInputValue(value)
+  // TODO: select onEnter
+  // TODO: blur? onEscape
 
   useEffect(() => {
     const input = inputRef.current
-    if (open && !isEmpty && input) {
+    if (open && hasValue && input) {
       input.focus()
-      input.select() // why dis do not wrk!?
+      input.select()
     }
   }, [open])
 
@@ -60,18 +42,18 @@ export default function SirAutocomplete(props) {
         <SirReadOnlyField value={value.Name || ''} onClick={handleOnClick} /> :
         <div className={classes.root}>
           <Autocomplete
-            className={classes.autocomplete}            
+            // TODO: autoHighlight          
             classes={{ option: classes.option }}
-            // TODO: autoHighlight
             openOnFocus
-            size='small'
 
             options={options}
             getOptionLabel={(option) => option ? option.Name : ''}
-            getOptionSelected={(option) => !isEmpty ? option.Name === value.Name : false}
+            getOptionSelected={(option) => hasValue ? option.Name === value.Name : false}
             renderInput={(params) => <SirTextField inputRef={inputRef} {...params} placeholder={'Search...'} onBlur={handleOnBlur} />} 
-            value={!isEmpty ? value : null}
+            value={hasValue ? value : null}
+            inputValue={inputValue}
             onChange={handleOnChange}
+            onInputChange={handleOnInputChange}
           />
         </div>
       }

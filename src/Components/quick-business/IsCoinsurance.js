@@ -10,7 +10,8 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 4.5, 0, 2)
   },
   switch: {
-    marginTop: theme.spacing(.5)
+    marginTop: theme.spacing(.5),
+    marginBottom: theme.spacing(2.25)
   }
 }));
 

@@ -1,12 +1,20 @@
+import { 
+  fontFamily,
+  brdRadius,
+  hexSecondary,
+  hexPaper,
+  hexDefaultBg, 
+  fontSizeTextField,
+  pxFieldHeight,
+  hexError
+} from './vars'
+
 import { createMuiTheme } from "@material-ui/core/styles";
-//import { pxFieldHeight } from "./colors";
 
-// TODO: move to separate file
-// vars
-const hexPrimary = '#002C73'
-const hexSecondary = '#0060A5'
-const hexDefault = '#f2f2f2'
+// use to get access to default values and mixins
+const defaultTheme = createMuiTheme()
 
+// sirius custom theme
 export const theme = createMuiTheme({
   palette: {
     primary: {
@@ -16,85 +24,60 @@ export const theme = createMuiTheme({
       main: hexSecondary
     },
     background: {
-
-      paper: '#fcfcfc',
-      default: hexDefault
-    }
-  },
-  typography: {
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-    caption: {
-      //letterSpacing: '.5px'
+      paper: hexPaper,
+      default: hexDefaultBg
+    },
+    error: {
+      main: hexError
     }
   },
   shape: {
-    borderRadius: 3
+    borderRadius: brdRadius
   },
-  
+  typography: {
+    fontFamily: fontFamily
+  },
   overrides: {
     MuiOutlinedInput: {
-      // root: {
-      //   '&.Mui-focused $notchedOutline': {
-      //     borderColor: hexSecondary,
-      //     borderWidth: 1
-      //   },
-      //   '&:hover $notchedOutline': {
-      //     borderColor: 'rgba(0,0,0,.87)',
-      //   }
-      // },
+      root: {
+        fontSize: defaultTheme.typography.pxToRem(fontSizeTextField),
+        height: defaultTheme.typography.pxToRem(pxFieldHeight),
+      },
+      input: {
+        height: 'unset',
+        padding: defaultTheme.spacing(1, 2)
+      },
       notchedOutline: {
         borderColor: 'rgba(0,0,0,.12)',
         transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1)'
-      },
-    },
-  /*
-    MuiInputBase: {
-      root: {
-        //height: '48px',
-        //padding: '0 12px 2px'
-      },
-      input: {
-        //padding: 0
       }
     },
+    MuiAutocomplete: {
+      root: {},
+      inputRoot: {
+        '&[class*="MuiOutlinedInput-root"]': {
+          padding: 0,
 
-    MuiFilledInput: {
-      root: {
-        backgroundColor: 'transparent',
-
-        '&:hover': {
-          backgroundColor: 'rgba(0,0,0,.02)'
+          '& .MuiAutocomplete-input:first-child': {
+            padding: defaultTheme.spacing(1, 2)
+          }
         }
       },
-      input: {
-        padding: '12px 14px'
+      endAdornment: {},
+      clearIndicator: {
+        fontSize: defaultTheme.typography.pxToRem(20),
+        color: defaultTheme.palette.text.disabled,
+        '&:hover': {
+          color: defaultTheme.palette.text.primary
+        }
       },
-      inputHiddenLabel: {
-        paddingTop: '12px',
-        paddingBottom: '12px'
+      popupIndicator: {
+        fontSize: defaultTheme.typography.pxToRem(20),
+        color: defaultTheme.palette.text.disabled,
+        '&:hover': {
+          color: defaultTheme.palette.text.primary
+        }
       }
-    },
-    MuiButtonGroup: {
-      root: {
-
-      },
-      grouped: {
-        padding: '0 .5rem',
-        minHeight: '2rem',
-        whiteSpace: 'nowrap',
-        fontSize: '.775rem',
-        color: 'rgba(0,0,0,.6)'
-      }
-    },
-    MuiButton: {
-      root: {
-
-      },
-      outlined: {
-        borderColor: 'rgba(0,0,0,.12)',
-      },
-    },
-  */  
+    }
   }
-  
-});
+})

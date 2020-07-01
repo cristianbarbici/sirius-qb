@@ -17,41 +17,35 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center'
   },
-  autocomplete: { // not nice hack
+  autocomplete: {
     marginLeft: theme.spacing(3),
-    flex: 1,
-
-    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"][class*="MuiOutlinedInput-marginDense"]': {
-      padding: 0
-    },
-
-    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
-      padding: theme.spacing(1, 2)
-    }
+    flex: 1
   },
   option: {
-    fontSize: '14px'
-  },
-  actions: {
-    marginLeft: theme.spacing(2)
+    fontSize: theme.typography.pxToRem(14)
   }
 }));
 
 export default function Currency(props) {
   const label = 'Main currency'
   const classes = useStyles();
-  const processState = useSplatProcessState()
+  
   const [value, setValue] = useSplatField(SPLATFIELD.CURRENCY)
   const hasValue = !_.isEmpty(value)
   const [open, setOpen] = useState(!hasValue)
+
+  const processState = useSplatProcessState()
   const mainCurrencyOptions = processState.MainCurrencyOptions
   const commonCurrency = processState.CommonCurrency
+  const editMode = open && hasValue
+  const untouched = open && !hasValue
 
   const filterOptions = createFilterOptions({ stringify: (option) => option.Name + ' ' + option.Code })
-  const handleRenderInput = params => <SirTextField {...params} variant="outlined" hiddenLabel placeholder='Search...' />
+  const handleRenderInput = params => <SirTextField {...params} placeholder='Search...' />
   const handleGetOptionLabel = option => hasValue ? option.Code : ''
   const handleGetOptionSelected = option => option && hasValue ? option.Code === value.Code : false
   const handleRenderOption = option => <div className={classes.option}>{option.Code}</div>
+  const handleOpen = () => setOpen(!open)
   const handleAutocompleteChange = (event, value, reson) => {
     setValue(value)
     _.isEmpty(value) ? setOpen(true) : handleOpen()
@@ -60,10 +54,8 @@ export default function Currency(props) {
     setValue({Code: currency})
     handleOpen()
   }
-  const handleOpen = () => setOpen(!open)
-  const editMode = open && hasValue
-  const untouched = open && !hasValue
-
+  
+  
   return (
     <SirField label={label} valid={!open} hint={untouched ? 'Select an option' : (editMode ? 'Select to close' : null)}>
       {!open ?
@@ -71,12 +63,9 @@ export default function Currency(props) {
         <div className={classes.root}>
           <SirButtonGroup data={commonCurrency} value={value} callbackClick={handleOnClick} />
           <Autocomplete
-            className={classes.autocomplete}
             // TODO: autoHighlight
-            size='small'
-            // openOnFocus
-            // disableClearable={!hasValue}
-            // freeSolo={!hasValue}
+            className={classes.autocomplete}
+            openOnFocus
 
             filterOptions={filterOptions}
             options={mainCurrencyOptions}
@@ -85,11 +74,10 @@ export default function Currency(props) {
             getOptionLabel={handleGetOptionLabel}
             getOptionSelected={handleGetOptionSelected}
             onChange={handleAutocompleteChange}
-            value={value}
+            value={hasValue ? value : null}
           />
           { editMode &&             
             <CtrlActions
-              className={classes.actions} 
               titleClear='Clear currency and start over' 
               callbackClear={() => setValue({})} 
               titleOk='Close edit mode' 

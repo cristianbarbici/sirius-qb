@@ -1,10 +1,8 @@
 import React from "react"
-import Switch from "@material-ui/core/Switch"
 import { useSplatField } from "@splat/splat-react"
 import SirField from "../common/SirField"
 import { makeStyles } from '@material-ui/core/styles'
 import {SPLATFIELD} from './splat/vars'
-import { Button } from "@material-ui/core"
 import IconButton from '@material-ui/core/IconButton'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
@@ -17,8 +15,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   value: {
     minWidth: theme.typography.pxToRem(24),
-    margin: theme.spacing(1),
     textAlign: 'center'
+  },
+  iconButton: {
+    '&:hover': {
+      color: theme.palette.text.primary
+    }
   }
 }));
 
@@ -39,11 +41,11 @@ export default function NrOfBusinesses(props) {
   return (
     <SirField label={"Nr.of businesses"} valid>
       <div className={classes.root}>
-        <IconButton size='small' onClick={decrease} disabled={value <= min}>
+        <IconButton onClick={decrease} disabled={value <= min} className={classes.iconButton}>
           <RemoveCircleOutlineIcon />
         </IconButton>
         <span className={classes.value}>{value}</span>
-        <IconButton size='small' onClick={increase} disabled={value >= max}>
+        <IconButton onClick={increase} disabled={value >= max} className={classes.iconButton}>
           <AddCircleOutlineIcon />
         </IconButton>
       </div>

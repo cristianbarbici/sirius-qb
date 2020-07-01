@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CheckIcon from '@material-ui/icons/Check'
 import EditIcon from '@material-ui/icons/Edit'
-import { hexValid } from '../../Styles/colors'
+import { hexValid } from '../../Styles/vars'
 
 export const useStyles = makeStyles((theme) => ({
   root: {

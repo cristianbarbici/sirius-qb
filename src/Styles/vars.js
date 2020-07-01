@@ -1,3 +1,11 @@
+// typography
+export const fontFamily         = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
+export const fontSizeTextField  = 14
+
+// shape
+export const brdRadius        = 3
+
+// colors
 export const hexPrimary       = '#002C73'
 export const rgbPrimary       = '0, 44, 115'
 
@@ -13,6 +21,9 @@ export const hexWarning       = '#faab4b'
 export const hexWarning50     = '#fdd8a6'
 
 
+// surface / bg
+export const hexPaper         = '#fcfcfc'
+export const hexDefaultBg     = '#f2f2f2'
 
 // vars
 export const pxFieldHeight    = 38 // px

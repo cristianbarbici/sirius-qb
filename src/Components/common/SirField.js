@@ -1,7 +1,7 @@
 import React from "react"
 import clsx from "clsx"
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { hexError } from "../../Styles/colors";
+import { hexError } from "../../Styles/vars";
 
 export const useStyles = makeStyles((theme) => ({
   root: {

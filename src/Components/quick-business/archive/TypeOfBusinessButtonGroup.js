@@ -8,7 +8,7 @@ import AddIcon from '@material-ui/icons/Add'
 import SirField from "../../common/SirField"
 import { useSplatField } from "@splat/splat-react"
 import { useSplatProcessState } from "@splat/splat-react"
-import { hexSecondary, rgbSecondary } from '../../../Styles/colors'
+import { hexSecondary, rgbSecondary } from '../../../Styles/vars'
 
 const bgColor = `rgba(${rgbSecondary}, .12)`
 const bgColorHover = `rgba(${rgbSecondary}, .2)`

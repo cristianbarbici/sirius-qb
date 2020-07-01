@@ -2,10 +2,13 @@ import React from "react"
 import clsx from 'clsx'
 import _ from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import { rgbSecondary, hexSecondary } from "../../../Styles/colors";
+import { rgbSecondary, hexSecondary } from "../../../Styles/vars";
 import { Tooltip, Link } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
+  root: {
+    marginLeft: theme.spacing(2)
+  },
   link: {
     fontSize: '.825rem',
     padding: theme.spacing(.5, 1),
@@ -33,7 +36,7 @@ export default function CtrlActions(props) {
   const { titleClear, titleOk, callbackClear, callbackOk, className } = props
   const classes = useStyles()
   return (
-    <span className={className}>
+    <span className={clsx(classes.root, className)}>
         <Tooltip title={titleClear}>
           <Link className={clsx(classes.link, classes.linkClear)} href='#' onClick={callbackClear}>Clear</Link>
         </Tooltip>

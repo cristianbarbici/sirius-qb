@@ -10,7 +10,7 @@ import Section from '../common/Section'
 import IsCoinsurance from './IsCoinsurance'
 import TypeOfParticipation from './TypeOfParticipation'
 import {SPLATFIELD} from './splat/vars'
-import { hexValid } from '../../Styles/colors'
+import { hexValid } from '../../Styles/vars'
 import CheckIcon from '@material-ui/icons/Check'
 
 export const useStyles = makeStyles((theme) => ({

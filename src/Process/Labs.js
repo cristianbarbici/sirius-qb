@@ -11,6 +11,8 @@ import SirButton from "../Components/common/SirButton";
 import ReportingUnit from "../Components/quick-business/ReportingUnit";
 import Currency from "../Components/quick-business/Currency";
 import NrOfBusinesses from '../Components/quick-business/NrOfBusinesses'
+import SirTextField from "../Components/common/SirTextField";
+import SirField from "../Components/common/SirField";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,13 +20,10 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
     maxWidth: theme.spacing(72),
-    margin: '0 auto', // `0 auto ${theme.spacing(6)}px`,
+    margin: '0 auto',
     padding: theme.spacing(3, 0),
-    backgroundColor: '#fdfdfd' // $hexPanelBg: #fdfdfd;
+    backgroundColor: theme.palette.background.paper
   },
-  section: {
-    margin: theme.spacing(4, 0)
-  }
 }));
 
 
@@ -34,6 +33,11 @@ export default function Labs(props) {
 
   return (
     <div className={classes.root}>
+      <Section>
+        <SirField>
+          <SirTextField></SirTextField>
+        </SirField>
+      </Section>
       <Section>
         <SearchableField label='Broker' splatField={SPLATFIELD.BROKER} data={SplatData.fakeCompanies} />
       </Section>
