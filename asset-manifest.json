@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/sirius-qb/static/js/main.68dc9b73.chunk.js",
+    "main.js.map": "/sirius-qb/static/js/main.68dc9b73.chunk.js.map",
+    "runtime-main.js": "/sirius-qb/static/js/runtime-main.51356a88.js",
+    "runtime-main.js.map": "/sirius-qb/static/js/runtime-main.51356a88.js.map",
+    "static/js/2.205d52cd.chunk.js": "/sirius-qb/static/js/2.205d52cd.chunk.js",
+    "static/js/2.205d52cd.chunk.js.map": "/sirius-qb/static/js/2.205d52cd.chunk.js.map",
+    "index.html": "/sirius-qb/index.html",
+    "precache-manifest.40aa2b29b632f7dc1d66dcd476222c61.js": "/sirius-qb/precache-manifest.40aa2b29b632f7dc1d66dcd476222c61.js",
+    "service-worker.js": "/sirius-qb/service-worker.js",
+    "static/js/2.205d52cd.chunk.js.LICENSE.txt": "/sirius-qb/static/js/2.205d52cd.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.51356a88.js",
+    "static/js/2.205d52cd.chunk.js",
+    "static/js/main.68dc9b73.chunk.js"
+  ]
+}
