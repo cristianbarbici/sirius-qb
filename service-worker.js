@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/sirius-qb/precache-manifest.40aa2b29b632f7dc1d66dcd476222c61.js"
+  "/sirius-qb/precache-manifest.67224f3eac565628e6c108028e61e8b6.js"
 );
 
 self.addEventListener('message', (event) => {
